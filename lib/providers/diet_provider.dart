@@ -31,6 +31,11 @@ class DietProvider with ChangeNotifier {
     notifyListeners();
   }
 
+  Future<void> replaceMeal() async {
+    await _dayDetailViewModel.replaceMeal();
+    notifyListeners();
+  }
+
 
   homePresenterChange(){
     notifyListeners();

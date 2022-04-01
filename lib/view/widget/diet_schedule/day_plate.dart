@@ -91,10 +91,10 @@ class DayPlateState extends State<DayPlate> {
                     activeColor: primaryColor,
                     shape: const CircleBorder(),
                     onChanged: (value){
-                      setState(() {
-                        updating = true;
-                      });
                       if(isPatient()){
+                        setState(() {
+                          updating = true;
+                        });
                         if( widget.meal.status != 1){
                           Provider.of<DietProvider>(context, listen: false).completeMeal(widget.meal.mealId!).whenComplete((){
                             setState(() {
@@ -109,6 +109,9 @@ class DayPlateState extends State<DayPlate> {
                             });
                           });
                         }
+                      }
+                      else{
+
                       }
                     }),
               ),

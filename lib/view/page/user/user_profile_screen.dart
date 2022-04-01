@@ -450,11 +450,11 @@ class _UserProfileScreenState extends State<UserProfileScreen> with
                           ),
                           child: ElevatedButton(
                             onPressed: () async {
-                              // await Provider.of<UserProvider>(context, listen: false).generateAccessCode().then((value){
-                              //   setState(() {
-                              //     pinController.text = value;
-                              //   });
-                              // });
+                              await Provider.of<ProfileViewModel>(context, listen: false).generateAccessCode().then((value){
+                                setState(() {
+                                  pinController.text = value;
+                                });
+                              });
                             },
                             child: Icon(CupertinoIcons.refresh, color: Colors.white, size: size.height/20,),
                             style: ElevatedButton.styleFrom(

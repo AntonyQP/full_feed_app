@@ -18,7 +18,7 @@ class DietDayDetailViewModel{
 
   late List<Meal> _dayMeals = [];
   late Meal _mealSelected;
-  late MealReplaceDto mealToReplace;
+  late MealReplaceDto _mealToReplace;
   late Meal _alternativeMeal;
   late List<String> _ingredients;
   late List<Meal> _alternativeMealList = [];
@@ -41,6 +41,15 @@ class DietDayDetailViewModel{
     await _dietService.setRestoreMeal(mealId).then((newMeal){
       if(newMeal.status != null){
         setMealState(newMeal, mealId);
+      }
+    });
+  }
+
+  Future<void> replaceMeal() async {
+    await _dietService.replaceMeal(_mealToReplace).then((newMeal){
+      if(newMeal.mealId != null){
+        setMealState(newMeal, newMeal.mealId!);
+        _mealSelected = newMeal;
       }
     });
   }
@@ -96,7 +105,7 @@ class DietDayDetailViewModel{
   }
 
   prepareNewMeal(){
-    mealToReplace = MealReplaceDto(_mealSelected.mealId!, _alternativeMeal.name!, _alternativeMeal.carbohydrates!,
+    _mealToReplace = MealReplaceDto(_mealSelected.mealId!, _alternativeMeal.name!, _alternativeMeal.carbohydrates!,
         _alternativeMeal.fat!, _alternativeMeal.gramsPortion!, _alternativeMeal.ingredients!, _alternativeMeal.protein!, _alternativeMeal.totalCalories!,
         _alternativeMeal.imageUrl!);
   }

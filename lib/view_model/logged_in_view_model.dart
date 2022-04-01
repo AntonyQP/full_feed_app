@@ -86,6 +86,8 @@ class LoggedInViewModel extends ChangeNotifier{
     for(int i = 0; i < _patientsByDoctor.length; i++){
       if(_patientsByDoctor[i].patientId == patient.patientId){
         _patientsByDoctor[i] = patient;
+        notifyListeners();
+        break;
       }
     }
   }
@@ -93,22 +95,5 @@ class LoggedInViewModel extends ChangeNotifier{
   Patient getPatientAt(int patientId){
     return _patientsByDoctor.where((element) => element.patientId == patientId).first;
   }
-
-  /*getPatientMeals() async{
-    int aux = 0;
-    _patientsDayMeals = List.filled(_patientsByDoctor.length, []);
-    if(_patientsByDoctor.isEmpty){
-      Provider.of<DietProvider>(context, listen: false).setMealsReady(true);
-    }
-    for(int i = 0; i < _patientsByDoctor.length; i++){
-      Provider.of<DietProvider>(context, listen: false).getDayMealsByPatient(_patientsByDoctor[i].patientId!).then((value){
-        _patientsDayMeals[_patientsByDoctor.indexOf(_patientsByDoctor[i])] = value;
-        aux++;
-        if(aux == _patientsByDoctor.length){
-          Provider.of<DietProvider>(context, listen: false).setMealsReady(true);
-        }
-      });
-    }
-  }*/
 
 }

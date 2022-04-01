@@ -64,6 +64,10 @@ class ProfileViewModel{
     ProteinData(0, 'Dom'),
   ];
 
+  Future<String> generateAccessCode(){
+    return _userService.getAccessCode();
+  }
+
 
   final UserService _userService = UserService();
 

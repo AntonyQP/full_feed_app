@@ -3,7 +3,10 @@ import 'dart:math';
 import 'package:flutter/cupertino.dart';
 import 'package:full_feed_app/domain/service/user_service.dart';
 import 'package:full_feed_app/model/dtos/patient_update_dto.dart';
+import 'package:full_feed_app/view_model/logged_in_view_model.dart';
+import 'package:full_feed_app/view_model/login_view_model.dart';
 import 'package:full_feed_app/view_model/profile_view_model.dart';
+import 'package:provider/provider.dart';
 
 import '../model/entities/patient.dart';
 
@@ -21,11 +24,13 @@ class PatientViewModel with ChangeNotifier {
     return _patientSelected;
   }
 
-  Future<void> updatePatient(double height, double weight) async {
-    double imc = weight/pow(height, 2);
+  Future<void> updatePatient(double height, double weight, BuildContext context) async {
+    double imc = weight/pow(height/100, 2);
     await _userService.updatePatientInfo(PatientUpdateDto(_patientSelected.patientId!, height, imc, weight)).then((newPatient){
       if(newPatient.patientId == _patientSelected.patientId){
         _patientSelected = newPatient;
+        Provider.of<LoggedInViewModel>(context, listen: false).setPatientAfterUpdate(newPatient);
+        notifyListeners();
       }
     });
   }

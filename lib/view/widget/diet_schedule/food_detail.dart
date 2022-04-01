@@ -35,14 +35,10 @@ class FoodDetailState extends State<FoodDetail> {
       context: context,
       builder: (BuildContext context) {
         return Message(text: '¿Desea continuar con el cambio de dieta?', yesFunction: (){
-          // Provider.of<DietProvider>(context, listen: false).dayDetailPresenter.prepareNewMeal();
-          // Provider.of<DietProvider>(context, listen: false).replaceMeal(Provider.of<DietProvider>(context, listen: false).dayDetailPresenter.mealToReplace).then((value){
-          //   if(value.mealId != null){
-          //     Provider.of<DietProvider>(context, listen: false).dayDetailPresenter.afterMealChanged(value);
-          //     Provider.of<DietProvider>(context, listen: false).dietPresenter.setNewMeal(value);
-          //     Navigator.pop(context);
-          //   }
-          // });
+          Provider.of<DietProvider>(context, listen: false).getDietDayDetailViewModel().prepareNewMeal();
+          Provider.of<DietProvider>(context, listen: false).replaceMeal().whenComplete((){
+            Navigator.pop(context);
+          });
         }, noFunction: (){}, options: true,);
       },
     );

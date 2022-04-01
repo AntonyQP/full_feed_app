@@ -56,7 +56,9 @@ class DoctorPatientsListState extends State<DoctorPatientsList> with
                     itemCount: Provider.of<LoggedInViewModel>(context, listen: false).getPatientsByDoctor().length,
                     physics: const BouncingScrollPhysics(),
                     itemBuilder: (BuildContext context, int index) {
-                      final Patient _patient = Provider.of<LoggedInViewModel>(context, listen: false).getPatientsByDoctor()[index];
+
+                      Patient _patient = Provider.of<LoggedInViewModel>(context).getPatientsByDoctor()[index];
+
                       return InkWell(
                         onTap: (){
                           Provider.of<PatientViewModel>(context, listen: false).setPatientSelected(_patient);
