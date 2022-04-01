@@ -20,6 +20,18 @@ class DietProvider with ChangeNotifier {
     return _isAlternativeMealSelected;
   }
 
+
+  Future<void> completeMeal(int mealId) async {
+    await _dayDetailViewModel.completeMeal(mealId);
+    notifyListeners();
+  }
+
+  Future<void> restoreMeal(int mealId) async {
+    await _dayDetailViewModel.restoreMeal(mealId);
+    notifyListeners();
+  }
+
+
   homePresenterChange(){
     notifyListeners();
   }
@@ -60,13 +72,4 @@ class DietProvider with ChangeNotifier {
     _dayDetailViewModel.setMealSelected(meal);
     notifyListeners();
   }
-
-  // setAlternativeMeal(Meal alternativeMeal, bool _changeFood){
-  //   dayDetailPresenter.changeFood = _changeFood;
-  //   dayDetailPresenter.alternativeMeal = alternativeMeal;
-  //   dayDetailPresenter.splitIngredients(_changeFood);
-  //   dayDetailPresenter.generateData();
-  //   notifyListeners();
-  // }
-
 }

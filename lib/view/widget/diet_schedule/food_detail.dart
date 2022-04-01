@@ -119,7 +119,7 @@ class FoodDetailState extends State<FoodDetail> {
                                 Wrap(
                                   spacing: 2.0,
                                   direction: Axis.vertical,
-                                  children: List.generate(Provider.of<DietProvider>(context).getDietDayDetailViewModel().getIngredients().length, (index){
+                                  children: List.generate(Provider.of<DietProvider>(context).getDietDayDetailViewModel().splitIngredients(widget.meal).length, (index){
                                     return Text(Provider.of<DietProvider>(context).getDietDayDetailViewModel().getIngredients()[index], style: const TextStyle(color: Color(0xFF2D2D2D), fontSize: 10),);
                                   }),
                                 ),
@@ -145,7 +145,7 @@ class FoodDetailState extends State<FoodDetail> {
                   ],
                   series: <ChartSeries>[
                     BarSeries<ProteinDetail, String>(
-                        dataSource: Provider.of<DietProvider>(context).getDietDayDetailViewModel().chartData,
+                        dataSource: Provider.of<DietProvider>(context).getDietDayDetailViewModel().generateData(widget.meal),
                         xValueMapper: (ProteinDetail pd, _) => pd.protein,
                         yValueMapper: (ProteinDetail pd, _) => pd.q,
                         dataLabelSettings: const DataLabelSettings(
@@ -178,7 +178,7 @@ class FoodDetailState extends State<FoodDetail> {
                   ],
               ),
               FutureBuilder(
-                future: Provider.of<DietProvider>(context, listen: false).getDietDayDetailViewModel().setAlternativeMealList(Provider.of<DietProvider>(context, listen: false).getAlternativeMealSelected()),
+                future: Provider.of<DietProvider>(context, listen: false).getDietDayDetailViewModel().setAlternativeMealList(Provider.of<DietProvider>(context, listen: false).getAlternativeMealSelected(), widget.meal),
                 builder: (context, snapshot) {
                   return Wrap(
                     direction: Axis.horizontal,

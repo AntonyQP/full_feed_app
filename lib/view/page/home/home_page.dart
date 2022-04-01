@@ -33,63 +33,65 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    return Text("Home");
-
-    // return ListView(
-    //   children: [
-    //     Align(
-    //       alignment: Alignment.topLeft,
-    //       child: Text.rich(TextSpan(
-    //           children: [
-    //             const TextSpan(text: 'Bienvenido de nuevo, ', style: TextStyle(fontSize: 16)),
-    //             TextSpan(text: UserSession().userFirstName.contains(" ")? UserSession().userFirstName.substring(0, UserSession().userFirstName.lastIndexOf(" ")) : UserSession().userFirstName
-    //             , style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 20)),
-    //           ])
-    //       ),
-    //     ),
-    //     const SizedBox(height: 25.0),
-    //     HomeDietCard(
-    //       child: FutureBuilder(
-    //           future: _future,
-    //           builder: (context, snapshot) {
-    //             if(snapshot.connectionState == ConnectionState.done){
-    //               if(snapshot.data == true){
-    //                 if(Provider.of<LoggedInViewModel>(context, listen: false).getDayMeals().isNotEmpty){
-    //                   return Wrap(
-    //                       children: List.generate(5, (index) =>
-    //                           DayPlate(meal: Provider.of<LoggedInViewModel>(context, listen: false).getDayMeals()[index], selected: false,))
-    //                   );
-    //                 }
-    //                 else{
-    //                   return SizedBox(
-    //                     height: 250,
-    //                     child: Center(
-    //                       child: Column(
-    //                         mainAxisAlignment: MainAxisAlignment.center,
-    //                         children: const [
-    //                           Text('No tiene dietas hoy', style: TextStyle(color: Colors.grey)),
-    //                           Text('Disfrute de su dia con moderacion', style: TextStyle(color: Colors.grey)),
-    //                         ],
-    //                       ),
-    //                     ),
-    //                   );
-    //                 }
-    //               }
-    //             }
-    //             return const CircularProgressIndicator();
-    //           }),
-    //     ),
-    //     const SizedBox(height: 25.0),
-    //     // Row(
-    //     //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-    //     //   crossAxisAlignment: CrossAxisAlignment.start,
-    //     //   children: [
-    //     //     HomeNutritionistCard(chatViewModel: widget.chatViewModel),
-    //     //     const HomeAchievementsCard()
-    //     //   ],
-    //     // )
-    //   ],
-    // );
+    var size = MediaQuery.of(context).size;
+    return SizedBox(
+      height: size.height,
+      child: ListView(
+        children: [
+          Align(
+            alignment: Alignment.topLeft,
+            child: Text.rich(TextSpan(
+                children: [
+                  const TextSpan(text: 'Bienvenido de nuevo, ', style: TextStyle(fontSize: 16)),
+                  TextSpan(text: UserSession().userFirstName.contains(" ")? UserSession().userFirstName.substring(0, UserSession().userFirstName.lastIndexOf(" ")) : UserSession().userFirstName
+                  , style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 20)),
+                ])
+            ),
+          ),
+          const SizedBox(height: 25.0),
+          HomeDietCard(
+            child: FutureBuilder(
+                future: _future,
+                builder: (context, snapshot) {
+                  if(snapshot.connectionState == ConnectionState.done){
+                    if(snapshot.data == true){
+                      if(Provider.of<LoggedInViewModel>(context, listen: false).getDayMeals().isNotEmpty){
+                        return Wrap(
+                            children: List.generate(5, (index) =>
+                                DayPlate(meal: Provider.of<LoggedInViewModel>(context, listen: false).getDayMeals()[index], selected: false,))
+                        );
+                      }
+                      else{
+                        return SizedBox(
+                          height: 250,
+                          child: Center(
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: const [
+                                Text('No tiene dietas hoy', style: TextStyle(color: Colors.grey)),
+                                Text('Disfrute de su dia con moderacion', style: TextStyle(color: Colors.grey)),
+                              ],
+                            ),
+                          ),
+                        );
+                      }
+                    }
+                  }
+                  return const CircularProgressIndicator();
+                }),
+          ),
+          const SizedBox(height: 25.0),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              HomeNutritionistCard(chatViewModel: widget.chatViewModel),
+              const HomeAchievementsCard()
+            ],
+          )
+        ],
+      ),
+    );
   }
 }
 

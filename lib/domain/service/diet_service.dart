@@ -106,28 +106,30 @@ class DietService {
     return [];
   }
 
-  Future<bool> setCompleteMeal(int mealId) async {
+  Future<Meal> setCompleteMeal(int mealId) async {
     var api = baseUrl + mealEndpoint + completeMeal;
     final dio = Dio();
     dio.options.headers["authorization"] = "Bearer ${UserSession().token}";
 
     Response response = await dio.put(api, queryParameters: {'mealId' : mealId});
     if(response.statusCode == 200){
-      return true;
+      Meal aux = Meal.fromJson(response.data["data"]);
+      return aux;
     }
-    return false;
+    return Meal();
   }
 
-  Future<bool> setRestoreMeal(int mealId) async {
+  Future<Meal> setRestoreMeal(int mealId) async {
     var api = baseUrl + mealEndpoint + restoreMeal;
     final dio = Dio();
     dio.options.headers["authorization"] = "Bearer ${UserSession().token}";
 
     Response response = await dio.put(api, queryParameters: {'mealId' : mealId});
     if(response.statusCode == 200){
-      return false;
+      Meal aux = Meal.fromJson(response.data["data"]);
+      return aux;
     }
-    return true;
+    return Meal();
   }
 
   Future<Meal> replaceMeal(MealReplaceDto meal) async {

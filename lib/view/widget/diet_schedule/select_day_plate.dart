@@ -42,7 +42,7 @@ class _SelectDayPlateState extends State<SelectDayPlate> {
                 Provider.of<DietProvider>(context, listen: false).setMealSelected(widget.dayMeals[selected]);
               });
             },
-            child: DayPlate(meal: widget.dayMeals[index], selected: index == selected ? true : false, ),
+            child: DayPlate(meal: widget.dayMeals[index], selected: index == selected, ),
           );
         }),),);
   }

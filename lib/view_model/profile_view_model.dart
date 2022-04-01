@@ -81,8 +81,10 @@ class ProfileViewModel{
 
   Future<void> initPatientData() async {
     if(isPatient()){
-      await _userService.getWeightEvolution().then((weightHistory){
-        generateWeightHistory(weightHistory);
+      await  _userService.getUserSuccessfulDays().then((value){
+        _userService.getWeightEvolution().then((weightHistory){
+          generateWeightHistory(weightHistory);
+        });
       });
       await _userService.getConsumedBalance().then((nutritionStats){
         generateNutritionStats(nutritionStats);

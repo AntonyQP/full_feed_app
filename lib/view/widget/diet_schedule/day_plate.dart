@@ -4,6 +4,7 @@ import 'package:full_feed_app/model/entities/user_session.dart';
 import 'package:full_feed_app/providers/diet_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:full_feed_app/util/colors.dart';
+import 'package:full_feed_app/view_model/diet_view_model.dart';
 import 'package:provider/provider.dart';
 
 import '../../../model/entities/meal.dart';
@@ -24,15 +25,9 @@ class DayPlate extends StatefulWidget {
 
 class DayPlateState extends State<DayPlate> {
   late bool completed;
-
+  bool updating = false;
   @override
   void initState() {
-    if(widget.meal.status == 1){
-      completed = true;
-    }
-    else{
-      completed = false;
-    }
     super.initState();
   }
 
@@ -40,6 +35,9 @@ class DayPlateState extends State<DayPlate> {
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size.width;
     var size2 = MediaQuery.of(context).size.height;
+
+
+
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: size/60, vertical: 5),
       child: Container(
@@ -77,31 +75,41 @@ class DayPlateState extends State<DayPlate> {
                     ],
                   ),
                 ),),
-              Align(
+              updating ? Positioned(
+                right: size/25,
+                top: size2/60,
+                child: const SizedBox(
+                    width: 15,
+                    height: 15,
+                    child: CircularProgressIndicator(color: primaryColor, strokeWidth: 2,)),
+              ) : Align(
                 alignment: Alignment.centerRight,
                 child: Checkbox(
-                    value: completed,
+                    value: widget.meal.status == 1,
                     checkColor: selectedColor,
                     fillColor: MaterialStateProperty.all( primaryColor),
                     activeColor: primaryColor,
                     shape: const CircleBorder(),
                     onChanged: (value){
-                      // if(isPatient()){
-                      //   if(completed == false){
-                      //     Provider.of<DietProvider>(context, listen: false).completeMeal(widget.meal.mealId!).then((value){
-                      //       setState(() {
-                      //         completed = value;
-                      //       });
-                      //     });
-                      //   }
-                      //   else{
-                      //     Provider.of<DietProvider>(context, listen: false).restoreMeal(widget.meal.mealId!).then((value){
-                      //       setState(() {
-                      //         completed = value;
-                      //       });
-                      //     });
-                      //   }
-                      // }
+                      setState(() {
+                        updating = true;
+                      });
+                      if(isPatient()){
+                        if( widget.meal.status != 1){
+                          Provider.of<DietProvider>(context, listen: false).completeMeal(widget.meal.mealId!).whenComplete((){
+                            setState(() {
+                              updating = false;
+                            });
+                          });
+                        }
+                        else{
+                          Provider.of<DietProvider>(context, listen: false).restoreMeal(widget.meal.mealId!).whenComplete((){
+                            setState(() {
+                              updating = false;
+                            });
+                          });
+                        }
+                      }
                     }),
               ),
             ],

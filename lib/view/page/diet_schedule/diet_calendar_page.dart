@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:full_feed_app/util/colors.dart';
 import 'package:full_feed_app/view_model/diet_view_model.dart';
 import 'package:full_feed_app/view_model/patient_view_model.dart';
+import 'package:page_transition/page_transition.dart';
 import 'package:provider/provider.dart';
 import 'package:syncfusion_flutter_datepicker/datepicker.dart';
 
@@ -88,7 +89,12 @@ class _DietCalendarPageState extends State<DietCalendarPage> {
                         Provider.of<DietViewModel>(context, listen: false).initWeekMealList().then((response){
                           if(response){
                             Provider.of<DietProvider>(context, listen: false).setDayDetailPresenter(0, context);
-                            Navigator.push(context, MaterialPageRoute(builder: (context) => const DietDayDetail(fromRegister: false,)),);
+                            Navigator.push(context, PageTransition(
+                                duration: const Duration(milliseconds: 200),
+                                reverseDuration: const Duration(milliseconds: 200),
+                                type: PageTransitionType.rightToLeft,
+                                child: const DietDayDetail(fromRegister: false,)
+                            ));
                           }
                           else{
                             _showDialog();

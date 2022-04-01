@@ -20,7 +20,7 @@ class _HomeAchievementsCardState extends State<HomeAchievementsCard> {
     return Container(
       width: size.width / 2.7,
       height: size.height / 3.5,
-      decoration: BoxDecoration(
+      decoration: const BoxDecoration(
         borderRadius: const BorderRadius.all(Radius.circular(20.0)),
         color: achievementsCardColor,
       ),

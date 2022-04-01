@@ -29,31 +29,54 @@ class DietDayDetailViewModel{
     return _ingredients;
   }
 
+  Future<void> completeMeal(int mealId) async {
+    await _dietService.setCompleteMeal(mealId).then((newMeal){
+      if(newMeal.status != null){
+        setMealState(newMeal, mealId);
+      }
+    });
+  }
+
+  Future<void> restoreMeal(int mealId) async {
+    await _dietService.setRestoreMeal(mealId).then((newMeal){
+      if(newMeal.status != null){
+        setMealState(newMeal, mealId);
+      }
+    });
+  }
+
+  setMealState(Meal meal, int mealId){
+    int index = _dayMeals.indexOf(_dayMeals.where((element) => element.mealId == mealId).first);
+    _dayMeals[index] = meal;
+  }
+
   DietDayDetailViewModel(List<Meal> _meals){
     _dayMeals = _meals;
     _mealSelected = _dayMeals[0];
     _alternativeMeal = Meal();
-    splitIngredients(false);
-    generateData();
+    _dietService.getAlternativeMeals(_mealSelected).then((mealList){
+      _alternativeMealList = mealList;
+    });
   }
 
   setMealSelected(Meal meal){
     _mealSelected = meal;
-    splitIngredients(false);
-    generateData();
   }
 
   setAlternativeMeal(int index){
     _alternativeMeal = _alternativeMealList[index];
   }
 
-  setAlternativeMealList(bool isAlternativeMealSelected) async {
+  Future<List<Meal>> setAlternativeMealList(bool isAlternativeMealSelected, Meal meal) async {
     if(isAlternativeMealSelected){
-      return;
+      _alternativeMealList = _alternativeMealList;
     }
-    await _dietService.getAlternativeMeals(_mealSelected).then((mealList){
-      _alternativeMealList = mealList;
-    });
+    else{
+      await _dietService.getAlternativeMeals(_mealSelected).then((mealList){
+        _alternativeMealList = mealList;
+      });
+    }
+    return _alternativeMealList;
   }
 
   List<Meal> getAlternativeMealList(){
@@ -87,22 +110,16 @@ class DietDayDetailViewModel{
     _mealSelected = newMeal;
   }
 
-  splitIngredients(bool alternative){
-    if(alternative){
-      _ingredients = _alternativeMeal.ingredients!.split('-');
-      for(int i =0; i< _ingredients.length; i ++){
-        _ingredients[i] = _ingredients[i].substring(0, 1) + _ingredients[i].substring(1).toLowerCase();
-      }
+  List<String> splitIngredients(Meal meal){
+    _ingredients = meal.ingredients!.split('-');
+    for(int i =0; i< _ingredients.length; i ++){
+      _ingredients[i] = _ingredients[i].substring(0, 1) + _ingredients[i].substring(1).toLowerCase();
     }
-    else{
-      _ingredients = _mealSelected.ingredients!.split('-');
-      for(int i =0; i<_ingredients.length; i ++){
-        _ingredients[i] = _ingredients[i].substring(0, 1) + _ingredients[i].substring(1).toLowerCase();
-      }
-    }
+
+    return _ingredients;
   }
 
-  generateData(){
+  List<ProteinDetail> generateData(Meal meal){
 
     if(chartData.isNotEmpty){
       chartData.clear();
@@ -123,6 +140,8 @@ class DietDayDetailViewModel{
         ProteinDetail('Carbohidratos', double.parse(_mealSelected.carbohydrates.toString())),
       ];
     }
+
+    return chartData;
   }
 
 }

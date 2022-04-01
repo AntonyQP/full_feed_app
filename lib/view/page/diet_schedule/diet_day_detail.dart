@@ -35,8 +35,6 @@ class DietDayDetailState extends State<DietDayDetail> {
 
   @override
   void initState() {
-    // Provider.of<DietProvider>(context, listen: false).setDayDetailPresenter(0);
-    // Provider.of<DietProvider>(context, listen: false).getAlternativeMeals(Provider.of<DietProvider>(context, listen: false).dietPresenter.weekMealList.first);
     super.initState();
   }
 
