@@ -26,6 +26,7 @@ class _UserChatPageState extends State<UserChatPage> with
   @override
   void initState() {
     channel = widget.channel;
+    channel.watch();
     super.initState();
   }
 
@@ -134,7 +135,6 @@ class _UserChatPageState extends State<UserChatPage> with
                             child: MessageListView(),
                           ),
                           MessageInput(
-
                           )
                         ],
                       ),

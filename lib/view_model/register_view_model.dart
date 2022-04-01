@@ -4,6 +4,7 @@ import 'dart:math';
 import 'package:flutter/cupertino.dart';
 import 'package:full_feed_app/domain/service/preferences_service.dart';
 import 'package:full_feed_app/domain/service/user_service.dart';
+import 'package:full_feed_app/model/dtos/user_login_dto.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:provider/provider.dart';
@@ -36,6 +37,7 @@ class RegisterViewModel extends ChangeNotifier{
 
   bool _loggedIn = false;
 
+  final Map<dynamic, dynamic> _userLoginDto = UserLoginDto("", "").toJson();
   final Map<dynamic, dynamic> _patientRegisterDto = PatientRegisterDto("", "", "", "", "", "", "", "", "", "", 0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0).toJson();
   final Map<dynamic, dynamic> _doctorRegisterDto = DoctorRegisterDto("", "", "", "", "", "", "", "", "", "", "").toJson();
 
@@ -87,6 +89,17 @@ class RegisterViewModel extends ChangeNotifier{
     }
     else{
       _doctorRegisterDto[value] = newValue;
+    }
+
+    if(value == 'email' || value == 'password'){
+      switch(value){
+        case 'email':
+          _userLoginDto['email'] = newValue;
+          break;
+        case 'password':
+          _patientRegisterDto['password'] = newValue;
+          break;
+      }
     }
   }
 
@@ -227,7 +240,7 @@ class RegisterViewModel extends ChangeNotifier{
   }
 
   Future<bool> registerAndLogin() async{
-    return await _userService.registerAndLogin(_patientRegisterDto);
+    return await _userService.registerAndLogin(_patientRegisterDto, _userLoginDto);
   }
 
 }

@@ -34,9 +34,8 @@ class ChatViewModel{
           }
       ),
       client.devToken(UserSession().userId.toString()).rawValue,).whenComplete((){
+      initChannels(doctorId, patientsChat);
     });
-
-    initChannels(doctorId, patientsChat);
   }
 
   initChannels(int? doctorId, List<Patient> patientsChat){

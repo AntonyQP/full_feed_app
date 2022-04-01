@@ -6,10 +6,8 @@ import 'package:intl/intl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../model/dtos/doctor_register_dto.dart';
-import '../../model/dtos/patient_register_dto.dart';
 import '../../model/dtos/patient_update_dto.dart';
 import '../../model/dtos/preference_register_dto.dart';
-import '../../model/dtos/user_login_dto.dart';
 import '../../model/entities/doctor.dart';
 import '../../model/entities/nutrition_stat.dart';
 import '../../model/entities/region.dart';
@@ -21,9 +19,9 @@ import '../../view_model/profile_view_model.dart';
 
 class UserService{
 
-  Future<bool> registerAndLogin(Map<dynamic, dynamic> patientRegisterDto) async{
-    await registerPatient(patientRegisterDto).then((value) {
-      //loginUser();
+  Future<bool> registerAndLogin(Map<dynamic, dynamic> patientRegisterDto, Map<dynamic, dynamic> userLoginDto) async{
+    await registerPatient(patientRegisterDto).whenComplete(() {
+      loginUser(userLoginDto);
     });
     return true;
   }

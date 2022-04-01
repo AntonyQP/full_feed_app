@@ -3,7 +3,6 @@ import 'package:full_feed_app/util/colors.dart';
 import 'package:provider/provider.dart';
 
 import '../../../model/entities/preference.dart';
-import '../../../providers/user_provider.dart';
 import '../../../view_model/register_view_model.dart';
 import '../../widget/authentication/food_check_item.dart';
 

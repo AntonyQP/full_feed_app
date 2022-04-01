@@ -90,7 +90,7 @@ class _DietCalendarPageState extends State<DietCalendarPage> {
           Padding(
               padding: EdgeInsets.only(top: size.height/10),
               child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                mainAxisAlignment: isPatient() ? MainAxisAlignment.center : MainAxisAlignment.spaceEvenly,
                 children: [
                   Visibility(
                     visible: !isPatient(),

@@ -90,8 +90,8 @@ class UserRegisterFormScreenState extends State<UserRegisterFormScreen> with
                           borderRadius: BorderRadius.only(topLeft: Radius.circular(15.0), topRight: Radius.circular(15.0)),
                           child: Image.file(
                             image!,
-                            width: 130,
-                            height: 130,
+                            width: 125,
+                            height: 120,
                             fit: BoxFit.cover,
                           ),
                         )
@@ -99,8 +99,8 @@ class UserRegisterFormScreenState extends State<UserRegisterFormScreen> with
                             decoration: const BoxDecoration(
                                 color: Colors.white,
                                 borderRadius: BorderRadius.only(topLeft: Radius.circular(18.0), topRight: Radius.circular(18.0))),
-                            height: 135,
-                            width: 145,
+                            height: 120,
+                            width: 125,
                             child: const Center(
                                 child: Icon(Icons.account_circle,
                                     size: 50.0, color: Colors.black38))),

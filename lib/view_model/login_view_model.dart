@@ -39,7 +39,7 @@ class LoginViewModel extends ChangeNotifier{
             _errorMessage = "Contraseña incorrecta";
             break;
         }
-        _canLogin = true;
+        _canLogin = false;
       }
     });
 

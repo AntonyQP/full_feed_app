@@ -346,7 +346,6 @@ class _UserProfileScreenState extends State<UserProfileScreen> with
                     ),
                     SizedBox(
                       width: size.width,
-                      height: size.height / 4.5,
                       child: SfCartesianChart(
                         plotAreaBorderWidth: 0,
                         zoomPanBehavior: ZoomPanBehavior(enablePanning: true, enablePinching: true),

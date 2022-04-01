@@ -97,7 +97,7 @@ class DietDayDetailState extends State<DietDayDetail> {
                   Navigator.pop(context); },
                 icon: const Icon(CupertinoIcons.back, color: primaryColor,),
               ),
-              const Text("Semana 1", style: TextStyle(color: primaryColor, fontWeight: FontWeight.bold, fontSize: 15),)
+              const Text("Plan Nutricional", style: TextStyle(color: primaryColor, fontWeight: FontWeight.bold, fontSize: 15),)
             ],
           ),
           SizedBox(height: size2/50,),

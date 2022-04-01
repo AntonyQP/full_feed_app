@@ -54,8 +54,8 @@ class _ChatScreenState extends State<ChatScreen> with
     return SizedBox(
       height: size.height,
       child: Provider.of<LoggedInViewModel>(context).getPatientsByDoctor().isNotEmpty || isPatient() ?
-      Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+      ListView(
+        //crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const Text('Chats', style: TextStyle(fontSize: 20, color: primaryColor, fontWeight: FontWeight.bold),),
           !isPatient() ?

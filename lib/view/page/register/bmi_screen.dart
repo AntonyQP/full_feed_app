@@ -32,6 +32,12 @@ class _BMIScreenState extends State<BMIScreen> with AutomaticKeepAliveClientMixi
     showValue();
   }
 
+  @override
+  dispose(){
+
+    super.dispose();
+  }
+
   showValue(){
     timer = Timer.periodic(const Duration(milliseconds: 10), (_) {
       if(_valueSlider < Provider.of<RegisterViewModel>(context, listen: false).getImc()){

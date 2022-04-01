@@ -34,9 +34,7 @@ class _UserRoleScreenState extends State<UserRoleScreen> with
             children: [
               //TODO: Change Text
               const SizedBox(
-                height: 50,
-                child: Text('Descripcion del rol'),
-              ),
+                height: 50,),
               ElevatedButton(
                 style: ElevatedButton.styleFrom(
                   fixedSize: Size(

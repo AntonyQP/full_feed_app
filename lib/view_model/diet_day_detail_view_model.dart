@@ -143,22 +143,12 @@ class DietDayDetailViewModel{
     if(chartData.isNotEmpty){
       chartData.clear();
     }
-    if(_alternativeMeal.name != null){
-      chartData = [
-        ProteinDetail('Peso', double.parse(_alternativeMeal.gramsPortion.toString())),
-        ProteinDetail('Grasas', double.parse(_alternativeMeal.fat.toString())),
-        ProteinDetail('Proteinas', double.parse(_alternativeMeal.protein.toString())),
-        ProteinDetail('Carbohidratos', double.parse(_alternativeMeal.carbohydrates.toString())),
-      ];
-    }
-    else{
-      chartData = [
-        ProteinDetail('Peso', double.parse(_mealSelected.gramsPortion.toString())),
-        ProteinDetail('Grasas', double.parse(_mealSelected.fat.toString())),
-        ProteinDetail('Proteinas', double.parse(_mealSelected.protein.toString())),
-        ProteinDetail('Carbohidratos', double.parse(_mealSelected.carbohydrates.toString())),
-      ];
-    }
+    chartData = [
+      ProteinDetail('Peso', double.parse(meal.gramsPortion.toString())),
+      ProteinDetail('Grasas', double.parse(meal.fat.toString())),
+      ProteinDetail('Proteinas', double.parse(meal.protein.toString())),
+      ProteinDetail('Carbohidratos', double.parse(meal.carbohydrates.toString())),
+    ];
 
     return chartData;
   }
