@@ -11,7 +11,11 @@ class Patient {
   final double? imc;
   final double? abdominal;
   final User? user;
-  final int? firstDayOfWeek;
+  int? firstDayOfWeek;
+
+  setFirstDayOfWeek(int _firstDayOfWeek){
+    firstDayOfWeek = _firstDayOfWeek;
+  }
 
   Patient({this.patientId, this.arm, this.age, this.tmb, this.height, this.weight, this.imc, this.abdominal, this.user, this.firstDayOfWeek});
 

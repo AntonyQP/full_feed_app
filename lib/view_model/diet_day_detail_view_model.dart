@@ -22,6 +22,7 @@ class DietDayDetailViewModel{
   late Meal _alternativeMeal;
   late List<String> _ingredients;
   late List<Meal> _alternativeMealList = [];
+  bool _thereAreDiet = true;
 
   final DietService _dietService = DietService();
 
@@ -60,12 +61,21 @@ class DietDayDetailViewModel{
   }
 
   DietDayDetailViewModel(List<Meal> _meals){
-    _dayMeals = _meals;
-    _mealSelected = _dayMeals[0];
-    _alternativeMeal = Meal();
-    _dietService.getAlternativeMeals(_mealSelected).then((mealList){
-      _alternativeMealList = mealList;
-    });
+    if(_meals.isNotEmpty){
+      _dayMeals = _meals;
+      _mealSelected = _dayMeals[0];
+      _alternativeMeal = Meal();
+      _dietService.getAlternativeMeals(_mealSelected).then((mealList){
+        _alternativeMealList = mealList;
+      });
+    }
+    else{
+      _thereAreDiet = false;
+    }
+  }
+
+  bool getThereAreDiet(){
+    return _thereAreDiet;
   }
 
   setMealSelected(Meal meal){

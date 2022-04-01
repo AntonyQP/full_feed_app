@@ -1,5 +1,4 @@
 import 'package:dio/dio.dart';
-import 'package:full_feed_app/model/dtos/patient_update_dto.dart';
 import 'package:intl/intl.dart';
 
 import '../../model/dtos/meal_replace_dto.dart';

@@ -35,7 +35,6 @@ class _HomeDietCardState extends State<HomeDietCard> {
     var size = MediaQuery.of(context).size;
     return Container(
       width: size.width,
-      height: size.height / 3,
       decoration: BoxDecoration(
           borderRadius: const BorderRadius.all(Radius.circular(20.0)),
           color: Colors.white,

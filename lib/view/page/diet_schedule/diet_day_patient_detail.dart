@@ -108,7 +108,7 @@ class DietDayPatientDetailState extends State<DietDayPatientDetail> {
                     ),
                   ),
                   SizedBox(
-                    height: size.height * 1.1,
+                    height: size.height * 1.2,
                     child: PageView(
                       controller: _dietPageController,
                       children: [
@@ -155,7 +155,6 @@ class DietDayPatientDetailState extends State<DietDayPatientDetail> {
                                   ],
                                   color: Colors.white
                               ),
-                              height: size.height/2.8,
                               width: size.width,
                               child: Column(
                                 children: [
@@ -219,18 +218,18 @@ class DietDayPatientDetailState extends State<DietDayPatientDetail> {
                                       ),
                                     ],
                                   ),
-                                  Padding(
-                                    padding: EdgeInsets.symmetric(vertical: size.height/50),
-                                    child: Wrap(
-                                      spacing: 10,
-                                      runSpacing: 10,
-                                      children: [
-                                        PatientDetailCard(asset: "assets/height.svg", text: (_patientSelected.height! / 100).toString() + " m", title: "Altura"),
-                                        PatientDetailCard(asset: "assets/weight.svg", text: _patientSelected.weight.toString() + " kg", title: "Peso"),
-                                        PatientDetailCard(asset: "assets/bmi.svg", text: _patientSelected.imc!.toStringAsFixed(2), title: "Imc"),
-                                        PatientDetailCard(asset: "assets/age.svg", text: _patientSelected.age.toString(), title: "Edad")
-                                      ],
-                                    ),
+                                  SizedBox(
+                                    height: size.height/50,
+                                  ),
+                                  Wrap(
+                                    spacing: 10,
+                                    runSpacing: 10,
+                                    children: [
+                                      PatientDetailCard(asset: "assets/height.svg", text: (_patientSelected.height! / 100).toString() + " m", title: "Altura"),
+                                      PatientDetailCard(asset: "assets/weight.svg", text: _patientSelected.weight.toString() + " kg", title: "Peso"),
+                                      PatientDetailCard(asset: "assets/bmi.svg", text: _patientSelected.imc!.toStringAsFixed(2), title: "Imc"),
+                                      PatientDetailCard(asset: "assets/age.svg", text: _patientSelected.age.toString(), title: "Edad")
+                                    ],
                                   ),
                                 ],
                               ),
@@ -252,7 +251,6 @@ class DietDayPatientDetailState extends State<DietDayPatientDetail> {
                                   ],
                                   color: Colors.white
                               ),
-                              height: size.height/3.3,
                               width: size.width,
                               child: Column(
                                 children: [
@@ -411,7 +409,6 @@ class DietDayPatientDetailState extends State<DietDayPatientDetail> {
                                   ],
                                   color: Colors.white
                               ),
-                              height: size.height/3.5,
                               width: size.width,
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -426,9 +423,8 @@ class DietDayPatientDetailState extends State<DietDayPatientDetail> {
                                     ],
                                   ),
                                   Container(
-                                      padding: EdgeInsets.only(top: 10),
+                                      padding: EdgeInsets.all(10),
                                       width: size.width,
-                                      height: size.height / 4.5,
                                       child: FutureBuilder<List<WeightData>>(
                                         future: _weightHistory,
                                         builder: (context, snapshot){

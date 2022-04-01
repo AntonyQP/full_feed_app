@@ -121,7 +121,7 @@ class DietDayDetailState extends State<DietDayDetail> {
                 ),
               );
             }),),
-          Container(
+          Provider.of<DietProvider>(context).getDietDayDetailViewModel().getThereAreDiet() ? Container(
             margin: const EdgeInsets.symmetric(horizontal: 15, vertical: 30),
             decoration: BoxDecoration(
                 borderRadius: const BorderRadius.all(Radius.circular(20)),
@@ -146,6 +146,15 @@ class DietDayDetailState extends State<DietDayDetail> {
                       Provider.of<DietProvider>(context).getDietDayDetailViewModel().getMealSelected()),
                 ],
               ),
+          )
+              : SizedBox(
+            height: size2/2,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text("Este dia no existen dietas", style: TextStyle(color: Colors.grey),),
+              ],
+            ),
           ),
           Visibility(
             visible: widget.fromRegister,

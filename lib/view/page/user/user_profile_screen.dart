@@ -174,7 +174,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> with
                           Column(
                             mainAxisAlignment: MainAxisAlignment.start,
                             children: [
-                              const FaIcon(FontAwesomeIcons.personBooth, color: Color(0xFFFFAC33), size: 40,),
+                              const Icon(Icons.accessibility_new_rounded, color: Color(0xFFFFAC33), size: 40,),
                               Text(UserSession().activePatients.toString(),
                                   style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold)
                               ),
@@ -190,7 +190,6 @@ class _UserProfileScreenState extends State<UserProfileScreen> with
               UserSession().rol == "p" ? Container(
                 margin: const EdgeInsets.fromLTRB(10.0, 15.0, 10.0, 0),
                 padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
-                height: size.height/1.8,
                 width: size.width,
                 decoration: BoxDecoration(
                     borderRadius: const BorderRadius.all(Radius.circular(30.0)),

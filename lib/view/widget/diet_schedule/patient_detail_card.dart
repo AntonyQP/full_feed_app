@@ -20,13 +20,12 @@ class PatientDetailCardState extends State<PatientDetailCard> {
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
     return Container(
-      padding: const EdgeInsets.all(7),
+      padding: const EdgeInsets.all(5),
       decoration: const BoxDecoration(
           color: Color(0xFFFFBAB9),
           borderRadius: BorderRadius.all(Radius.circular(18.0))
       ),
       width: size.width/2.7,
-      height: size.height/12,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
