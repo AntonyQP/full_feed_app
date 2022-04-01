@@ -26,7 +26,7 @@ class LoggedInViewModel extends ChangeNotifier{
     return _getMealsReady;
   }
   
-  void setHomePatientMeals() {
+  Future<void> setHomePatientMeals() async{
     int aux = 0;
     _patientsDayMeals = List.filled(_patientsByDoctor.length, []);
     if(_patientsByDoctor.isEmpty){
@@ -34,7 +34,7 @@ class LoggedInViewModel extends ChangeNotifier{
     }
     else{
       for(int i = 0; i < _patientsByDoctor.length; i++){
-        _dietService.getDayMealsByPatient(_patientsByDoctor[i].patientId!).then((patientMealList){
+        await _dietService.getDayMealsByPatient(_patientsByDoctor[i].patientId!).then((patientMealList){
           _patientsDayMeals[_patientsByDoctor.indexOf(_patientsByDoctor[i])] = patientMealList;
           aux++;
           if(aux == _patientsByDoctor.length){
@@ -43,7 +43,6 @@ class LoggedInViewModel extends ChangeNotifier{
         });
       }
     }
-    //notifyListeners();
   }
 
   List<Meal> getDayMeals(){

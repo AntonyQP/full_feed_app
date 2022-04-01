@@ -19,7 +19,8 @@ import '../../widget/user/user_profile_completed_days.dart';
 import '../authentication/authentication_screen.dart';
 
 class UserProfileScreen extends StatefulWidget {
-  const UserProfileScreen({Key? key}) : super(key: key);
+  final Function logOut;
+  const UserProfileScreen({Key? key, required this.logOut}) : super(key: key);
 
   @override
   _UserProfileScreenState createState() => _UserProfileScreenState();
@@ -61,7 +62,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> with
                   child: const AuthenticationScreen()
               )
           );
-          // Provider.of<UserProvider>(context, listen: false).logOut();
+          widget.logOut();
 
         }, noFunction: (){}, options: true,);
       },
@@ -381,8 +382,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> with
                 ),
               ) : Container(
                 margin: const EdgeInsets.fromLTRB(10.0, 15.0, 10.0, 0),
-                padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
-                height: size.height/1.8,
+                padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 50.0),
                 width: size.width,
                 decoration: BoxDecoration(
                     borderRadius: const BorderRadius.all(Radius.circular(30.0)),

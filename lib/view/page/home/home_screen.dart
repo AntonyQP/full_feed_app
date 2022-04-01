@@ -7,6 +7,7 @@ import 'package:full_feed_app/view_model/logged_in_view_model.dart';
 import 'package:full_feed_app/view_model/profile_view_model.dart';
 import 'package:provider/provider.dart';
 
+import '../../../model/entities/user_session.dart';
 import '../chat/chat_screen.dart';
 import '../diet_schedule/diet_calendar_page.dart';
 import '../diet_schedule/doctor_patients_list.dart';
@@ -45,6 +46,11 @@ class _HomeScreenState extends State<HomeScreen> {
       });
     }
     super.initState();
+  }
+
+  logOut(){
+    UserSession().logOut();
+    _chatViewModel.client.disconnectUser();
   }
 
   @override
@@ -121,7 +127,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 25.0, vertical: 30.0),
                           child: ChatScreen(chatViewModel: _chatViewModel,),),
-                        const UserProfileScreen()
+                        UserProfileScreen( logOut: () { logOut(); } )
                       ],
                     ),
                   ),

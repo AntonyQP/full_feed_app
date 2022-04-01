@@ -27,7 +27,7 @@ class DayPlateState extends State<DayPlate> {
 
   @override
   void initState() {
-    if(widget.meal.status != 0){
+    if(widget.meal.status == 1){
       completed = true;
     }
     else{

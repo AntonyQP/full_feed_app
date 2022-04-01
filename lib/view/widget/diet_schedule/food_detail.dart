@@ -201,14 +201,12 @@ class FoodDetailState extends State<FoodDetail> {
           ),
         ),
         AnimatedPositioned(
-            width: Provider.of<DietProvider>(context).getIsAlternativeMealSelected() ? size.width/3.2 : size.width/3.2,
-            height: Provider.of<DietProvider>(context).getIsAlternativeMealSelected() ? 55.0 : 20.0,
             top: 150,
-            left: Provider.of<DietProvider>(context).getIsAlternativeMealSelected() ? 16.0 : -150.0,
+            left: Provider.of<DietProvider>(context).getIsAlternativeMealSelected() ? size.width/35 : -150.0,
             curve: Curves.fastOutSlowIn,
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 ElevatedButton(
                   onPressed: () async {
@@ -221,7 +219,7 @@ class FoodDetailState extends State<FoodDetail> {
                     shape: const CircleBorder(),
                     padding: EdgeInsets.all(size.height/90),
                     primary: primaryColor, // <-- Button color
-                    onPrimary: primaryColor, // <-- Splash color
+                    onPrimary: Colors.white, // <-- Splash color
                   ),
                 ),
                 ElevatedButton(
@@ -235,12 +233,12 @@ class FoodDetailState extends State<FoodDetail> {
                     shape: const CircleBorder(),
                     padding: EdgeInsets.all(size.height/90),
                     primary: Colors.red, // <-- Button color
-                    onPrimary: primaryColor, // <-- Splash color
+                    onPrimary: Colors.white, // <-- Splash color
                   ),
                 ),
               ],
             ),
-            duration: Duration(seconds: 2))
+            duration: const Duration(seconds: 2))
       ],
     );
   }
