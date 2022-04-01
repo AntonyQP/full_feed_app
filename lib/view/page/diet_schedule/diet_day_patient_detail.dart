@@ -108,7 +108,7 @@ class DietDayPatientDetailState extends State<DietDayPatientDetail> {
                     ),
                   ),
                   SizedBox(
-                    height: size.height * 1.2,
+                    height: size.height*1.5,
                     child: PageView(
                       controller: _dietPageController,
                       children: [
@@ -515,7 +515,8 @@ class DietDayPatientDetailState extends State<DietDayPatientDetail> {
                           ],
                         )
                       ],
-                    ),),
+                    ),
+                  ),
                 ],
               );
             },
