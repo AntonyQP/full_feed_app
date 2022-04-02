@@ -167,7 +167,7 @@ class FoodDetailState extends State<FoodDetail> {
                       child: IconButton(
                           onPressed: () {
                             setState(() {
-                              
+
                             });
                             //Provider.of<DietProvider>(context, listen: false).getDietDayDetailViewModel().setAlternativeMealList(Provider.of<DietProvider>(context, listen: false).getAlternativeMealSelected(), widget.meal);
                           },
