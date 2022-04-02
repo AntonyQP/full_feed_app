@@ -117,7 +117,8 @@ class HomePageDoctorState extends State<HomePageDoctor> {
                   );
                 }
                 else{
-                  return Center(
+                  return SizedBox(
+                    height: 250,
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: const [

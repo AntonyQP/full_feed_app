@@ -7,6 +7,7 @@ import 'package:full_feed_app/view_model/profile_view_model.dart';
 import 'package:provider/provider.dart';
 
 import '../../../model/entities/user_session.dart';
+import '../../../util/colors.dart';
 import '../../widget/diet_schedule/day_plate.dart';
 import '../../widget/home/home_achievements_card.dart';
 import '../../widget/home/home_diet_card.dart';
@@ -76,8 +77,22 @@ class _HomePageState extends State<HomePage> {
                         );
                       }
                     }
+                    else{
+                      return SizedBox(
+                        height: 250,
+                        child: Center(
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: const [
+                              Text('No tiene dietas hoy', style: TextStyle(color: Colors.grey)),
+                              Text('Disfrute de su dia con moderacion', style: TextStyle(color: Colors.grey)),
+                            ],
+                          ),
+                        ),
+                      );
+                    }
                   }
-                  return const CircularProgressIndicator();
+                  return const SizedBox( width: 15, height: 15, child:  CircularProgressIndicator( color: primaryColor,));
                 }),
           ),
           const SizedBox(height: 25.0),
