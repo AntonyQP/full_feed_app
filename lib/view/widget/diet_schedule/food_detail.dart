@@ -166,7 +166,10 @@ class FoodDetailState extends State<FoodDetail> {
                       width: size.width/15,
                       child: IconButton(
                           onPressed: () {
-                            Provider.of<DietProvider>(context, listen: false).getDietDayDetailViewModel().setAlternativeMealList(Provider.of<DietProvider>(context, listen: false).getAlternativeMealSelected(), widget.meal);
+                            setState(() {
+                              
+                            });
+                            //Provider.of<DietProvider>(context, listen: false).getDietDayDetailViewModel().setAlternativeMealList(Provider.of<DietProvider>(context, listen: false).getAlternativeMealSelected(), widget.meal);
                           },
                           icon: Icon(CupertinoIcons.refresh_thin, color: const Color(0xFF2D2D2D), size: size.width/25,)
                       ),
