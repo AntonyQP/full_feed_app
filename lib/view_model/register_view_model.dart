@@ -44,6 +44,19 @@ class RegisterViewModel extends ChangeNotifier{
   final Map<dynamic, dynamic> _doctorRegisterDto = DoctorRegisterDto("", "", "", "", "", "", "", "", "", "", "").toJson();
 
 
+  clear(){
+    _meats.clear();
+    _vegetables.clear();
+    _seafood.clear();
+    _tubers.clear();
+    _fruits.clear();
+
+    preferencesFavorite.clear();
+    preferencesAllergy.clear();
+
+    regionList.clear();
+  }
+
   List<Preference> getListPreferenceOf(String value){
     switch(value){
       case "meat":

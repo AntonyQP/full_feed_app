@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:full_feed_app/providers/user_provider.dart';
 import 'package:full_feed_app/view_model/register_view_model.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:provider/provider.dart';
 
-import '../../../util/util.dart';
 import '../authentication/authentication_screen.dart';
 
 
@@ -65,6 +63,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                   ),
                   child: ElevatedButton(
                     onPressed: () async {
+                      Provider.of<RegisterViewModel>(context, listen: false).clear();
                       Navigator.pushReplacement(
                           context,
                           PageTransition(
