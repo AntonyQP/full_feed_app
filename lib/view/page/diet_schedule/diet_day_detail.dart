@@ -60,6 +60,7 @@ class DietDayDetailState extends State<DietDayDetail> {
 
   @override
   void dispose() {
+    Provider.of<DietProvider>(context, listen: false).deselectAlternativeMeal();
     super.dispose();
   }
 
@@ -93,6 +94,7 @@ class DietDayDetailState extends State<DietDayDetail> {
             children: [
               IconButton(
                 onPressed: () {
+                  Provider.of<DietProvider>(context, listen: false).deselectAlternativeMeal();
                   Provider.of<DietProvider>(context, listen: false).firstDayEntry = true; //TODO: CHECK BEST OPTION
                   Navigator.pop(context); },
                 icon: const Icon(CupertinoIcons.back, color: primaryColor,),
