@@ -205,22 +205,20 @@ class UserService{
     return false;
   }
 
-  Future<bool> registerDoctor(DoctorRegisterDto newDoctor) async{
+  Future<bool> registerDoctor(Map<dynamic, dynamic> newDoctor) async{
 
     var api = baseUrl + userEndpoint + doctorRegister;
 
     final dio = Dio();
     Response response;
-    response = await dio.post(api, data: newDoctor.toJson());
+    response = await dio.post(api, data: newDoctor);
     if(response.statusCode == 201){
-      // email = newDoctor.email;
-      // password = newDoctor.password;
       return true;
     }
     return false;
   }
 
-  Future<bool> getAllRegions() async{
+  Future<List<Region>> getAllRegions() async{
 
     var api = baseUrl + regionEndpoint + allRegion;
 
@@ -229,9 +227,10 @@ class UserService{
     response = await dio.get(api);
     if(response.statusCode == 200){
       List aux = response.data['data'].map((e) => Region.fromJson(e)).toList();
+      return aux.cast<Region>();
 
     }
-    return false;
+    return [];
   }
 
   Future<List<Patient>> getPatientsByDoctor() async{

@@ -68,6 +68,7 @@ class _RegisterUserFormState extends State<RegisterUserForm> {
 
   @override
   void initState() {
+    Provider.of<RegisterViewModel>(context, listen: false).determineLocation();
     Provider.of<RegisterViewModel>(context, listen: false).setPreferencesLists();
     super.initState();
   }

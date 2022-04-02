@@ -188,9 +188,15 @@ class DietViewModel extends ChangeNotifier {
     }
   }
 
-  Future<bool> generateNutritionPlan(int patientId, int doctorId) async{
-    _dietService.generateNutritionPlan(patientId, doctorId);
-    return true;
+  Future<void> generateNutritionPlan(int doctorId) async{
+    await _dietService.generateNutritionPlan(UserSession().profileId, doctorId).then((value){
+      _weekMealList = value;
+      _initialDate = DateTime.parse(value[0].day!);
+      getDays();
+      for(int i = 0; i < _daysForDetail.length; i++) {
+        _dietDayViewModels.add(DietDayDetailViewModel(getDayMeals(DateFormat('yyyy-MM-dd').format(_daysForDetail[i]))));
+      }
+    });
   }
 
   Future<void> getWeekDietMeals() async {

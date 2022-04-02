@@ -176,12 +176,12 @@ class _UserLikesScreenState extends State<UserLikesScreen> with
                     SizedBox(height: size.height/20,),
                     FloatingActionButton(
                       onPressed: (){
-                        // bool isValid = _rolFormKey.currentState!.validate();
-                        // if(isValid){
-                        //   _rolFormKey.currentState!.save();
-                        //   widget.goToNextPage();
-                        // }
-                        widget.goToNextPage();
+                        Provider.of<RegisterViewModel>(context, listen: false).registerPreferences().then((value){
+                          if(value){
+                            widget.goToNextPage();
+                          }
+                        });
+
                       },
                       elevation: 1,
                       child: Ink(

@@ -39,30 +39,30 @@ class _BMIScreenState extends State<BMIScreen> with AutomaticKeepAliveClientMixi
   }
 
   showValue(){
-    // timer = Timer.periodic(const Duration(milliseconds: 10), (_) {
-    //   if(_valueSlider < Provider.of<RegisterViewModel>(context, listen: false).getImc()){
-    //     setState(() {
-    //       _valueSlider += 0.1;
-    //       if (_valueSlider >= 30.0) {
-    //         _colorEgg = fatWeightColor;
-    //         _labelEgg = "OBESIDAD";
-    //       }
-    //       if (_valueSlider < 30.0 && _valueSlider >= 25.0) {
-    //         _colorEgg = overWeightColor;
-    //         _labelEgg = "SOBREPESO";
-    //       }
-    //       if (_valueSlider < 24.9 && _valueSlider >= 18.5) {
-    //         _colorEgg = normalWeightColor;
-    //         _labelEgg = "NORMAL";
-    //       }
-    //       if (_valueSlider < 18.5) {
-    //         _colorEgg = lowWeightColor;
-    //         _labelEgg = "BAJO PESO";
-    //       }
-    //       value = _valueSlider.toStringAsFixed(1);
-    //     });
-    //   }
-    // });
+    timer = Timer.periodic(const Duration(milliseconds: 10), (_) {
+      if(_valueSlider < Provider.of<RegisterViewModel>(context, listen: false).getImc()){
+        setState(() {
+          _valueSlider += 0.1;
+          if (_valueSlider >= 30.0) {
+            _colorEgg = fatWeightColor;
+            _labelEgg = "OBESIDAD";
+          }
+          if (_valueSlider < 30.0 && _valueSlider >= 25.0) {
+            _colorEgg = overWeightColor;
+            _labelEgg = "SOBREPESO";
+          }
+          if (_valueSlider < 24.9 && _valueSlider >= 18.5) {
+            _colorEgg = normalWeightColor;
+            _labelEgg = "NORMAL";
+          }
+          if (_valueSlider < 18.5) {
+            _colorEgg = lowWeightColor;
+            _labelEgg = "BAJO PESO";
+          }
+          value = _valueSlider.toStringAsFixed(1);
+        });
+      }
+    });
   }
 
   @override

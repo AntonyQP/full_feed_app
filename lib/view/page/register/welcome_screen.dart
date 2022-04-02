@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:full_feed_app/providers/user_provider.dart';
+import 'package:full_feed_app/view_model/register_view_model.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:provider/provider.dart';
 
@@ -48,7 +49,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
               padding: EdgeInsets.only(top: size.height/80),
               child: SizedBox(
                 width: size.width/2,
-                child: Text(isPatient() ? "A partir de mañana comienza una nueva vida saludable" :
+                child: Text(Provider.of<RegisterViewModel>(context, listen: false).getDesireRol() == 'p' ? "A partir de mañana comienza una nueva vida saludable" :
                 "Los pacientes esperan por tu asesoramiento.", style: const TextStyle(fontSize: 16), textAlign: TextAlign.center,),
               ),
             ),

@@ -2,7 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:full_feed_app/model/entities/preference.dart';
 import 'package:full_feed_app/providers/user_provider.dart';
 import 'package:full_feed_app/util/colors.dart';
+import 'package:full_feed_app/view_model/register_view_model.dart';
 import 'package:provider/provider.dart';
+
+import '../../../model/dtos/preference_register_dto.dart';
 
 
 class FoodItem extends StatefulWidget {
@@ -32,21 +35,20 @@ class _FoodItemState extends State<FoodItem> {
       splashColor: Colors.white,
       onTap: (){
         if(selected) {
-          //   if(widget.type == "FAVORITE"){
-          //     Provider.of<UserProvider>(context, listen: false).registerPresenter.preferencesFavorite.add(PreferenceRegisterDto(widget.preference.preferencesId!, widget.type));
-          //   }
-          //   else{
-          //     Provider.of<UserProvider>(context, listen: false).registerPresenter.preferencesAllergy.add(PreferenceRegisterDto(widget.preference.preferencesId!, widget.type));
-          //   }
-          // }
-          // else{
-          //   if(widget.type == "FAVORITE"){
-          //     Provider.of<UserProvider>(context, listen: false).registerPresenter.preferencesFavorite.removeWhere((element) => element.preferenceId == widget.preference.preferencesId);
-          //   }
-          //   else{
-          //     Provider.of<UserProvider>(context, listen: false).registerPresenter.preferencesAllergy.removeWhere((element) => element.preferenceId == widget.preference.preferencesId);
-          //   }
-          // }
+            if(widget.type == "FAVORITE"){
+              Provider.of<RegisterViewModel>(context, listen: false).preferencesFavorite.add(PreferenceRegisterDto(widget.preference.preferencesId!, widget.type));
+            }
+            else{
+              Provider.of<RegisterViewModel>(context, listen: false).preferencesAllergy.add(PreferenceRegisterDto(widget.preference.preferencesId!, widget.type));
+            }
+          }
+          else{
+            if(widget.type == "FAVORITE"){
+              Provider.of<RegisterViewModel>(context, listen: false).preferencesFavorite.removeWhere((element) => element.preferenceId == widget.preference.preferencesId);
+            }
+            else{
+              Provider.of<RegisterViewModel>(context, listen: false).preferencesAllergy.removeWhere((element) => element.preferenceId == widget.preference.preferencesId);
+            }
         }
         setState(() {
           selected = !selected;

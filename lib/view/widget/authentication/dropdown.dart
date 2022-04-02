@@ -53,7 +53,7 @@ class DropDownState extends State<DropDown> {
                   setState(() {
                     value = newValue.user!.firstName.toString();
                     id = newValue.doctorId!;
-                    //Provider.of<UserProvider>(context, listen: false).registerPresenter.doctorId = newValue.doctorId!;
+                    Provider.of<RegisterViewModel>(context, listen: false).setDoctorId(newValue.doctorId!);
                   });
                 }
                 else{

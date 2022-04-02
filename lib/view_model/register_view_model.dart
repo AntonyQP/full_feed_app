@@ -2,6 +2,7 @@
 import 'dart:math';
 
 import 'package:flutter/cupertino.dart';
+import 'package:full_feed_app/domain/service/diet_service.dart';
 import 'package:full_feed_app/domain/service/preferences_service.dart';
 import 'package:full_feed_app/domain/service/user_service.dart';
 import 'package:full_feed_app/model/dtos/user_login_dto.dart';
@@ -22,6 +23,7 @@ class RegisterViewModel extends ChangeNotifier{
 
   final PreferenceService _preferenceService = PreferenceService();
   final UserService _userService = UserService();
+  final DietService _dietService = DietService();
 
   final List<Preference> _meats = [];
   final List<Preference> _vegetables = [];
@@ -59,12 +61,21 @@ class RegisterViewModel extends ChangeNotifier{
     }
   }
 
+  int getDoctorId(){
+    return _doctorId;
+  }
+
+  setDoctorId(int doctorId){
+    _doctorId = doctorId;
+  }
+
   String getDesireRol(){
     return _desireRol;
   }
 
   setDesireRol(String rol){
     _desireRol = rol;
+    _patientRegisterDto['rol'] = rol;
     notifyListeners();
   }
 
@@ -97,7 +108,7 @@ class RegisterViewModel extends ChangeNotifier{
           _userLoginDto['email'] = newValue;
           break;
         case 'password':
-          _patientRegisterDto['password'] = newValue;
+          _userLoginDto['password'] = newValue;
           break;
       }
     }
@@ -127,7 +138,7 @@ class RegisterViewModel extends ChangeNotifier{
   }
 
   calculateImc(){
-    _imc = _weight/pow(_height, 2);
+    _imc = _weight/pow(_height/100, 2);
     setUserRegisterDto('imc', _imc);
   }
 
@@ -138,13 +149,14 @@ class RegisterViewModel extends ChangeNotifier{
   //Location
 
   determinateRegion(String addressRegion){
+
     String regionToValidate = addressRegion.substring(addressRegion.lastIndexOf(" ") + 1);
     regionToValidate = regionToValidate.toUpperCase();
 
     for(int i = 0; i < regionList.length; i ++){
       if(regionList[i].name == regionToValidate){
         _regionId = regionList[i].regionId!;
-        setUserRegisterDto('regionId', _regionId);
+        _patientRegisterDto['regionId'] = _regionId;
         break;
       }
     }
@@ -154,6 +166,10 @@ class RegisterViewModel extends ChangeNotifier{
     bool serviceEnabled;
     LocationPermission permission;
     Position currentPosition;
+
+    _userService.getAllRegions().then((value){
+      regionList = value;
+    });
 
     serviceEnabled = await Geolocator.isLocationServiceEnabled();
     if (!serviceEnabled) {
@@ -241,6 +257,18 @@ class RegisterViewModel extends ChangeNotifier{
 
   Future<bool> registerAndLogin() async{
     return await _userService.registerAndLogin(_patientRegisterDto, _userLoginDto);
+  }
+
+  Future<bool> registerPreferences() async{
+    return await _userService.registerPreferences(preferencesFavorite);
+  }
+
+  Future<bool> registerAllergies() async{
+    return await _userService.registerPreferences(preferencesAllergy);
+  }
+
+  Future<bool> registerDoctor() async{
+    return await _userService.registerDoctor(_doctorRegisterDto);
   }
 
 }

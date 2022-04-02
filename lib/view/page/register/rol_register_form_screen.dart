@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:full_feed_app/util/colors.dart';
+import 'package:full_feed_app/view/page/register/welcome_screen.dart';
 import 'package:full_feed_app/view_model/register_view_model.dart';
 import 'package:intl/intl.dart';
+import 'package:page_transition/page_transition.dart';
 import 'package:provider/provider.dart';
 
 import '../../widget/authentication/dropdown.dart';
@@ -276,7 +278,24 @@ class RolRegisterFormScreenState extends State<RolRegisterFormScreen> with
             bool isValid = _rolFormKey.currentState!.validate();
             if(isValid){
               _rolFormKey.currentState!.save();
-              widget.goToNextPage();
+              if(Provider.of<RegisterViewModel>(context, listen: false).getDesireRol() == 'p'){
+                widget.goToNextPage();
+              }
+              else{
+                Provider.of<RegisterViewModel>(context, listen: false).registerDoctor().then((value){
+                  if(value){
+                    Navigator.pushReplacement(
+                        context,
+                        PageTransition(
+                            duration: const Duration(milliseconds: 200),
+                            reverseDuration: const Duration(milliseconds: 200),
+                            type: PageTransitionType.leftToRight,
+                            child: const WelcomeScreen()
+                        )
+                    );
+                  }
+                });
+              }
             }
           },
           elevation: 1,

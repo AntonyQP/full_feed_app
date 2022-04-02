@@ -3,7 +3,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:full_feed_app/providers/diet_provider.dart';
 import 'package:full_feed_app/view_model/diet_view_model.dart';
+import 'package:full_feed_app/view_model/register_view_model.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:provider/provider.dart';
 
@@ -41,19 +43,18 @@ class LoadingScreenState extends State<LoadingScreen> with TickerProviderStateMi
   }
 
   generateDiet(){
-    Provider.of<DietViewModel>(context, listen: false).generateNutritionPlan(0, 0).then((value){
-      if(value){
-        controller.stop();
-        Navigator.push(
-            context,
-            PageTransition(
-                duration: const Duration(milliseconds: 200),
-                reverseDuration: const Duration(milliseconds: 200),
-                type: PageTransitionType.rightToLeft,
-                child: const DietDayDetail(fromRegister: true,)
-            )
-        );
-      }
+    Provider.of<DietViewModel>(context, listen: false).generateNutritionPlan(Provider.of<RegisterViewModel>(context, listen: false).getDoctorId()).whenComplete((){
+      Provider.of<DietProvider>(context, listen: false).setDayDetailPresenter(0, context);
+      controller.stop();
+      Navigator.push(
+          context,
+          PageTransition(
+              duration: const Duration(milliseconds: 200),
+              reverseDuration: const Duration(milliseconds: 200),
+              type: PageTransitionType.rightToLeft,
+              child: const DietDayDetail(fromRegister: true,)
+          )
+      );
     });
   }
 
