@@ -41,7 +41,9 @@ class _DietCalendarPageState extends State<DietCalendarPage> {
       barrierColor: Colors.white70,
       context: context,
       builder: (BuildContext context) {
-        return Message(text: isPatient() ? 'En esa semana no tiene dietas' : 'El paciente no tiene dietas esa semana', yesFunction: (){
+        return Message(text: isPatient() ? 'En esa semana no tiene dietas' : 'El paciente no tiene dietas esa semana',
+          advice: '',
+          yesFunction: (){
           Navigator.pop(context);
         }, noFunction: (){}, options: false,);
       },
@@ -53,7 +55,9 @@ class _DietCalendarPageState extends State<DietCalendarPage> {
       barrierColor: Colors.white70,
       context: context,
       builder: (BuildContext context) {
-        return Message(text: '¿Seguro desea continuar con la creación de la nueva dieta? Recuerde que esta acción inhabilitará la dieta anterior.', yesFunction: () async {
+        return Message(text: '¿Seguro desea continuar con la creación de la nueva dieta?',
+          advice: 'Recuerde que esta acción inhabilitará la dieta actual por lo que el paciente de marcar todas sus comidas como cumplidas.',
+          yesFunction: () async {
 
           await Provider.of<PatientViewModel>(context, listen: false).generateNewDiet().whenComplete((){
             Navigator.pop(context);
@@ -94,84 +98,98 @@ class _DietCalendarPageState extends State<DietCalendarPage> {
                 children: [
                   Visibility(
                     visible: !isPatient(),
-                    child: Container(
-                      decoration: const BoxDecoration(
-                          shape: BoxShape.circle,
-                          gradient: LinearGradient(
-                              colors: [primaryColor, Color(0xFFFE7EB4)],
-                              stops: [0.05, 1]
-                          )
-                      ),
-                      child: ElevatedButton(
-                        onPressed: () async {
-                          _showNewDietDialog();
-                        },
-                        child: Icon(CupertinoIcons.add_circled, color: Colors.white, size: size.height/20,),
-                        style: ElevatedButton.styleFrom(
-                          maximumSize: const Size( 200,  200),
-                          elevation: 0,
-                          shape: const CircleBorder(),
-                          padding: const EdgeInsets.all(20),
-                          primary: Colors.transparent, // <-- Button color
-                          onPrimary: Colors.transparent, // <-- Splash color
+                    child: Column(
+                      children: [
+                        Container(
+                          decoration: const BoxDecoration(
+                              shape: BoxShape.circle,
+                              gradient: LinearGradient(
+                                  colors: [primaryColor, secondaryColor],
+                                  stops: [0.05, 1]
+                              )
+                          ),
+                          child: ElevatedButton(
+                            onPressed: () async {
+                              _showNewDietDialog();
+                            },
+                            child: Icon(CupertinoIcons.add_circled, color: Colors.white, size: size.height/20,),
+                            style: ElevatedButton.styleFrom(
+                              maximumSize: const Size( 200,  200),
+                              elevation: 0,
+                              shape: const CircleBorder(),
+                              padding: const EdgeInsets.all(20),
+                              primary: Colors.transparent, // <-- Button color
+                              onPrimary: Colors.transparent, // <-- Splash color
+                            ),
+                          ),
+                        ),
+                        SizedBox(
+                          height: 5,
+                        ),
+                        Text('Actualizar dieta', style: TextStyle(fontSize: 12),)
+                      ],
+                    )
+                  ),
+                  Column(
+                    children: [
+                      Container(
+                        decoration: const BoxDecoration(
+                            shape: BoxShape.circle,
+                            gradient: LinearGradient(
+                                colors: [primaryColor, secondaryColor],
+                                stops: [0.05, 1]
+                            )
+                        ),
+                        child: ElevatedButton(
+                          onPressed: () async {
+                            Provider.of<DietViewModel>(context, listen: false).getDays();
+                            if(isPatient()){
+                              await Provider.of<DietViewModel>(context, listen: false).getWeekDietMeals().whenComplete((){
+                                Provider.of<DietViewModel>(context, listen: false).initWeekMealList().then((response){
+                                  if(response){
+                                    Provider.of<DietProvider>(context, listen: false).setDayDetailPresenter(0, context);
+                                    Navigator.push(context, PageTransition(
+                                        duration: const Duration(milliseconds: 200),
+                                        reverseDuration: const Duration(milliseconds: 200),
+                                        type: PageTransitionType.rightToLeft,
+                                        child: const DietDayDetail(fromRegister: false,)
+                                    ));
+                                  }
+                                  else{
+                                    _showDialog();
+                                  }
+                                });
+                              });
+                            }
+                            else{
+                              await Provider.of<DietViewModel>(context, listen: false).getWeekDietMealsByPatient(Provider.of<PatientViewModel>(context, listen: false).getPatientSelected()).whenComplete((){
+                                Provider.of<DietViewModel>(context, listen: false).initWeekMealList().then((response){
+                                  if(response){
+                                    Provider.of<DietProvider>(context, listen: false).setDayDetailPresenter(0, context);
+                                    Navigator.push(context, MaterialPageRoute(builder: (context) => const DietDayDetail(fromRegister: false,)),);
+                                  }
+                                  else{
+                                    _showDialog();
+                                  }
+                                });
+                              });
+                            }
+                          },
+                          child: Icon(Icons.arrow_forward_ios_rounded, color: Colors.white, size: size.height/20,),
+                          style: ElevatedButton.styleFrom(
+                            maximumSize: const Size( 200,  200),
+                            elevation: 0,
+                            shape: const CircleBorder(),
+                            padding: const EdgeInsets.all(20),
+                            primary: Colors.transparent, // <-- Button color
+                            onPrimary: Colors.transparent, // <-- Splash color
+                          ),
                         ),
                       ),
-                    ),
-                  ),
-                  Container(
-                    decoration: const BoxDecoration(
-                        shape: BoxShape.circle,
-                        gradient: LinearGradient(
-                            colors: [primaryColor, Color(0xFFFE7EB4)],
-                            stops: [0.05, 1]
-                        )
-                    ),
-                    child: ElevatedButton(
-                      onPressed: () async {
-                        Provider.of<DietViewModel>(context, listen: false).getDays();
-                        if(isPatient()){
-                          await Provider.of<DietViewModel>(context, listen: false).getWeekDietMeals().whenComplete((){
-                            Provider.of<DietViewModel>(context, listen: false).initWeekMealList().then((response){
-                              if(response){
-                                Provider.of<DietProvider>(context, listen: false).setDayDetailPresenter(0, context);
-                                Navigator.push(context, PageTransition(
-                                    duration: const Duration(milliseconds: 200),
-                                    reverseDuration: const Duration(milliseconds: 200),
-                                    type: PageTransitionType.rightToLeft,
-                                    child: const DietDayDetail(fromRegister: false,)
-                                ));
-                              }
-                              else{
-                                _showDialog();
-                              }
-                            });
-                          });
-                        }
-                        else{
-                          await Provider.of<DietViewModel>(context, listen: false).getWeekDietMealsByPatient(Provider.of<PatientViewModel>(context, listen: false).getPatientSelected()).whenComplete((){
-                            Provider.of<DietViewModel>(context, listen: false).initWeekMealList().then((response){
-                              if(response){
-                                Provider.of<DietProvider>(context, listen: false).setDayDetailPresenter(0, context);
-                                Navigator.push(context, MaterialPageRoute(builder: (context) => const DietDayDetail(fromRegister: false,)),);
-                              }
-                              else{
-                                _showDialog();
-                              }
-                            });
-                          });
-                        }
-                      },
-                      child: Icon(Icons.arrow_forward_ios_rounded, color: Colors.white, size: size.height/20,),
-                      style: ElevatedButton.styleFrom(
-                        maximumSize: const Size( 200,  200),
-                        elevation: 0,
-                        shape: const CircleBorder(),
-                        padding: const EdgeInsets.all(20),
-                        primary: Colors.transparent, // <-- Button color
-                        onPrimary: Colors.transparent, // <-- Splash color
-                      ),
-                    ),
-                  ),
+                      SizedBox(height: 5),
+                      Text('Revisar dieta', style: TextStyle(fontSize: 12))
+                    ],
+                  )
                 ],
               )
           )

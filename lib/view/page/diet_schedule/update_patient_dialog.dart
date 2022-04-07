@@ -83,7 +83,7 @@ class UpdatePatientDialogState extends State<UpdatePatientDialog> {
                             },
                             decoration: const InputDecoration(
                                 hintStyle: TextStyle(color: Colors.grey),
-                                hintText: 'cm',
+                                hintText: 'm',
                                 border: OutlineInputBorder(
                                     borderSide: BorderSide(
                                       width: 0,

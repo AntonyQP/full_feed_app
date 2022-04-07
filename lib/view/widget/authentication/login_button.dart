@@ -30,7 +30,7 @@ class _LoginButtonState extends State<LoginButton> {
                     end: Alignment.topRight,
                     colors: [
                       primaryColor,
-                      Color(0xffFFC3E9),
+                      secondaryColor,
                     ],
                     stops: [0.40, 1],
                   ),

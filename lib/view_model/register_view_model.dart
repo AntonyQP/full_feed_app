@@ -45,16 +45,30 @@ class RegisterViewModel extends ChangeNotifier{
 
 
   clear(){
-    _meats.clear();
-    _vegetables.clear();
-    _seafood.clear();
-    _tubers.clear();
-    _fruits.clear();
-
-    preferencesFavorite.clear();
-    preferencesAllergy.clear();
-
-    regionList.clear();
+    if(_meats.isNotEmpty){
+      _meats.clear();
+    }
+    if(_vegetables.isNotEmpty){
+      _vegetables.clear();
+    }
+    if(_seafood.isNotEmpty){
+      _seafood.clear();
+    }
+    if(_tubers.isNotEmpty){
+      _tubers.clear();
+    }
+    if(_fruits.isNotEmpty){
+      _fruits.clear();
+    }
+    if(preferencesFavorite.isNotEmpty){
+      preferencesFavorite.clear();
+    }
+    if(preferencesAllergy.isNotEmpty){
+      preferencesAllergy.clear();
+    }
+    if(regionList.isNotEmpty){
+      regionList.clear();
+    }
   }
 
   List<Preference> getListPreferenceOf(String value){
@@ -151,7 +165,7 @@ class RegisterViewModel extends ChangeNotifier{
   }
 
   calculateImc(){
-    _imc = _weight/pow(_height/100, 2);
+    _imc = _weight/pow(_height, 2);
     setUserRegisterDto('imc', _imc);
   }
 
@@ -228,6 +242,7 @@ class RegisterViewModel extends ChangeNotifier{
   //List Preferences
 
   setPreferencesLists(){
+    clear();
     _preferenceService.listAllPreferences().then((preferenceList){
       categorizeLists(preferenceList);
     });

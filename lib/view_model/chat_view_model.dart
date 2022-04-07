@@ -25,26 +25,26 @@ class ChatViewModel{
     return _userChannels;
   }
 
-  Future<void> initUser(int? doctorId, List<Patient> patientsChat) async{
+  Future<void> initUser(String? doctorId, List<Patient> patientsChat) async{
     await client.connectUser(
       User(
-          id: UserSession().userId.toString(),
+          id: UserSession().dni,
           extraData: {
             "name" : UserSession().userFirstName
           }
       ),
-      client.devToken(UserSession().userId.toString()).rawValue,).whenComplete((){
+      client.devToken(UserSession().dni).rawValue,).whenComplete((){
       initChannels(doctorId, patientsChat);
     });
   }
 
-  initChannels(int? doctorId, List<Patient> patientsChat){
+  initChannels(String? doctorId, List<Patient> patientsChat){
     if(isPatient()){
-      _userChannels.add(client.channel('messaging', id: "doctor${doctorId.toString()}patient${UserSession().userId.toString()}"));
+      _userChannels.add(client.channel('messaging', id: "d${doctorId.toString()}p${UserSession().dni}"));
     }
     else{
       for(int i = 0; i < patientsChat.length; i++){
-        _userChannels.add(client.channel('messaging', id: "doctor${UserSession().userId.toString()}patient${patientsChat[i].user!.userId.toString()}"));
+        _userChannels.add(client.channel('messaging', id: "d${UserSession().dni}p${patientsChat[i].user!.dni}"));
       }
     }
     //setLastMessages();

@@ -355,8 +355,8 @@ class UserRegisterFormScreenState extends State<UserRegisterFormScreen> with
                               padding: EdgeInsets.only(bottom: size.height/80),
                               child: InkWell(
                                 child: isHiddenPassword == true
-                                    ? const Icon(Icons.visibility, size: 20, color: Colors.redAccent,)
-                                    : const Icon(Icons.visibility_off, size: 20, color: Colors.redAccent,),
+                                    ? const Icon(Icons.visibility, size: 20, color: primaryColor,)
+                                    : const Icon(Icons.visibility_off, size: 20, color: primaryColor,),
                                 onTap: _togglePassword,
                               ),
                             )),
@@ -391,7 +391,7 @@ class UserRegisterFormScreenState extends State<UserRegisterFormScreen> with
               decoration: const ShapeDecoration(
                   shape: CircleBorder(),
                   gradient: LinearGradient(
-                      colors: [primaryColor, Color(0xFFFF9FC8)],
+                      colors: [primaryColor, secondaryColor],
                       stops: [0.05, 1]
                   )
               ),

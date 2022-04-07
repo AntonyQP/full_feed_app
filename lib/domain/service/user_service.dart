@@ -41,7 +41,7 @@ class UserService{
       UserSession().create(response.data["data"]["profile"]["user"]["userId"], response.data["data"]["profile"]["user"]["username"],
           response.data["data"]["profile"]["user"]["firstName"], response.data["data"]["profile"]["user"]["lastName"],
           response.headers.value("Token")!, response.data["data"]["profile"]["user"]["rol"], int.parse(response.headers.value("Firstdayofweek")!),
-          response.headers.value("Date")!);
+          response.headers.value("Date")!, response.data["data"]["profile"]["user"]["dni"]);
       if(UserSession().rol == "p"){
         UserSession().setProfileId(response.data["data"]["profile"]["patientId"]);
       }

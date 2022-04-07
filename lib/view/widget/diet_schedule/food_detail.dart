@@ -34,12 +34,14 @@ class FoodDetailState extends State<FoodDetail> {
       barrierColor: Colors.white70,
       context: context,
       builder: (BuildContext context) {
-        return Message(text: '¿Desea continuar con el cambio de dieta?', yesFunction: (){
+        return Message(text: '¿Desea continuar con el cambio de dieta?',
+          advice: '',
+          yesFunction: (){
           Provider.of<DietProvider>(context, listen: false).getDietDayDetailViewModel().prepareNewMeal();
           Provider.of<DietProvider>(context, listen: false).replaceMeal().whenComplete((){
             Navigator.pop(context);
           });
-        }, noFunction: (){}, options: true,);
+        }, noFunction: (){ Navigator.pop(context); }, options: true,);
       },
     );
   }
@@ -55,11 +57,15 @@ class FoodDetailState extends State<FoodDetail> {
     return Stack(
       children: [
         Container(
-          margin: const EdgeInsets.all(5),
+
           padding: EdgeInsets.symmetric(horizontal: size.width/20, vertical: size.height/90),
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(20.0),
-            color: foodDetailColor,
+          decoration: const BoxDecoration(
+            borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(70.0),
+              bottomLeft: Radius.circular(25.0),
+              bottomRight: Radius.circular(25.0),
+            ),
+            color: primaryColor,
           ),
           width: size.width,
           child: Column(
@@ -71,14 +77,11 @@ class FoodDetailState extends State<FoodDetail> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
-                    ClipRRect(
-                        borderRadius: BorderRadius.circular(15.0),
-                        child: Align(
-                          alignment: Alignment.center,
-                          heightFactor: size.width/500,
-                          widthFactor: size.width/500,
-                          child: Image.network("https://blogladiadoresfit.com/wp-content/uploads/2021/02/avena-fitness.jpg", height: size.width/3,),
-                        )
+                    const CircleAvatar(
+                      backgroundImage: NetworkImage(
+                        "https://blogladiadoresfit.com/wp-content/uploads/2021/02/avena-fitness.jpg"
+                      ),
+                      radius: 50,
                     ),
                     Padding(
                       padding: EdgeInsets.only(left: size.width/40),
@@ -150,9 +153,9 @@ class FoodDetailState extends State<FoodDetail> {
                         ))
                   ],
                   primaryXAxis: CategoryAxis(
-                    borderColor: Color(0xFFFFCC7E),
+                    borderColor: primaryColor,
                     borderWidth: 2,
-                    labelStyle: TextStyle(color: Color(0xFF2D2D2D)),
+                    labelStyle: const TextStyle(color: Colors.white),
                     majorGridLines: MajorGridLines(width: 0),
                   ),
                   primaryYAxis: NumericAxis(

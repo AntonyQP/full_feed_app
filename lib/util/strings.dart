@@ -2,7 +2,9 @@ const String breakfastImg = 'assets/breakfast.png';
 
 const String lunchImg = 'assets/steak.png';
 
-const String dinnerImg = 'assets/sandwich.png';
+const String breakImg = 'assets/sandwich.png';
+
+const String dinnerImg = 'assets/fish.png';
 
 const String logoImagePath = 'assets/fullfeedcolorsolo.png';
 

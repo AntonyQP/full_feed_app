@@ -101,8 +101,8 @@ class DoctorPatientState extends State<DoctorPatient> with
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(widget.patient.user!.firstName.toString(), style: TextStyle(color: Colors.black, fontWeight: FontWeight.w500, fontSize: size.width/25),),
-                    Text('Altura: ' + widget.patient.height.toString() + " m", style: TextStyle(color: Colors.grey, fontSize: size.width/35),),
-                    Text('Altura: ' + widget.patient.weight.toString() + " kg", style: TextStyle(color: Colors.grey, fontSize: size.width/35),),
+                    Text('Altura: ' + (widget.patient.height! / 100).toStringAsFixed(2) + " m", style: TextStyle(color: Colors.grey, fontSize: size.width/35),),
+                    Text('Peso: ' + widget.patient.weight!.toStringAsFixed(2) + " kg", style: TextStyle(color: Colors.grey, fontSize: size.width/35),),
                   ],
                 ),
               ),

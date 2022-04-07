@@ -16,6 +16,15 @@ class LoggedInViewModel extends ChangeNotifier{
   final DietService _dietService = DietService();
   final UserService _userService = UserService();
 
+  clean(){
+    if(_dayMeals.isNotEmpty){
+      _dayMeals.clear();
+    }
+    if(_patientsByDoctor.isNotEmpty){
+      _patientsByDoctor.clear();
+    }
+  }
+
   Future<bool> setHomeDietDayMeals() async {
     await _dietService.getDayMeals().then((dayMealList){
       _dayMeals = dayMealList;

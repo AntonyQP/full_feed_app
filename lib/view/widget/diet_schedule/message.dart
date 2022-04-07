@@ -6,10 +6,11 @@ import 'package:full_feed_app/util/colors.dart';
 class Message extends StatefulWidget {
 
   final String text;
+  final String advice;
   final Function yesFunction;
   final Function noFunction;
   final bool options;
-  const Message({Key? key, required this.text, required this.yesFunction, required this.noFunction, required this.options}) : super(key: key);
+  const Message({Key? key, required this.text, required this.advice, required this.yesFunction, required this.noFunction, required this.options}) : super(key: key);
 
   @override
   MessageState createState() => MessageState();
@@ -29,7 +30,7 @@ class MessageState extends State<Message> {
     return Material(
       color: const Color.fromRGBO(255, 255, 255, 0.8),
       child: Padding(padding: EdgeInsets.symmetric(
-          vertical: size.height/4, horizontal: size.width/20),
+          vertical: size.height/3.5, horizontal: size.width/20),
         child: SizedBox(
           width: 20,
           height: 20,
@@ -37,8 +38,15 @@ class MessageState extends State<Message> {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               SizedBox(
-                width: size.width/2,
+                width: size.width/1.5,
                 child: Text(widget.text, style: TextStyle(fontSize: 18), textAlign: TextAlign.center,),
+              ),
+              SizedBox(
+                height: 10,
+              ),
+              SizedBox(
+                width: size.width/ 1.5,
+                child: Text(widget.advice, style: TextStyle(fontSize: 12), textAlign: TextAlign.center,),
               ),
               Padding(
                 padding: EdgeInsets.symmetric(horizontal: size.width/8, vertical: size.height/30),

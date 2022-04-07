@@ -51,7 +51,9 @@ class _UserProfileScreenState extends State<UserProfileScreen> with
       context: context,
       builder: (BuildContext context) {
 
-        return Message(text: '¿Seguro desea cerrar sesión?', yesFunction: (){
+        return Message(text: '¿Seguro desea cerrar sesión?',
+          advice: '',
+          yesFunction: (){
           Navigator.pop(context);
           Navigator.pushReplacement(
               context,
@@ -64,7 +66,9 @@ class _UserProfileScreenState extends State<UserProfileScreen> with
           );
           widget.logOut();
 
-        }, noFunction: (){}, options: true,);
+        }, noFunction: (){
+          Navigator.pop(context);
+        }, options: true,);
       },
     );
   }
@@ -442,7 +446,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> with
                           decoration: const BoxDecoration(
                               shape: BoxShape.circle,
                               gradient: LinearGradient(
-                                  colors: [primaryColor, Color(0xFFFE7EB4)],
+                                  colors: [primaryColor, secondaryColor],
                                   stops: [0.05, 1]
                               )
                           ),

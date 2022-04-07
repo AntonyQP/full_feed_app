@@ -81,7 +81,8 @@ class HomePageDoctorState extends State<HomePageDoctor> {
                           ],
                       ),),
                       Wrap(
-                      children: List.generate(3, (index){
+                      children: List.generate(Provider.of<LoggedInViewModel>(context, listen: false).getPatientsByDoctor().length < 3 ?
+                      Provider.of<LoggedInViewModel>(context, listen: false).getPatientsByDoctor().length : 3, (index){
 
                       Patient _patient = Provider.of<LoggedInViewModel>(context, listen: false).getPatientsByDoctor()[index];
                       List<Meal> _patientMeals = Provider.of<LoggedInViewModel>(context, listen: false).getPatientDayMeals()[index];

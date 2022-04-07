@@ -34,33 +34,41 @@ class _HomeDietCardState extends State<HomeDietCard> {
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
     return Container(
+      padding: const EdgeInsets.only(bottom: 20),
       width: size.width,
       decoration: BoxDecoration(
-          borderRadius: const BorderRadius.all(Radius.circular(20.0)),
-          color: Colors.white,
+          borderRadius: const BorderRadius.all(Radius.circular(25.0)),
+          gradient: RadialGradient(
+            colors: [
+              cardColor,
+              Colors.white.withOpacity(0.6),
+            ],
+            stops: [0.50, 1.0],
+          ),
           boxShadow: [
             BoxShadow(
-              color: Colors.grey.withOpacity(0.2),
-              spreadRadius: 2,
-              blurRadius: 4,
-              offset: const Offset(0, 2),
+              color: Colors.black.withOpacity(0.1),
+              spreadRadius: 1,
+              blurRadius: 15,
+              offset: const Offset(5, 5),
+            ),
+            BoxShadow(
+              color: Colors.white.withOpacity(0.5),
+              spreadRadius: 1,
+              blurRadius: 12,
+              offset: const Offset(-5, -5),
             )
-          ]
+          ],
       ),
       child: Column(
         children: [
           Container(
-            padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 5.0),
-            decoration: const BoxDecoration(
-                borderRadius: BorderRadius.only(topLeft: Radius.circular(20.0),
-                    topRight: Radius.circular(20.0)),
-                color: containerUpperColor),
+            padding: EdgeInsets.all(20),
             child: Row(
               children: [
-                const Text('Semana '),
-                Text(getCurrentWeek().toString(), style: const TextStyle(fontSize: 15)),
-                const Spacer(),
-                Padding(padding: EdgeInsets.only(right: size.width/50), child: Text(getCurrentDay(DateFormat('EEEE').format(DateTime.now())), style: const TextStyle(fontSize: 16)),),
+                Padding(
+                  padding: EdgeInsets.only(right: size.width * 0.01),
+                  child: Text(getCurrentDay(DateFormat('EEEE').format(DateTime.now())), style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),),
                 Stack(
                   alignment: Alignment.center,
                   children: [

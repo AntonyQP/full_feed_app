@@ -18,11 +18,16 @@ class _HomeAchievementsCardState extends State<HomeAchievementsCard> {
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
     return Container(
-      width: size.width / 2.7,
-      height: size.height / 3.5,
+      width: size.width * 0.4,
+      height: size.height * 0.35,
       decoration: const BoxDecoration(
-        borderRadius: const BorderRadius.all(Radius.circular(20.0)),
-        color: achievementsCardColor,
+        borderRadius: BorderRadius.only(topLeft: Radius.circular(15.0), topRight: Radius.circular(60.0),),
+        gradient: LinearGradient(
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+          colors: [achievementsCardPrimaryColor, achievementsCardSecondaryColor],
+          stops: [0.2, 1]
+        )
       ),
       child: Column(
         children: [

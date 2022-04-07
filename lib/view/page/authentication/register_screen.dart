@@ -90,7 +90,9 @@ class _RegisterUserFormState extends State<RegisterUserForm> {
               title: 'Selecciona un rol',
               child: UserRoleScreen( goToNextPage: () { switchPage(GoToPage.userInfo); } ),
               fabOnPressed: (){ switchPage(GoToPage.userInfo); },
-              arrowBackOnPressed: () { Navigator.of(context, rootNavigator: true).pop(); }
+              arrowBackOnPressed: () {
+                Provider.of<RegisterViewModel>(context, listen: false).clear();
+                Navigator.of(context, rootNavigator: true).pop(); }
           ),
           RegisterStepBody(
               title: 'Datos personales',

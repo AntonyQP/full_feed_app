@@ -225,8 +225,8 @@ class DietDayPatientDetailState extends State<DietDayPatientDetail> {
                                     spacing: 10,
                                     runSpacing: 10,
                                     children: [
-                                      PatientDetailCard(asset: "assets/height.svg", text: (_patientSelected.height! / 100).toString() + " m", title: "Altura"),
-                                      PatientDetailCard(asset: "assets/weight.svg", text: _patientSelected.weight.toString() + " kg", title: "Peso"),
+                                      PatientDetailCard(asset: "assets/height.svg", text: (_patientSelected.height! / 100).toStringAsFixed(2) + " m", title: "Altura"),
+                                      PatientDetailCard(asset: "assets/weight.svg", text: _patientSelected.weight!.toStringAsFixed(2) + " kg", title: "Peso"),
                                       PatientDetailCard(asset: "assets/bmi.svg", text: _patientSelected.imc!.toStringAsFixed(2), title: "Imc"),
                                       PatientDetailCard(asset: "assets/age.svg", text: _patientSelected.age.toString(), title: "Edad")
                                     ],

@@ -43,7 +43,9 @@ class DietDayDetailState extends State<DietDayDetail> {
       barrierColor: Colors.white70,
       context: context,
       builder: (BuildContext context) {
-        return Message(text: '¿Desea continuar con este plan dietético?', yesFunction: (){
+        return Message(text: '¿Desea continuar con este plan dietético?',
+          advice: '',
+          yesFunction: (){
           Navigator.pushReplacement(
               context,
               PageTransition(
@@ -53,7 +55,7 @@ class DietDayDetailState extends State<DietDayDetail> {
                   child: const WelcomeScreen()
               )
           );
-        }, noFunction: (){}, options: true,);
+        }, noFunction: (){ Navigator.pop(context); }, options: true,);
       },
     );
   }
@@ -76,20 +78,9 @@ class DietDayDetailState extends State<DietDayDetail> {
     var size = MediaQuery.of(context).size.width;
     var size2 = MediaQuery.of(context).size.height;
     return Scaffold(
+      backgroundColor: const Color(0xFFE5E5E5),
       body: ListView(
         children: [
-          Padding(
-            padding: const EdgeInsets.only(left: 25.0),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                Image.asset(logoImagePath, width: 40,
-                    height: 40, fit: BoxFit.contain),
-                Image.asset(logoTextPath, width: 70,
-                    height: 70, fit: BoxFit.contain)
-              ],
-            ),
-          ),
           Row(
             children: [
               IconButton(
@@ -123,19 +114,32 @@ class DietDayDetailState extends State<DietDayDetail> {
                 ),
               );
             }),),
-          Provider.of<DietProvider>(context).getDietDayDetailViewModel().getThereAreDiet() ? Container(
+          Provider.of<DietProvider>(context).getDietDayDetailViewModel().getThereAreDiet() ?
+          Container(
             margin: const EdgeInsets.symmetric(horizontal: 15, vertical: 30),
             decoration: BoxDecoration(
-                borderRadius: const BorderRadius.all(Radius.circular(20)),
+                borderRadius: const BorderRadius.all(Radius.circular(30)),
+                gradient: RadialGradient(
+                  colors: [
+                    cardColor,
+                    Colors.white.withOpacity(0.6),
+                  ],
+                  stops: [0.5, 1.0],
+                ),
                 boxShadow: [
                   BoxShadow(
-                    color: Colors.grey.withOpacity(0.1),
-                    spreadRadius: 4,
-                    blurRadius: 2,
-                    offset: const Offset(0, 5), // changes position of shadow
+                    color: Colors.black.withOpacity(0.1),
+                    spreadRadius: 1,
+                    blurRadius: 15,
+                    offset: const Offset(5, 5),
                   ),
+                  BoxShadow(
+                    color: Colors.white.withOpacity(0.005),
+                    spreadRadius: 1,
+                    blurRadius: 12,
+                    offset: const Offset(-5, -5),
+                  )
                 ],
-                color: Colors.white
             ),
             width: size,
             child: Column(
@@ -166,7 +170,7 @@ class DietDayDetailState extends State<DietDayDetail> {
                   decoration: const BoxDecoration(
                       shape: BoxShape.circle,
                       gradient: LinearGradient(
-                          colors: [Color(0xFFFF295D), Color(0xFFFE7EB4)],
+                          colors: [primaryColor, secondaryColor],
                           stops: [0.05, 1]
                       )
                   ),

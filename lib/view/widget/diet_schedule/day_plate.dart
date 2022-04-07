@@ -31,6 +31,24 @@ class DayPlateState extends State<DayPlate> {
     super.initState();
   }
 
+
+  String foodIcon(String menu){
+    switch(menu){
+      case "DESAYUNO":
+        return breakfastImg;
+      case "MERIENDA_DIA":
+        return breakImg;
+      case "ALMUERZO":
+        return lunchImg;
+      case "MERIENDA_TARDE":
+        return breakImg;
+      case "CENA":
+        return dinnerImg;
+      default:
+        return breakfastImg;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size.width;
@@ -44,7 +62,7 @@ class DayPlateState extends State<DayPlate> {
           padding: EdgeInsets.symmetric(vertical: size2/90),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(15),
-            color: widget.selected ? selectedColor : Colors.white,
+            color: widget.selected ? primaryColor : Colors.transparent,
           ),
           width: size/2.5,
           child: Stack(
@@ -59,8 +77,10 @@ class DayPlateState extends State<DayPlate> {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Text(setFoodDayName(widget.meal.schedule.toString()), style: TextStyle(fontSize: size/40, fontWeight: FontWeight.w600),),
-                          Image.asset(breakfastImg, width: 30,
+                          Text(setFoodDayName(widget.meal.schedule.toString()),
+                            style: TextStyle(fontSize: size/40, fontWeight: FontWeight.bold,
+                                color: widget.selected ? Colors.white : Colors.black),),
+                          Image.asset(foodIcon(widget.meal.schedule.toString()), width: 30,
                               height: 20, fit: BoxFit.contain),
                         ],
                       ),
@@ -70,7 +90,9 @@ class DayPlateState extends State<DayPlate> {
                           width: size/4,
                           child: Text(
                             widget.meal.name.toString(),
-                            style: TextStyle(fontSize: size/35, fontWeight: FontWeight.w200, overflow: TextOverflow.ellipsis),),
+                            style: TextStyle(fontSize: size/35, fontWeight:
+                            FontWeight.w200, overflow: TextOverflow.ellipsis,
+                            color: widget.selected ? Colors.white : Colors.black),),
                         ),)
                     ],
                   ),
@@ -86,9 +108,9 @@ class DayPlateState extends State<DayPlate> {
                 alignment: Alignment.centerRight,
                 child: Checkbox(
                     value: widget.meal.status == 1,
-                    checkColor: selectedColor,
-                    fillColor: MaterialStateProperty.all( primaryColor),
-                    activeColor: primaryColor,
+                    checkColor: widget.selected ? primaryColor : Colors.white,
+                    fillColor: MaterialStateProperty.all( widget.selected ? Colors.white : primaryColor,),
+                    activeColor: widget.selected ? Colors.white : selectedColor,
                     shape: const CircleBorder(),
                     onChanged: (value){
                       if(isPatient()){

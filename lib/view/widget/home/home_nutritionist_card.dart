@@ -20,50 +20,34 @@ class _HomeNutritionistCardState extends State<HomeNutritionistCard> {
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
     return Container(
-      width: size.width / 2.2,
-      height: size.height / 4.5,
+      width: size.width * 0.4,
+      height: size.height * 0.35,
       decoration: const BoxDecoration(
-        borderRadius: BorderRadius.all(Radius.circular(20.0)),
-        color: Color(0xFFDFE7FC),
+        borderRadius: BorderRadius.only(topLeft: Radius.circular(60.0), topRight: Radius.circular(15.0),),
+        gradient: LinearGradient(
+           begin: Alignment.topLeft,
+           end: Alignment.bottomRight,
+           colors: [chatCardPrimaryColor, chatCardSecondaryColor],
+           stops: [0.4, 1]
+        )
       ),
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           const Padding(
-            padding: EdgeInsets.fromLTRB(13, 18, 0, 0),
+            padding: EdgeInsets.fromLTRB(13, 18, 13, 0),
             child: Align(
-                alignment: Alignment.topLeft,
-                child: Text('Nutricionista', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold))),
+                alignment: Alignment.topRight,
+                child: Text('Nutricionista', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.white))),
           ),
           const SizedBox(height: 10.0),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Padding(padding: EdgeInsets.only(left: size.width/30),
-              child: Container(
-                width: 55,
-                height: 55,
-                decoration: BoxDecoration(
-                  borderRadius: const BorderRadius.all(Radius.circular(10.0)),
-                  border: Border.all(
-                    color: Color(0xFFDFE7FC),
-                    width: 2,
-                  ),
-                  color: Colors.white,
-                ),
-                //TODO: necesita lógica si el experto tiene o no una foto, se requiere condicional de poner un ícono de usuario o imagen
-                child: const Icon(Icons.account_circle, size: 30, color: Colors.grey,),
-              ),),
-              Padding(padding: EdgeInsets.only(left: size.width/60),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const Text('Doctor', style: TextStyle(fontSize: 12)),
-                  Text(Provider.of<LoggedInViewModel>(context, listen: false).getDoctorByPatient().user!.firstName.toString(), style: const TextStyle(fontSize: 12),)
-                ],
-              ),)
-            ],
-          ),
+          CircleAvatar(
+            radius: size.width * 0.1,
+            backgroundImage: AssetImage('assets/breakfast_back.png')
+            ),
+          const SizedBox(height: 10.0),
+          Text(Provider.of<LoggedInViewModel>(context, listen: false).getDoctorByPatient().user!.firstName.toString(),
+            style: const TextStyle(fontSize: 14, color: Colors.white),),
           const SizedBox(height: 10.0),
           Padding(
             padding: EdgeInsets.fromLTRB(13, 0, 0, 0),
@@ -71,8 +55,9 @@ class _HomeNutritionistCardState extends State<HomeNutritionistCard> {
                 alignment: Alignment.topLeft,
                 child: Row(
                   children: const [
-                    Icon(CupertinoIcons.chat_bubble_2_fill, size: 12,),
-                    Text('  Último mensaje', style: TextStyle(fontSize: 11),)
+                    Text('  Último mensaje', style: TextStyle(fontSize: 11, color: Colors.white),),
+                    SizedBox(width: 5,),
+                    Icon(CupertinoIcons.chat_bubble_2_fill, size: 12, color: Colors.white,),
                   ],
                 )
             ),
@@ -84,7 +69,6 @@ class _HomeNutritionistCardState extends State<HomeNutritionistCard> {
             children: [
               Container(
                 width: size.width,
-                height: 25.0,
                 margin: const EdgeInsets.symmetric(horizontal: 15.0),
                 decoration: const BoxDecoration(
                     borderRadius: BorderRadius.all(Radius.circular(25.5)),
@@ -103,9 +87,11 @@ class _HomeNutritionistCardState extends State<HomeNutritionistCard> {
                     child: Text(DateFormat('EEEE HH:mm').format(Provider.of<ChatViewModel>(context, listen: false).getLastMessages()[0].createdAt), style: const TextStyle(color: chatMessageTime, fontSize: 10))),
               )
             ],
-          ) : const Align(
+          ) : Align(
             alignment: Alignment.center,
-            child: Text('No tiene mensajes pendientes', style: TextStyle(fontSize: 10, color: Colors.grey),),)
+            child: SizedBox(
+                width: size.width * 0.3,
+                child: Text('No tiene mensajes pendientes', style: TextStyle(fontSize: 10, color: Colors.white), textAlign: TextAlign.center,)),)
         ],
       ),
     );

@@ -6,7 +6,7 @@ import 'package:provider/provider.dart';
 import '../../../util/colors.dart';
 
 class UserRoleScreen extends StatefulWidget {
-  final VoidCallback goToNextPage;
+  final Function goToNextPage;
   const UserRoleScreen({Key? key, required this.goToNextPage}) : super(key: key);
 
   @override
@@ -15,6 +15,8 @@ class UserRoleScreen extends StatefulWidget {
 
 class _UserRoleScreenState extends State<UserRoleScreen> with
     AutomaticKeepAliveClientMixin{
+
+  bool notValidated = false;
 
   @override
   bool get wantKeepAlive => true;
@@ -35,74 +37,115 @@ class _UserRoleScreenState extends State<UserRoleScreen> with
               //TODO: Change Text
               const SizedBox(
                 height: 50,),
-              ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  fixedSize: Size(
-                    MediaQuery.of(context).size.width * 0.8,
-                    MediaQuery.of(context).size.height * 0.20,
+              InkWell(
+                onTap: () {Provider.of<RegisterViewModel>(context, listen: false).setDesireRol("p");},
+                child: Container(
+                  padding: EdgeInsets.all(10),
+                  width: size.width * 0.8,
+                  height: size.height * 0.20,
+                  decoration: BoxDecoration(
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black.withOpacity(0.08),
+                        offset: const Offset(2, 3),
+                        blurRadius: 1,
+                        spreadRadius: 2
+                      )
+                    ],
+                      gradient: Provider.of<RegisterViewModel>(context).getDesireRol() == "p" ?
+                      const LinearGradient(
+                          begin: Alignment.bottomLeft,
+                          end: Alignment.topRight,
+                          colors: [primaryColor, secondaryColor],
+                          stops: [0.3, 1]
+                      ) :
+                      const LinearGradient(
+                          begin: Alignment.bottomLeft,
+                          end: Alignment.topRight,
+                          colors: [Color(0xFFF6F6F6), Colors.white],
+                          stops: [0.3, 1]
+                      ),
+                      borderRadius: BorderRadius.circular(30.0),
                   ),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(30.0),
-                    side: const BorderSide(
-                      color: primaryColor,
-                      width: 3.0,
-                    ),
+                  child: Align(
+                    alignment: Alignment.bottomRight,
+                    child: Padding(
+                        padding: const EdgeInsets.only(right: 10, bottom: 20),
+                        child: Text('Paciente', style: GoogleFonts.raleway(
+                              color: Provider.of<RegisterViewModel>(context).getDesireRol() == "p" ? Colors.white : primaryColor,
+                              fontSize: 20, fontWeight: FontWeight.bold),
+                        )),
                   ),
-                  textStyle: const TextStyle(fontSize: 15),
-                  primary: Provider.of<RegisterViewModel>(context).getDesireRol() == "p" ? primaryColor : Colors.white,
-                  onPrimary: Colors.redAccent
-                ),
-                onPressed: () {
-                  Provider.of<RegisterViewModel>(context, listen: false).setDesireRol("p");
-                },
-                child: Align(
-                  alignment: Alignment.bottomRight,
-                  child: Padding(
-                      padding: const EdgeInsets.only(right: 10, bottom: 20),
-                      child: Text('Paciente', style: GoogleFonts.raleway(
-                            color: Provider.of<RegisterViewModel>(context).getDesireRol() == "p" ? Colors.white : primaryColor,
-                            fontSize: 20, fontWeight: FontWeight.bold),
-                      )),
                 ),
               ),
               const SizedBox(height: 50),
-              ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  fixedSize: Size(
-                    MediaQuery.of(context).size.width * 0.8,
-                    MediaQuery.of(context).size.height * 0.20,
-                  ),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(30.0),
-                    side: const BorderSide(
-                      color: primaryColor,
-                      width: 3.0,
+              InkWell(
+                onTap: () {Provider.of<RegisterViewModel>(context, listen: false).setDesireRol("d");},
+                child: Container(
+                  padding: EdgeInsets.all(10),
+                  width: size.width * 0.8,
+                  height: size.height * 0.20,
+                  decoration: BoxDecoration(
+                    boxShadow: [
+                      BoxShadow(
+                          color: Colors.black.withOpacity(0.08),
+                          offset: const Offset(2, 3),
+                          blurRadius: 1,
+                          spreadRadius: 2
+                      )
+                    ],
+                    gradient: Provider.of<RegisterViewModel>(context).getDesireRol() == "d" ?
+                    const LinearGradient(
+                        begin: Alignment.bottomLeft,
+                        end: Alignment.topRight,
+                        colors: [primaryColor, secondaryColor],
+                        stops: [0.3, 1]
+                    ) :
+                    const LinearGradient(
+                        begin: Alignment.bottomLeft,
+                        end: Alignment.topRight,
+                        colors: [Color(0xFFF6F6F6), Colors.white],
+                        stops: [0.3, 1]
                     ),
+                    borderRadius: BorderRadius.circular(30.0),
                   ),
-                  textStyle: const TextStyle(fontSize: 15),
-                  primary: Provider.of<RegisterViewModel>(context).getDesireRol() == "d" ? primaryColor : Colors.white,
-                  onPrimary: Colors.redAccent
-                ),
-                onPressed: () {
-                  Provider.of<RegisterViewModel>(context, listen: false).setDesireRol("d");
-                },
-                child: Align(
-                  alignment: Alignment.bottomRight,
-                  child: Padding(
-                      padding: const EdgeInsets.only(right: 10, bottom: 20),
-                      child: Text('Nutricionista', style: GoogleFonts.raleway(
+                  child: Align(
+                    alignment: Alignment.bottomRight,
+                    child: Padding(
+                        padding: const EdgeInsets.only(right: 10, bottom: 20),
+                        child: Text('Nutricionista', style: GoogleFonts.raleway(
                             color: Provider.of<RegisterViewModel>(context).getDesireRol() == "d" ? Colors.white : primaryColor,
                             fontSize: 20, fontWeight: FontWeight.bold),
-                      )),
+                        )),
+                  ),
                 ),
               ),
+              const SizedBox(
+                height: 50,
+              ),
+              Visibility(
+                visible: notValidated,
+                child: const Text('*Debe selecionar un rol para continuar.', style: TextStyle(fontSize: 14, color: Colors.red),),
+              )
             ],
           ),
         ),
         Positioned(
           bottom: 50,
           child: FloatingActionButton(
-            onPressed: widget.goToNextPage,
+            onPressed: (){
+              if(Provider.of<RegisterViewModel>(context,listen: false).getDesireRol() != ""){
+                setState(() {
+                  notValidated = false;
+                });
+                widget.goToNextPage();
+              }
+              else{
+                setState(() {
+                  notValidated = true;
+                });
+              }
+            },
             elevation: 1,
             child: Ink(
               width: 200,
@@ -110,7 +153,7 @@ class _UserRoleScreenState extends State<UserRoleScreen> with
               decoration: const ShapeDecoration(
                   shape: CircleBorder(),
                   gradient: LinearGradient(
-                      colors: [primaryColor, Color(0xFFFF9FC8)],
+                      colors: [primaryColor, secondaryColor],
                       stops: [0.05, 1]
                   )
               ),

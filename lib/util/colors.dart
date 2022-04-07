@@ -1,8 +1,12 @@
 import 'package:flutter/cupertino.dart';
 
-const Color primaryColor = Color(0xFFFF5956);
+const Color primaryColor = Color(0xFF38EB95);
 
-const Color proteinItemColor = Color(0xFFFEF1C5);
+const Color secondaryColor = Color(0xFF4CDFCB);
+
+const Color cardColor = Color(0xFFEFEFEF);
+
+const Color proteinItemColor = Color(0xFFFFF281);
 
 const Color meatItemColor = Color(0xFFFED3C5);
 
@@ -28,16 +32,21 @@ const Color foodShimmerColor = Color(0xFFFCC670);
 
 const Color foodDetailHighLightColor = Color(0xFFFDCC91);
 
+const Color achievementsCardPrimaryColor = Color(0xFFFFF281);
 
-const Color bottomNavigationBarColor = Color(0xFFFF295D);
+const Color achievementsCardSecondaryColor = Color(0xFFFFFCDE);
 
-const Color itemSelectedColor = Color(0xFFB02E2C);
+const Color chatCardPrimaryColor = Color(0xFF7FA1FA);
+
+const Color chatCardSecondaryColor = Color(0xFFB3C8FD);
+
+const Color itemSelectedColor = Color(0xFF34A36E);
 
 const Color containerUpperColor = Color(0xFFFED3C5);
 
 const Color mealCheckColor = Color(0xFFFF295D);
 
-const Color achievementsCardColor = Color(0xFFFEF1C5);
+
 
 const Color nutritionistCardColor = Color(0xFFE1FEC5);
 

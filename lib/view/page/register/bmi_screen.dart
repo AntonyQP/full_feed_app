@@ -168,7 +168,7 @@ class _BMIScreenState extends State<BMIScreen> with AutomaticKeepAliveClientMixi
             decoration: const ShapeDecoration(
                 shape: CircleBorder(),
                 gradient: LinearGradient(
-                    colors: [primaryColor, Color(0xFFFF9FC8)],
+                    colors: [primaryColor, secondaryColor],
                     stops: [0.05, 1]
                 )
             ),

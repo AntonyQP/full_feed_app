@@ -28,7 +28,8 @@ class PatientViewModel with ChangeNotifier {
   }
 
   Future<void> updatePatient(double height, double weight, BuildContext context) async {
-    double imc = weight/pow(height/100, 2);
+    double imc = weight/pow(height, 2);
+    height = height * 100;
     await _userService.updatePatientInfo(PatientUpdateDto(_patientSelected.patientId!, height, imc, weight)).then((newPatient){
       if(newPatient.patientId == _patientSelected.patientId){
         newPatient.setFirstDayOfWeek(_patientSelected.firstDayOfWeek!);
