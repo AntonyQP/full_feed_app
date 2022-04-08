@@ -10,6 +10,7 @@ import '../../model/dtos/doctor_register_dto.dart';
 import '../../model/dtos/patient_update_dto.dart';
 import '../../model/dtos/preference_register_dto.dart';
 import '../../model/entities/doctor.dart';
+import '../../model/entities/illness.dart';
 import '../../model/entities/nutrition_stat.dart';
 import '../../model/entities/region.dart';
 import '../../model/entities/user_session.dart';
@@ -265,6 +266,25 @@ class UserService{
       List aux = response.data['data'].map((e) => Patient.fromJson(e)).toList();
       return aux.cast<Patient>();
     }
+    return [];
+  }
+
+  Future<List<Illness>> getPatientIllnessesByDoctor(int patientId) async {
+    var uri = baseUrl + illnessEndpoint;
+
+    final dio = Dio();
+
+    dio.options.headers["authorization"] = "Bearer ${UserSession().token}";
+
+    Response response = await dio.get(uri, queryParameters: {
+      'patientId': patientId
+    });
+
+    if(response.statusCode == 200) {
+      List aux = response.data["data"].map((e) => Illness.fromJson(e)).toList();
+      return aux.cast<Illness>();
+    }
+
     return [];
   }
 

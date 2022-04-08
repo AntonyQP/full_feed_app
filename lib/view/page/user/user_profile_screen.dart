@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:full_feed_app/util/util.dart';
+import 'package:full_feed_app/view_model/illness_list_view_model.dart';
 
 import 'package:google_fonts/google_fonts.dart';
 import 'package:page_transition/page_transition.dart';
@@ -91,6 +92,9 @@ class _UserProfileScreenState extends State<UserProfileScreen> with
   Widget build(BuildContext context) {
     super.build(context);
     var size = MediaQuery.of(context).size;
+
+    final patientIllnessesList = Provider.of<IllnessListViewModel>(context, listen: false).getPatientIllnesses();
+
     return SizedBox(
       height: size.height,
       child: ListView.builder(
@@ -150,6 +154,51 @@ class _UserProfileScreenState extends State<UserProfileScreen> with
                               child: Ink(
                                   child: InkWell(
                                       onTap: (){
+                                        showDialog(
+                                          context: context,
+                                          builder: (context){
+                                            return AlertDialog(
+                                              title: const Text('Enfermedades'),
+                                              content: SizedBox(
+                                                height: 100,
+                                                child: SingleChildScrollView(
+                                                  child: Column(
+                                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                                    children: patientIllnessesList.map((e) => Text('- ${e.name!}',
+                                                      style: const TextStyle(color: Colors.black),
+                                                    )).toList(),
+                                                  ),
+                                                ),
+                                              ),
+                                              shape: RoundedRectangleBorder(
+                                                  borderRadius: BorderRadius.circular(25.0)
+                                              ),
+                                              actions: [
+                                                ElevatedButton(
+                                                  onPressed: (){ Navigator.pop(context); },
+                                                  child: const Text('Volver', style: TextStyle(color: Colors.white),),
+                                                  style: ElevatedButton.styleFrom(
+                                                    primary: primaryColor,
+                                                    shape: RoundedRectangleBorder(
+                                                        borderRadius: BorderRadius.circular(25.0)
+                                                    ),
+                                                  ),
+                                                )
+                                              ],
+                                            );
+                                          }
+                                        );
+                                      },
+                                      child: const FaIcon(FontAwesomeIcons.headSideMask, color: primaryColor)
+                                  )
+                              )
+                          ),
+                          const SizedBox(width: 10.0,),
+                          Align(
+                              alignment: Alignment.topRight,
+                              child: Ink(
+                                  child: InkWell(
+                                      onTap: (){
                                         _showDialog();
                                       },
                                       child: const FaIcon(FontAwesomeIcons.signOutAlt, color: primaryColor)
@@ -191,7 +240,8 @@ class _UserProfileScreenState extends State<UserProfileScreen> with
                   ],
                 ),
               ),
-              UserSession().rol == "p" ? Container(
+              UserSession().rol == "p"
+                ? Container(
                 margin: const EdgeInsets.fromLTRB(10.0, 15.0, 10.0, 0),
                 padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
                 width: size.width,
@@ -382,7 +432,8 @@ class _UserProfileScreenState extends State<UserProfileScreen> with
                     )
                   ],
                 ),
-              ) : Container(
+              )
+                : Container(
                 margin: const EdgeInsets.fromLTRB(10.0, 15.0, 10.0, 0),
                 padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 50.0),
                 width: size.width,

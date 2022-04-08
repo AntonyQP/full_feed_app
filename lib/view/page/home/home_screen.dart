@@ -4,6 +4,7 @@ import 'package:full_feed_app/util/colors.dart';
 import 'package:full_feed_app/util/strings.dart';
 import 'package:full_feed_app/util/util.dart';
 import 'package:full_feed_app/view_model/chat_view_model.dart';
+import 'package:full_feed_app/view_model/illness_list_view_model.dart';
 import 'package:full_feed_app/view_model/logged_in_view_model.dart';
 import 'package:full_feed_app/view_model/profile_view_model.dart';
 import 'package:provider/provider.dart';
@@ -38,7 +39,9 @@ class _HomeScreenState extends State<HomeScreen> {
     if (isPatient()) {
       _future = Provider.of<LoggedInViewModel>(context, listen: false).setDoctorByPatient().whenComplete(() {
         Provider.of<ProfileViewModel>(context, listen: false).initPatientData().whenComplete(() {
-          _chatViewModel.initUser(Provider.of<LoggedInViewModel>(context, listen: false).getDoctorByPatient().user!.dni, []);
+          _chatViewModel.initUser(Provider.of<LoggedInViewModel>(context, listen: false).getDoctorByPatient().user!.dni, []).whenComplete((){
+            Provider.of<IllnessListViewModel>(context, listen: false).populateIllnessesByPatient();
+          });
         });
       });
     }

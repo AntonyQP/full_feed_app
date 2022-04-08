@@ -1,8 +1,11 @@
+import 'dart:convert';
+
 import 'package:dio/dio.dart';
 import 'package:full_feed_app/util/connection_tags.dart';
 
 import '../../model/entities/illness.dart';
 import '../../model/entities/user_session.dart';
+import '../../util/MultipartRequestEx.dart';
 
 class IllnessService {
 
@@ -40,6 +43,7 @@ class IllnessService {
   }
 
   Future<List<Illness>> getIllnessesByPatient() async {
+
     var uri = baseUrl + illnessEndpoint;
 
     final dio = Dio();
@@ -47,7 +51,7 @@ class IllnessService {
     dio.options.headers["authorization"] = "Bearer ${UserSession().token}";
 
     Response response = await dio.get(uri, queryParameters: {
-      'patiendId': UserSession().profileId
+      'patientId': UserSession().profileId
     });
 
     if(response.statusCode == 200) {

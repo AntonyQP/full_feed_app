@@ -11,6 +11,9 @@ import 'package:provider/provider.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
 
+import '../../../domain/service/user_service.dart';
+import '../../../model/entities/illness.dart';
+import '../../../view_model/illness_list_view_model.dart';
 import '../../../view_model/profile_view_model.dart';
 import '../../widget/diet_schedule/patient_detail_card.dart';
 import 'diet_calendar_page.dart';
@@ -40,6 +43,7 @@ class DietDayPatientDetailState extends State<DietDayPatientDetail> {
   late PageController _dietPageController;
   late var _futureConsumedBalance;
   late var _weightHistory;
+  late var _selectedPatientIllnessesFuture;
 
   void _switchPage(int page) {
     _pageController.animateToPage(page,
@@ -65,6 +69,7 @@ class DietDayPatientDetailState extends State<DietDayPatientDetail> {
     _dietPageController = PageController(initialPage: 0);
     _weightHistory = Provider.of<PatientViewModel>(context, listen: false).getWeightEvolutionOfSelectedPatient();
     _futureConsumedBalance = Provider.of<PatientViewModel>(context, listen: false).getConsumedBalanceOfSelectedPatient();
+
     super.initState();
   }
 
@@ -187,6 +192,57 @@ class DietDayPatientDetailState extends State<DietDayPatientDetail> {
                                                     Text(_patientSelected.user!.lastName.toString(), style: const TextStyle(fontWeight: FontWeight.w300),),
                                                     Text(_patientSelected.user!.firstName.toString(), style: const TextStyle(fontWeight: FontWeight.w300)),
                                                   ],
+                                                ),
+                                                FutureBuilder(
+                                                  future: UserService().getPatientIllnessesByDoctor(_patientSelected.patientId!),
+                                                  builder: (context, snapshot) {
+                                                    return Container(
+                                                      decoration: const BoxDecoration(
+                                                          color: Color(0xFF20D0CE),
+                                                          shape: BoxShape.circle
+                                                      ),
+                                                      child: IconButton(
+                                                        onPressed: (){showDialog(
+                                                            context: context,
+                                                            builder: (context){
+                                                              final _selectedPatientIllnessesList = snapshot.data as List<Illness>;
+                                                              return AlertDialog(
+                                                                title: const Text('Enfermedades'),
+                                                                content: SizedBox(
+                                                                  height: 100,
+                                                                  child: SingleChildScrollView(
+                                                                    child: Column(
+                                                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                                                      children: _selectedPatientIllnessesList.map((e) => Text('- ${e.name!}',
+                                                                        style: const TextStyle(color: Colors.black),
+                                                                      )).toList(),
+                                                                    ),
+                                                                  ),
+                                                                ),
+                                                                shape: RoundedRectangleBorder(
+                                                                    borderRadius: BorderRadius.circular(25.0)
+                                                                ),
+                                                                actions: [
+                                                                  ElevatedButton(
+                                                                    onPressed: (){ Navigator.pop(context); },
+                                                                    child: const Text('Volver', style: TextStyle(color: Colors.white),),
+                                                                    style: ElevatedButton.styleFrom(
+                                                                      primary: primaryColor,
+                                                                      shape: RoundedRectangleBorder(
+                                                                          borderRadius: BorderRadius.circular(25.0)
+                                                                      ),
+                                                                    ),
+                                                                  )
+                                                                ],
+                                                              );
+                                                            }
+                                                        );},
+                                                        icon: const FaIcon(FontAwesomeIcons.headSideMask),
+                                                        iconSize: 30,
+                                                        color: Colors.white,
+                                                      ),
+                                                    );
+                                                  }
                                                 ),
                                                 Container(
                                                   decoration: const BoxDecoration(
