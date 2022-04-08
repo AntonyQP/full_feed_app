@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:full_feed_app/view/page/register/user_illnesses_screen.dart';
 
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
@@ -23,8 +22,7 @@ class GoToPage {
   static const int selectDoctor = 4;
   static const int userLikes = 5;
   static const int userFoodAllergies = 6;
-  static const int userIllnesses = 7;
-  static const int waitForDiet = 8;
+  static const int waitForDiet = 7;
 }
 
 
@@ -166,7 +164,7 @@ class _RegisterUserFormState extends State<RegisterUserForm> {
           ),
           RegisterStepBody(
               title: 'Alergias',
-              child: UserAllergiesScreen(type: "ALLERGY", goToNextPage: () { switchPage(GoToPage.userIllnesses); },),
+              child: UserAllergiesScreen(type: "ALLERGY", goToNextPage: () { switchPage(GoToPage.waitForDiet); },),
               fabOnPressed: () {
                 // if(Provider.of<UserProvider>(context, listen: false).registerPresenter.preferencesAllergy.isNotEmpty){
                 //   Provider.of<UserProvider>(context, listen: false).registerPreferences(Provider.of<UserProvider>(context, listen: false).registerPresenter.preferencesAllergy).whenComplete((){
@@ -178,12 +176,6 @@ class _RegisterUserFormState extends State<RegisterUserForm> {
                 // }
               },
               arrowBackOnPressed: (){Navigator.of(context, rootNavigator: true).pop();}
-          ),
-          RegisterStepBody(
-            title: 'Enfermedades',
-            child: UserIllnessesScreen(goToNextPage: () { switchPage(GoToPage.waitForDiet); },),
-            fabOnPressed: (){},
-            arrowBackOnPressed: () { Navigator.of(context, rootNavigator: true).pop(); }
           ),
           RegisterStepBody(
               title: '',

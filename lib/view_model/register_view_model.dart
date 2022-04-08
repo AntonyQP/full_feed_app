@@ -165,7 +165,7 @@ class RegisterViewModel extends ChangeNotifier{
   }
 
   calculateImc(){
-    _imc = _weight/pow(_height/100, 2);
+    _imc = _weight/pow(_height, 2);
     setUserRegisterDto('imc', _imc);
   }
 
