@@ -171,7 +171,7 @@ class RolRegisterFormScreenState extends State<RolRegisterFormScreen> with
                         child: TextFormField(
                             onSaved: (value){
                               Provider.of<RegisterViewModel>(context, listen: false).setHeight(double.parse(value!));
-                              Provider.of<RegisterViewModel>(context, listen: false).setUserRegisterDto('height', double.parse(value));
+                              Provider.of<RegisterViewModel>(context, listen: false).setUserRegisterDto('height', double.parse(value) * 100);
                             },
                             decoration: const InputDecoration(
                               hintStyle: TextStyle(color: Colors.grey),
