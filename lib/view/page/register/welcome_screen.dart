@@ -41,7 +41,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
             ),
             Padding(
               padding: EdgeInsets.only(top: size.height/80),
-              child: Text("Todo Listo!", style: TextStyle(fontSize: 36),),
+              child: const Text("Todo Listo!", style: TextStyle(fontSize: 36),),
             ),
             Padding(
               padding: EdgeInsets.only(top: size.height/80),

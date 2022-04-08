@@ -6,6 +6,7 @@ import 'package:full_feed_app/providers/patient_provider.dart';
 import 'package:full_feed_app/providers/user_provider.dart';
 import 'package:full_feed_app/view/page/authentication/splash_screen.dart';
 import 'package:full_feed_app/view_model/diet_view_model.dart';
+import 'package:full_feed_app/view_model/illness_list_view_model.dart';
 import 'package:full_feed_app/view_model/logged_in_view_model.dart';
 import 'package:full_feed_app/view_model/login_view_model.dart';
 import 'package:full_feed_app/view_model/patient_view_model.dart';
@@ -57,7 +58,8 @@ class MyAppState extends State<MyApp> {
           ChangeNotifierProvider(create: (ctx) => RegisterViewModel()),
           ChangeNotifierProvider(create: (ctx) => LoggedInViewModel()),
           ChangeNotifierProvider(create: (ctx) => DietViewModel()),
-          ChangeNotifierProvider(create: (ctx) => PatientViewModel())
+          ChangeNotifierProvider(create: (ctx) => PatientViewModel()),
+          ChangeNotifierProvider(create: (ctx) => IllnessListViewModel())
         ],
         child: MaterialApp(
             localizationsDelegates: const [

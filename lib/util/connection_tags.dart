@@ -4,6 +4,10 @@ const String baseUrl = "https://fullfeed-aq.herokuapp.com/";
 
 //Endpoints
 
+//Illness
+const String illnessEndpoint = "illness";
+const String getAllIllnessesEndpoint = "/all";
+
 //User
 const String userEndpoint = "user/";
 const String userLogin = "login";
