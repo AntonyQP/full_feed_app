@@ -48,7 +48,7 @@ class _UserLikesScreenState extends State<UserLikesScreen> with
     return FutureBuilder(
         future: Provider.of<RegisterViewModel>(context, listen: false).registerAndLogin(),
         builder: (context, snapshot){
-          if((snapshot.data == false || snapshot.data == null)){
+          if(( false /*snapshot.data == false || snapshot.data == null*/)){
             return const LoadingScreen(text: "Estamos configurando tu cuenta...", generateDiet: false,);
           }
           else{
@@ -79,7 +79,7 @@ class _UserLikesScreenState extends State<UserLikesScreen> with
                                 FoodItem(
                                   type: "FAVORITE",
                                   preference: _meats[index],
-                                  imagePath: 'assets/1.png',
+
                                   color: meatItemColor,
                                 ),),
                           ),
@@ -102,7 +102,7 @@ class _UserLikesScreenState extends State<UserLikesScreen> with
                               FoodItem(
                                 type: "FAVORITE",
                                 preference: _seaFood[index],
-                                imagePath: 'assets/1.png',
+
                                 color: seaFoodItemColor,
                               ),),
                         ),
@@ -124,7 +124,7 @@ class _UserLikesScreenState extends State<UserLikesScreen> with
                               FoodItem(
                                 type: "FAVORITE",
                                 preference: _vegetables[index],
-                                imagePath: 'assets/1.png',
+
                                 color: vegetableItemColor,
                               ),),
                         ),
@@ -146,7 +146,7 @@ class _UserLikesScreenState extends State<UserLikesScreen> with
                               FoodItem(
                                 type: "FAVORITE",
                                 preference: _tubers[index],
-                                imagePath: 'assets/1.png',
+
                                 color: proteinItemColor,
                               ),),
                         ),
@@ -168,7 +168,7 @@ class _UserLikesScreenState extends State<UserLikesScreen> with
                               FoodItem(
                                 type: widget.type,
                                 preference: _fruits[index],
-                                imagePath: 'assets/1.png',
+
                                 color: fruitItemColor,
                               ),),
                         ),

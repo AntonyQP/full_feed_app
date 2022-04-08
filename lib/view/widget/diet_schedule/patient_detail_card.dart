@@ -20,32 +20,44 @@ class PatientDetailCardState extends State<PatientDetailCard> {
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
     return Container(
-      padding: const EdgeInsets.all(5),
-      decoration: const BoxDecoration(
-          color: Color(0xFFFFBAB9),
-          borderRadius: BorderRadius.all(Radius.circular(18.0))
+      padding: const EdgeInsets.all(10),
+      decoration: BoxDecoration(
+          gradient: RadialGradient(
+            colors: [
+              cardColor,
+              Colors.white.withOpacity(0.6),
+            ],
+            stops: [0.5, 1.0],
+          ),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withOpacity(0.15),
+              spreadRadius: 1,
+              blurRadius: 15,
+              offset: const Offset(5, 5),
+            ),
+            BoxShadow(
+              color: Colors.white.withOpacity(0.005),
+              spreadRadius: 1,
+              blurRadius: 12,
+              offset: const Offset(-5, -5),
+            )
+          ],
+          borderRadius: BorderRadius.all(Radius.circular(20.0))
       ),
       width: size.width/2.7,
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
-          Container(
-            padding: const EdgeInsets.all(15),
-            width: size.width/6.5,
-            decoration: const BoxDecoration(
-                color: primaryColor,
-                borderRadius: BorderRadius.all(Radius.circular(14.0))
-            ),
-            child: SvgPicture.asset(widget.asset, height: size.height/20,),
-          ),
+          SvgPicture.asset(widget.asset, height: size.height * 0.035, color: darkColor,),
           Padding(
             padding: EdgeInsets.only(top: 10, left: size.width/50, bottom: 10),
             child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(widget.title, style: const TextStyle(color: Colors.white, fontWeight: FontWeight.w400),),
-                Text(widget.text, style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 15))
+                Text(widget.title, style: const TextStyle(color: darkColor, fontWeight: FontWeight.w400, fontSize: 10),),
+                Text(widget.text, style: const TextStyle(color: darkColor, fontWeight: FontWeight.bold, fontSize: 15))
               ],
             ),
           )

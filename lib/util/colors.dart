@@ -4,6 +4,8 @@ const Color primaryColor = Color(0xFF38EB95);
 
 const Color secondaryColor = Color(0xFF4CDFCB);
 
+const Color darkColor = Color(0xFF323232);
+
 const Color cardColor = Color(0xFFEFEFEF);
 
 const Color proteinItemColor = Color(0xFFFFF281);

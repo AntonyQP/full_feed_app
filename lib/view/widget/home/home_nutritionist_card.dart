@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:full_feed_app/providers/user_provider.dart';
 import 'package:full_feed_app/util/colors.dart';
 import 'package:full_feed_app/view_model/chat_view_model.dart';
 import 'package:full_feed_app/view_model/logged_in_view_model.dart';
@@ -63,8 +64,15 @@ class _HomeNutritionistCardState extends State<HomeNutritionistCard> {
             ),
           ),
           const SizedBox(height: 10.0),
-          //TODO: Esqueleto de posible chat, es necesario proveer los mensajes, el lenght del mensaje y la última hora enviada
-          widget.chatViewModel.getMessagesReady() && widget.chatViewModel.getLastMessages().isNotEmpty ?
+          Provider.of<UserProvider>(context).messagesReady == false ?
+          const SizedBox(
+            width: 10,
+            height: 10,
+            child: Center(
+              child: CircularProgressIndicator(color: Colors.white, strokeWidth: 3,),
+            ),
+          ) :
+          widget.chatViewModel.getLastMessages().isNotEmpty ?
           Column(
             children: [
               Container(

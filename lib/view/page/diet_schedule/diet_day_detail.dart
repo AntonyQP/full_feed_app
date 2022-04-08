@@ -107,8 +107,12 @@ class DietDayDetailState extends State<DietDayDetail> {
                     Provider.of<DietProvider>(context, listen: false).firstDayEntry = true;
                   });
                 },
-                child: CircleAvatar(
-                  backgroundColor: selected == index? primaryColor : Colors.white60,
+                child: Container(
+                  padding: EdgeInsets.symmetric(vertical: 15, horizontal: 5),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.all(Radius.circular(10)),
+                    color: selected == index? primaryColor : Colors.transparent,
+                  ),
                   child: Text( setDayByDayIndex(Provider.of<DietViewModel>(context, listen: false).getDaysForDetail()[index].weekday),
                     style: TextStyle(fontWeight: FontWeight.bold, color: selected == index? Colors.white : Colors.black),),
                 ),
@@ -128,7 +132,7 @@ class DietDayDetailState extends State<DietDayDetail> {
                 ),
                 boxShadow: [
                   BoxShadow(
-                    color: Colors.black.withOpacity(0.1),
+                    color: Colors.black.withOpacity(0.15),
                     spreadRadius: 1,
                     blurRadius: 15,
                     offset: const Offset(5, 5),
@@ -142,14 +146,28 @@ class DietDayDetailState extends State<DietDayDetail> {
                 ],
             ),
             width: size,
-            child: Column(
+            height: size2,
+            child: Stack(
                 children: [
                   SelectDayPlate(dayMeals: Provider.of<DietProvider>(context).getDietDayDetailViewModel().getDayMeals(),),
-                  FoodDetail(
-                      notifyParent: refresh,
-                      meal: Provider.of<DietProvider>(context).getIsAlternativeMealSelected() ?
-                      Provider.of<DietProvider>(context).getDietDayDetailViewModel().getAlternativeMeal() :
-                      Provider.of<DietProvider>(context).getDietDayDetailViewModel().getMealSelected()),
+                  Positioned(
+                    top: size2 * 0.3,
+                    child: FoodDetail(
+                        notifyParent: refresh,
+                        meal: Provider.of<DietProvider>(context).getIsAlternativeMealSelected() ?
+                        Provider.of<DietProvider>(context).getDietDayDetailViewModel().getAlternativeMeal() :
+                        Provider.of<DietProvider>(context).getDietDayDetailViewModel().getMealSelected()),
+                  ),
+                  Positioned(
+                    right: 15,
+                    top: size2 * 0.2,
+                    child: const CircleAvatar(
+                      backgroundImage: NetworkImage(
+                          "https://blogladiadoresfit.com/wp-content/uploads/2021/02/avena-fitness.jpg"
+                      ),
+                      radius: 80,
+                    ),
+                  ),
                 ],
               ),
           )

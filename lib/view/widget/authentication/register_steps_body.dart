@@ -38,9 +38,29 @@ class _RegisterStepBodyState extends State<RegisterStepBody> {
       body: Container(
         height: size.height,
         width: size.width,
-        decoration: const BoxDecoration(
+        decoration: BoxDecoration(
           borderRadius: BorderRadius.all(Radius.circular(30.0)),
-          color: Colors.white,
+          gradient: RadialGradient(
+            colors: [
+              cardColor,
+              Colors.white.withOpacity(0.9),
+            ],
+            stops: [0.50, 1.0],
+          ),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withOpacity(0.1),
+              spreadRadius: 1,
+              blurRadius: 15,
+              offset: const Offset(5, 5),
+            ),
+            BoxShadow(
+              color: primaryColor.withOpacity(0.5),
+              spreadRadius: 1,
+              blurRadius: 12,
+              offset: const Offset(-5, -5),
+            )
+          ],
         ),
         margin: const EdgeInsets.all(10.0),
         child: widget.child,

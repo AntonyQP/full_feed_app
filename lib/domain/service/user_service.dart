@@ -44,11 +44,15 @@ class UserService{
           response.headers.value("Date")!, response.data["data"]["profile"]["user"]["dni"]);
       if(UserSession().rol == "p"){
         UserSession().setProfileId(response.data["data"]["profile"]["patientId"]);
+        UserSession().setSize(response.data["data"]["profile"]["arm"], response.data["data"]["profile"]["tmb"], response.data["data"]["profile"]["abdominal"],
+            response.data["data"]["profile"]["weight"], response.data["data"]["profile"]["height"], response.data["data"]["profile"]["imc"]);
+
       }
       else{
         UserSession().setProfileId(response.data["data"]["profile"]["doctorId"]);
         UserSession().setActivePatients(response.data["data"]["profile"]["activePatients"]);
       }
+
 
       _prefs.setString("full_feed_email", userLoginDto['email']);
       _prefs.setString("full_feed_password", userLoginDto['password']);

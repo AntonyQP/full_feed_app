@@ -44,8 +44,8 @@ class DropDownState extends State<DropDown> {
             child: DropdownButton<dynamic>(
               elevation: 0,
               itemHeight: size.height/10,
-              style: TextStyle(color: Colors.black, fontSize: size.width/25),
-              hint: SizedBox(child: Text(value, style: TextStyle(color: (value == 'Sexo' || value == 'Doctor') ? Colors.grey : Colors.black, fontSize: size.width/25),),),
+              style: TextStyle(color: Colors.black, fontSize: 13),
+              hint: SizedBox(child: Text(value, style: TextStyle(color: (value == 'Sexo' || value == 'Doctor') ? Colors.grey : Colors.black, fontSize: 12),),),
               dropdownColor: Colors.white,
               items: widget.datos,
               onChanged: (newValue) {

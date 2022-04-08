@@ -1,6 +1,7 @@
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:full_feed_app/util/util.dart';
 
@@ -93,131 +94,298 @@ class _UserProfileScreenState extends State<UserProfileScreen> with
     var size = MediaQuery.of(context).size;
     return SizedBox(
       height: size.height,
-      child: ListView.builder(
-        physics: const BouncingScrollPhysics(),
-        itemCount: 1,
-        itemBuilder: (BuildContext context, int index) {
-          return Column(
+      child: ListView(
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Container(
-                margin: const EdgeInsets.fromLTRB(10.0, 0.0, 10.0, 0),
-                padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
-                width: size.width,
-                decoration: BoxDecoration(
-                    borderRadius: const BorderRadius.all(Radius.circular(30.0)),
-                    color: Colors.white,
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.black.withOpacity(0.1),
-                        spreadRadius: 1,
-                        blurRadius: 2,
-                        offset: const Offset(0, 3),
-                      )
-                    ]
-                ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Container(
-                      height: 85, width: size.width, color: Colors.transparent,
-                      child: Row(
-                        children: [
-                          Container(
-                            width: 80,
-                            height: 80,
-                            decoration: BoxDecoration(
-                              borderRadius: const BorderRadius.all(Radius.circular(100.0)),
-                              border: Border.all(
-                                color: primaryColor,
-                                width: 4,
-                              ),
-                              color: Colors.white,
-                            ),
-                            child: const Icon(Icons.account_circle, size: 50, color: primaryColor,),
-                          ),
-                          const SizedBox(width: 20.0),
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Text(UserSession().userLastName),
-                              Text(UserSession().userFirstName, style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),),
-                            ],
-                          ),
-                          const Spacer(),
-                          Align(
-                              alignment: Alignment.topRight,
-                              child: Ink(
-                                  child: InkWell(
-                                      onTap: (){
-                                        _showDialog();
-                                      },
-                                      child: const FaIcon(FontAwesomeIcons.signOutAlt, color: primaryColor)
-                                  )
-                              )
-                          )
-                        ],
-                      ),
-                    ),
-                    Container(
-                      height: 120, width: size.width, color: Colors.transparent,
-                      child: isPatient() ? Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          CompletedDaysItem(
-                              completedDays: UserSession().successfulDays.toString()
-                          ),
-                          const SizedBox(width: 25),
-                          LostWeightItem(
-                              lostWeight: UserSession().lossWeight.toString()
-                          )
-                        ],
-                      ) : Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Column(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            children: [
-                              const Icon(Icons.accessibility_new_rounded, color: Color(0xFFFFAC33), size: 40,),
-                              Text(UserSession().activePatients.toString(),
-                                  style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold)
-                              ),
-                              const Text('Pacientes', style: TextStyle(fontSize: 10.5))
-                            ],
-                          )
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  CircleAvatar(
+                    radius: 40,
+                    backgroundColor: darkColor,
+                  ),
+                  const SizedBox(height: 10.0),
+                  Text(UserSession().userLastName),
+                  Text(UserSession().userFirstName, style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),),
+                ],
               ),
-              UserSession().rol == "p" ? Container(
-                margin: const EdgeInsets.fromLTRB(10.0, 15.0, 10.0, 0),
-                padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
-                width: size.width,
-                decoration: BoxDecoration(
-                    borderRadius: const BorderRadius.all(Radius.circular(30.0)),
-                    color: Colors.white,
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.black.withOpacity(0.1),
-                        spreadRadius: 1,
-                        blurRadius: 2,
-                        offset: const Offset(0, 3),
-                      )
-                    ]
+              Ink(
+                  child: InkWell(
+                      onTap: (){
+                        _showDialog();
+                      },
+                      child: const Icon(Icons.settings, color: darkColor)
+                  )
+              ),
+            ],
+          ),
+          SizedBox(
+            height: size.height * 0.03,
+          ),
+          Container(
+            margin: const EdgeInsets.fromLTRB(10.0, 0.0, 10.0, 0),
+            padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 20.0),
+            width: size.width,
+            decoration: BoxDecoration(
+              borderRadius: const BorderRadius.all(Radius.circular(30.0)),
+              color: Colors.white,
+              gradient: RadialGradient(
+                colors: [
+                  cardColor,
+                  Colors.white.withOpacity(0.6),
+                ],
+                stops: [0.5, 1.0],
+              ),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black.withOpacity(0.15),
+                  spreadRadius: 1,
+                  blurRadius: 15,
+                  offset: const Offset(5, 5),
                 ),
-                child: Column(
+                BoxShadow(
+                  color: Colors.white.withOpacity(0.005),
+                  spreadRadius: 1,
+                  blurRadius: 12,
+                  offset: const Offset(-5, -5),
+                )
+              ],
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Container(
+                  height: 120, width: size.width, color: Colors.transparent,
+                  child: isPatient() ? Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      CompletedDaysItem(
+                          completedDays: UserSession().successfulDays.toString()
+                      ),
+                      const SizedBox(width: 25),
+                      LostWeightItem(
+                          lostWeight: UserSession().lossWeight.toString()
+                      )
+                    ],
+                  ) : Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          const Icon(Icons.accessibility_new_rounded, color: Color(0xFFFFAC33), size: 40,),
+                          Text(UserSession().activePatients.toString(),
+                              style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold)
+                          ),
+                          const Text('Pacientes', style: TextStyle(fontSize: 10.5))
+                        ],
+                      )
+                    ],
+                  ),
+                ),
+                isPatient() ?
+                Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 5),
+                      padding: const EdgeInsets.symmetric(vertical: 20),
                       child:  Row(
                         children: const [
-                          FaIcon(FontAwesomeIcons.balanceScale, color: primaryColor, size: 12,),
+                          FaIcon(FontAwesomeIcons.infoCircle, color: darkColor, size: 12,),
                           Padding(
                             padding: EdgeInsets.only(left: 10),
-                            child: Text('Balance consumido', style: TextStyle(color: primaryColor, fontWeight: FontWeight.bold),),
+                            child: Text('Resumen de datos', style: TextStyle(color: darkColor, fontWeight: FontWeight.bold),),
+                          )
+                        ],
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(bottom: 8.0),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          Column(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Container(
+                                padding: EdgeInsets.all(10),
+                                width: 60,
+                                height: 60,
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.all(Radius.circular(100)),
+                                  gradient: RadialGradient(
+                                    colors: [
+                                      cardColor,
+                                      Colors.white.withOpacity(0.4),
+                                    ],
+                                    stops: [0.5, 1.0],
+                                  ),
+                                  boxShadow: [
+                                    BoxShadow(
+                                      color: Colors.black.withOpacity(0.15),
+                                      spreadRadius: 1,
+                                      blurRadius: 15,
+                                      offset: const Offset(5, 5),
+                                    ),
+                                    BoxShadow(
+                                      color: Colors.white.withOpacity(0.005),
+                                      spreadRadius: 1,
+                                      blurRadius: 12,
+                                      offset: const Offset(-5, -5),
+                                    )
+                                  ],
+                                ),
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                    children: [
+                                      SvgPicture.asset('assets/bmi_icon.svg', height: 15, color: darkColor,),
+                                      Text(UserSession().bmi.toStringAsFixed(1))
+                                    ],
+                                  )
+                              ),
+                              SizedBox(height: 15,),
+                              Container(
+                                padding: EdgeInsets.all(10),
+                                width: 60,
+                                height: 60,
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.all(Radius.circular(100)),
+                                  gradient: RadialGradient(
+                                    colors: [
+                                      cardColor,
+                                      Colors.white.withOpacity(0.4),
+                                    ],
+                                    stops: [0.5, 1.0],
+                                  ),
+                                  boxShadow: [
+                                    BoxShadow(
+                                      color: Colors.black.withOpacity(0.15),
+                                      spreadRadius: 1,
+                                      blurRadius: 15,
+                                      offset: const Offset(5, 5),
+                                    ),
+                                    BoxShadow(
+                                      color: Colors.white.withOpacity(0.005),
+                                      spreadRadius: 1,
+                                      blurRadius: 12,
+                                      offset: const Offset(-5, -5),
+                                    )
+                                  ],
+                                ),
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                    children: [
+                                      SvgPicture.asset('assets/hip_icon.svg', height: 15, color: darkColor,),
+                                      Text(UserSession().tmb.toStringAsFixed(1))
+                                    ],
+                                  )
+                              ),
+                            ],
+                          ),
+                          Column(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Container(
+                                padding: EdgeInsets.all(10),
+                                width: 60,
+                                height: 60,
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.all(Radius.circular(100)),
+                                  gradient: RadialGradient(
+                                    colors: [
+                                      cardColor,
+                                      Colors.white.withOpacity(0.4),
+                                    ],
+                                    stops: [0.5, 1.0],
+                                  ),
+                                  boxShadow: [
+                                    BoxShadow(
+                                      color: Colors.black.withOpacity(0.15),
+                                      spreadRadius: 1,
+                                      blurRadius: 15,
+                                      offset: const Offset(5, 5),
+                                    ),
+                                    BoxShadow(
+                                      color: Colors.white.withOpacity(0.005),
+                                      spreadRadius: 1,
+                                      blurRadius: 12,
+                                      offset: const Offset(-5, -5),
+                                    )
+                                  ],
+                                ),
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                  children: [
+                                    SvgPicture.asset('assets/arm_icon.svg', height: 15, color: darkColor,),
+                                    Text(UserSession().arm.toStringAsFixed(1))
+                                  ],
+                                )
+                              ),
+                              SizedBox(height: 15,),
+                              Container(
+                                padding: EdgeInsets.all(10),
+                                width: 60,
+                                height: 60,
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.all(Radius.circular(100)),
+                                  gradient: RadialGradient(
+                                    colors: [
+                                      cardColor,
+                                      Colors.white.withOpacity(0.4),
+                                    ],
+                                    stops: [0.5, 1.0],
+                                  ),
+                                  boxShadow: [
+                                    BoxShadow(
+                                      color: Colors.black.withOpacity(0.15),
+                                      spreadRadius: 1,
+                                      blurRadius: 15,
+                                      offset: const Offset(5, 5),
+                                    ),
+                                    BoxShadow(
+                                      color: Colors.white.withOpacity(0.005),
+                                      spreadRadius: 1,
+                                      blurRadius: 12,
+                                      offset: const Offset(-5, -5),
+                                    )
+                                  ],
+                                ),
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                  children: [
+                                    SvgPicture.asset('abdominal_icon.svg', height: 15, color: darkColor,),
+                                    Text(UserSession().abdominal.toStringAsFixed(1))
+                                  ],
+                                ),
+                              ),
+                            ],
+                          ),
+                          SvgPicture.asset('assets/normal_person.svg', height: size.height * 0.15,),
+                          Column(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text('${UserSession().height.toStringAsFixed(1)} cm'),
+                              SizedBox(
+                                height: size.height * 0.01,
+                              ),
+                              Text('${UserSession().weight.toStringAsFixed(1)} kg')
+                            ],
+                          )
+                        ],
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 20),
+                      child:  Row(
+                        children: const [
+                          FaIcon(FontAwesomeIcons.balanceScale, color: darkColor, size: 12,),
+                          Padding(
+                            padding: EdgeInsets.only(left: 10),
+                            child: Text('Balance consumido', style: TextStyle(color: darkColor, fontWeight: FontWeight.bold),),
                           )
                         ],
                       ),
@@ -232,7 +400,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> with
                           setState(() {});
                         },
                         style: ElevatedButton.styleFrom(
-                          primary: const Color(0xFF20D0CE),
+                          primary: primaryColor,
                           fixedSize: const Size(350.0, 20.0),
                           shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(50)),),
@@ -240,7 +408,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> with
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: const [
                             Icon(Icons.arrow_back_ios_rounded),
-                            Text('Carbohidratos', style: TextStyle(fontSize: 12),),
+                            Text('Carbohidratos (kcal)', style: TextStyle(fontSize: 12),),
                             Icon(Icons.arrow_forward_ios_rounded),
                           ],
                         ),
@@ -251,16 +419,16 @@ class _UserProfileScreenState extends State<UserProfileScreen> with
                           setState(() {});
                         },
                         style: ElevatedButton.styleFrom(
-                          primary: chartTitleCardColor,
+                          primary: chatCardPrimaryColor,
                           fixedSize: const Size(350.0, 20.0),
                           shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(50)),
+                              borderRadius: BorderRadius.circular(25)),
                         ),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: const [
                             Icon(Icons.arrow_back_ios_rounded),
-                            Text('Proteinas', style: TextStyle(fontSize: 12),),
+                            Text('Proteinas (kcal)', style: TextStyle(fontSize: 12),),
                             Icon(Icons.arrow_forward_ios_rounded),
                           ],
                         ),
@@ -268,7 +436,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> with
                     ),
                     SizedBox(
                       width: size.width,
-                      height: size.height / 5.5,
+                      height: size.height * 0.2,
                       child: PageView(
                           physics: const NeverScrollableScrollPhysics(),
                           controller: _pageController,
@@ -287,9 +455,9 @@ class _UserProfileScreenState extends State<UserProfileScreen> with
                                 majorGridLines: const MajorGridLines(width: 0),
                                 minimum: 0,
                                 maximum: 500,
-                                interval: 50,
+                                interval: 100,
                                 decimalPlaces: 1,
-                                labelFormat: '{value} kcal',
+                                labelFormat: '{value}',
                                 labelStyle: GoogleFonts.lato(),
                               ),
                               series: <CartesianSeries> [
@@ -318,9 +486,9 @@ class _UserProfileScreenState extends State<UserProfileScreen> with
                                 majorGridLines: const MajorGridLines(width: 0),
                                 minimum: 0,
                                 maximum: 500,
-                                interval: 50,
+                                interval: 100,
                                 decimalPlaces: 1,
-                                labelFormat: '{value} kcal',
+                                labelFormat: '{value}',
                                 labelStyle: GoogleFonts.lato(),
                               ),
                               series: <CartesianSeries> [
@@ -337,13 +505,13 @@ class _UserProfileScreenState extends State<UserProfileScreen> with
                       ),
                     ),
                     Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 5),
+                      padding: EdgeInsets.symmetric(vertical: size.height * 0.02),
                       child: Row(
                         children: const [
-                          FaIcon(FontAwesomeIcons.weight, color: primaryColor, size: 12,),
+                          FaIcon(FontAwesomeIcons.weight, color: darkColor, size: 12,),
                           Padding(
                             padding: EdgeInsets.only(left: 10),
-                            child: Text('Evolución del Peso', style: TextStyle(color: primaryColor, fontWeight: FontWeight.bold),),
+                            child: Text('Evolución del Peso', style: TextStyle(color: darkColor, fontWeight: FontWeight.bold),),
                           )
                         ],
                       ),
@@ -358,7 +526,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> with
                           majorGridLines: const MajorGridLines(width: 0),
                           labelPlacement: LabelPlacement.betweenTicks,
                           interval: 1,
-                          labelStyle: GoogleFonts.lato(),
+                          labelStyle: TextStyle(fontSize: 10,),
                         ),
                         primaryYAxis: NumericAxis(
                           majorGridLines: const MajorGridLines(width: 0),
@@ -366,7 +534,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> with
                           maximum: 100,
                           interval: 10,
                           decimalPlaces: 1,
-                          labelFormat: '{value} Kg',
+                          labelFormat: '{value}',
                           labelStyle: GoogleFonts.lato(),
                         ),
                         series: <ChartSeries> [
@@ -374,40 +542,23 @@ class _UserProfileScreenState extends State<UserProfileScreen> with
                             dataSource: Provider.of<ProfileViewModel>(context, listen: false).getWeightHistory(),
                             yValueMapper: (WeightData weight, _) => weight.lostWeight,
                             xValueMapper: (WeightData weight, _) => weight.month.toString(),
-                            color: chartLineColor,
-                            width: 2,
+                            color: darkColor,
+                            width: 5,
                           ),
                         ],
                       ),
                     )
                   ],
-                ),
-              ) : Container(
-                margin: const EdgeInsets.fromLTRB(10.0, 15.0, 10.0, 0),
-                padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 50.0),
-                width: size.width,
-                decoration: BoxDecoration(
-                    borderRadius: const BorderRadius.all(Radius.circular(30.0)),
-                    color: Colors.white,
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.black.withOpacity(0.1),
-                        spreadRadius: 1,
-                        blurRadius: 2,
-                        offset: const Offset(0, 3),
-                      )
-                    ]
-                ),
-                child: Column(
+                ) : Column(
                   children: [
                     Padding(
                       padding: const EdgeInsets.symmetric(vertical: 5),
                       child:  Row(
                         children: const [
-                          FaIcon(FontAwesomeIcons.qrcode, color: primaryColor, size: 12,),
+                          FaIcon(FontAwesomeIcons.qrcode, color: darkColor, size: 12,),
                           Padding(
                             padding: EdgeInsets.only(left: 10),
-                            child: Text('Codigo de registro', style: TextStyle(color: primaryColor, fontWeight: FontWeight.bold),),
+                            child: Text('Codigo de registro', style: TextStyle(color: darkColor, fontWeight: FontWeight.bold),),
                           )
                         ],
                       ),
@@ -419,8 +570,11 @@ class _UserProfileScreenState extends State<UserProfileScreen> with
                         appContext: context,
                         animationType: AnimationType.fade,
                         pinTheme: PinTheme(
-                          activeColor: Colors.grey,
-                          inactiveColor: Colors.grey,
+                          selectedFillColor: Colors.white,
+                          activeFillColor: Colors.white,
+                          inactiveFillColor: Colors.white,
+                          activeColor: Colors.white,
+                          inactiveColor: Colors.white,
                           selectedColor: primaryColor,
                           shape: PinCodeFieldShape.box,
                           borderRadius: BorderRadius.circular(10),
@@ -458,7 +612,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> with
                                 });
                               });
                             },
-                            child: Icon(CupertinoIcons.refresh, color: Colors.white, size: size.height/20,),
+                            child: Icon(Icons.confirmation_number_outlined, color: Colors.white, size: size.height/20,),
                             style: ElevatedButton.styleFrom(
                               maximumSize: const Size( 100,  100),
                               elevation: 0,
@@ -469,14 +623,15 @@ class _UserProfileScreenState extends State<UserProfileScreen> with
                             ),
                           ),
                         )
-                    )
+                    ),
+                    SizedBox(height: size.height * 0.05,)
                   ],
                 ),
-              ),
-              const SizedBox(height: 200,)
-            ],
-          );
-        },
+              ],
+            ),
+          ),
+          SizedBox(height: size.height * 0.15,)
+        ],
       ),
     );
   }

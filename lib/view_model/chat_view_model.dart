@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:full_feed_app/model/entities/patient.dart';
 import 'package:full_feed_app/model/entities/user_session.dart';
+import 'package:full_feed_app/providers/user_provider.dart';
+import 'package:provider/provider.dart';
 import 'package:stream_chat_flutter/stream_chat_flutter.dart';
 
 import '../util/util.dart';
@@ -10,7 +12,7 @@ class ChatViewModel{
 
   final List<Channel> _userChannels = [];
   final List<Message> _lastMessages = [];
-  bool _messagesReady = false;
+  int _messagesReady = 0;
   late StreamChatClient client;
 
   ChatViewModel(BuildContext _context){
@@ -47,14 +49,13 @@ class ChatViewModel{
         _userChannels.add(client.channel('messaging', id: "d${UserSession().dni}p${patientsChat[i].user!.dni}"));
       }
     }
-    //setLastMessages();
   }
 
   List<Message> getLastMessages(){
     return _lastMessages;
   }
 
-  setLastMessages() async{
+  Future<void> setLastMessages(BuildContext context) async{
     for(int i = 0; i < _userChannels.length; i++){
       await _userChannels[i].watch().then((value){
         if(value.messages.isNotEmpty){
@@ -62,9 +63,11 @@ class ChatViewModel{
             _lastMessages.add(value.messages.last);
           }
         }
-
       });
       await _userChannels[i].stopWatching();
+      if(i == _userChannels.length -1 ){
+        Provider.of<UserProvider>(context, listen: false).setMessagesReady(true);
+      }
     }
   }
 

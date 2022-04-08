@@ -58,7 +58,9 @@ class _ChatScreenState extends State<ChatScreen> with
         padding: EdgeInsets.zero,
         //crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text('Chats', style: TextStyle(fontSize: 20, color: primaryColor, fontWeight: FontWeight.bold),),
+          const Padding(
+            padding: EdgeInsets.only(left: 25),
+            child: Text('Chats', style: TextStyle(fontSize: 20, color: primaryColor, fontWeight: FontWeight.bold),)),
           !isPatient() ?
           SizedBox(
             height: size.height,
@@ -74,7 +76,7 @@ class _ChatScreenState extends State<ChatScreen> with
                     },
                     child: Padding(
                         padding: EdgeInsets.symmetric(vertical: size.height/80),
-                        child: ChatListItem(title: "Paciente", name: Provider.of<LoggedInViewModel>(context, listen: false).getPatientsByDoctor()[index].user!.firstName.toString(),)
+                        child: ChatListItem(index: index, title: "Paciente", name: Provider.of<LoggedInViewModel>(context, listen: false).getPatientsByDoctor()[index].user!.firstName.toString(),)
                     ),
                   )
               ),
@@ -92,7 +94,7 @@ class _ChatScreenState extends State<ChatScreen> with
                   },
                   child: Padding(
                       padding: EdgeInsets.symmetric(vertical: size.height/80),
-                      child: ChatListItem(title: "Doctor", name: Provider.of<LoggedInViewModel>(context, listen: false).getDoctorByPatient().user!.firstName.toString(),)
+                      child: ChatListItem(index: 0, title: "Doctor", name: Provider.of<LoggedInViewModel>(context, listen: false).getDoctorByPatient().user!.firstName.toString(),)
                   ),
                 ),
               ],

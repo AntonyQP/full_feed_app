@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:full_feed_app/domain/local/notification_service.dart';
 import 'package:full_feed_app/providers/diet_provider.dart';
 import 'package:full_feed_app/providers/patient_provider.dart';
 import 'package:full_feed_app/providers/user_provider.dart';
@@ -32,8 +33,17 @@ class MyApp extends StatefulWidget {
 class MyAppState extends State<MyApp> {
   late StreamChatClient client;
 
+  listenNotifications() => NotificationService.onNotifications.stream.listen((event) { });
+
   @override
   void initState() {
+    NotificationService.init().whenComplete((){
+      listenNotifications();
+
+      NotificationService.showScheduledNotification(title: 'Hola', body: 'Soy pepino');
+    });
+
+
     client = StreamChatClient(
       '4u4qb3jxyjpa',
       logLevel: Level.WARNING,

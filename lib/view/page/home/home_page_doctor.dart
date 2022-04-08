@@ -11,6 +11,7 @@ import '../../../model/entities/meal.dart';
 import '../../../model/entities/patient.dart';
 import '../../../model/entities/user_session.dart';
 import '../../widget/home/chat_list_card.dart';
+import '../../widget/home/home_diet_card.dart';
 import '../../widget/home/home_doctor_diet_card.dart';
 
 class HomePageDoctor extends StatefulWidget {
@@ -46,7 +47,7 @@ class HomePageDoctorState extends State<HomePageDoctor> {
           ),
         ),
         const SizedBox(height: 25.0),
-        HomeDoctorDietCard(
+        HomeDietCard(
           child: FutureBuilder(
             future: Future.wait(
               [
@@ -57,7 +58,7 @@ class HomePageDoctorState extends State<HomePageDoctor> {
               if(snapshot.connectionState == ConnectionState.done){
                 if(Provider.of<LoggedInViewModel>(context, listen: false).getPatientDayMeals().isNotEmpty){
                   return Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+                    padding: const EdgeInsets.symmetric(horizontal: 20),
                     child: Column(
                       children: [
                       Padding(padding: EdgeInsets.symmetric(vertical: 5),
@@ -67,15 +68,14 @@ class HomePageDoctorState extends State<HomePageDoctor> {
                             Text('Paciente'),
                             Row(
                             children: List.generate(5, (index){
-                              return SizedBox(
-                                width: 35,
-                                height: 35,
-                                  child: Padding(
-                                  padding: EdgeInsets.all(5),
-                                  child: Image.asset(breakfastImg, width: 5,
-                                  height: 5, fit: BoxFit.contain),
-                                  )
-                                );
+                              return Padding(
+                                padding: const EdgeInsets.all(7.5),
+                                child: SizedBox(
+                                  width: 20,
+                                  height: 20,
+                                    child: Image.asset(mealImages[index], width: 4, height: 4, fit: BoxFit.contain)
+                                  ),
+                              );
                               }),
                             )
                           ],

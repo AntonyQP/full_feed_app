@@ -39,6 +39,8 @@ dependencies:
   concentric_transition: ^1.0.1+1
   cupertino_icons: ^1.0.2
   dio: ^4.0.4
+  flutter_local_notifications: ^9.4.0
+  flutter_native_timezone: ^2.0.0
   flutter_svg: ^1.0.3
   font_awesome_flutter: ^9.1.0
   geocoding: ^2.0.4
@@ -50,6 +52,7 @@ dependencies:
   page_transition: ^2.0.4
   pin_code_fields: ^7.3.0
   provider: ^6.0.2
+  rxdart: ^0.27.3
   shared_preferences: ^2.0.11
   shimmer: ^2.0.0
   stream_chat_flutter: ^3.4.0
@@ -86,6 +89,7 @@ flutter:
   #   - images/a_dot_ham.jpeg
   assets:
     - assets/
+    - assets/preferences/
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.

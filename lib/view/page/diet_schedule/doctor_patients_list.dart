@@ -42,7 +42,7 @@ class DoctorPatientsListState extends State<DoctorPatientsList> with
     return SizedBox(
         height: size.height,
         child: Padding(
-          padding: EdgeInsets.symmetric(horizontal: size.width/20, vertical: 15.0),
+          padding: EdgeInsets.symmetric(vertical: 15.0),
           child: Provider.of<LoggedInViewModel>(context, listen: false).getPatientsByDoctor().isNotEmpty ?
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,

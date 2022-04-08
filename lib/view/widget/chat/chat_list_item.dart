@@ -1,11 +1,13 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:full_feed_app/util/colors.dart';
 
 
 class ChatListItem extends StatefulWidget {
+  final int index;
   final String title;
   final String name;
-  const ChatListItem({Key? key, required this.title, required this.name}) : super(key: key);
+  const ChatListItem({Key? key, required this.index, required this.title, required this.name}) : super(key: key);
 
   @override
   ChatListItemState createState() => ChatListItemState();
@@ -29,40 +31,46 @@ class ChatListItemState extends State<ChatListItem> with
     return Container(
       height: size.height/10,
       width: size.width,
-      padding: EdgeInsets.symmetric(horizontal: size.width/20),
-      decoration: BoxDecoration(
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withOpacity(0.1),
-            spreadRadius: 1,
-            blurRadius: 2,
-            offset: const Offset(0, 3), // changes position of shadow
-          ),
-        ],
-        borderRadius: const BorderRadius.all(Radius.circular(20.0)),
-        color: Colors.white,
-      ),
-      child: Row(
+      padding: EdgeInsets.symmetric(vertical: size.height * 0.005),
+      color: Colors.transparent,
+      child: Stack(
         children: [
-          Container(
-            width: 60,
-            height: 60,
-            decoration: const BoxDecoration(
-                borderRadius: BorderRadius.all(Radius.circular(15.0)),
-                color: Colors.grey
+          Align(
+            alignment: Alignment.centerRight,
+            child: Container(
+              decoration: BoxDecoration(
+                color: widget.index == 0 ? primaryColor : Color(0xFFDCDCDC),
+                borderRadius: BorderRadius.only(topLeft: Radius.circular(25), bottomLeft: Radius.circular(25))
+              ),
+              width: size.width * 0.85,
             ),
           ),
-          Padding(
-            padding: EdgeInsets.symmetric(horizontal: size.width/20, vertical: size.height/40),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          Positioned(
+            left: size.width * 0.1,
+            child: Row(
               children: [
-                Text(widget.title, style: TextStyle(color: Colors.grey, fontSize: size.width/35),),
-                Text(widget.name, style: TextStyle(color: Colors.black, fontWeight: FontWeight.w500, fontSize: size.width/25),)
+                const CircleAvatar(
+                  radius: 30,
+                  backgroundImage: AssetImage('assets/breakfast_back.png'),
+                ),
+                Padding(
+                  padding: EdgeInsets.symmetric(horizontal: size.width/20, vertical: size.height/40),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      Text(widget.title, style: TextStyle(
+                          color: widget.index == 0 ?  Colors.white.withOpacity(0.5) : Colors.black.withOpacity(0.5),
+                          fontSize: 12),),
+                      Text(widget.name, style: TextStyle(
+                          color: widget.index == 0 ?  Colors.white : Colors.black.withOpacity(0.7), fontWeight:
+                          FontWeight.bold, fontSize: 14),)
+                    ],
+                  ),
+                )
               ],
             ),
-          )
+          ),
         ],
       ),
     );

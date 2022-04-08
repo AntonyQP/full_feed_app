@@ -10,11 +10,10 @@ import '../../../model/dtos/preference_register_dto.dart';
 
 class FoodItem extends StatefulWidget {
 
-  final String imagePath;
   final Preference preference;
   final String type;
   final Color color;
-  const FoodItem({Key? key, required this.imagePath, required this.preference, required this.type,
+  const FoodItem({Key? key, required this.preference, required this.type,
     required this.color}) : super(key: key);
 
   @override
@@ -59,17 +58,17 @@ class _FoodItemState extends State<FoodItem> {
           height: 85,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.all(Radius.circular(20.0)),
-            color: selected ? fooSelectedColor : widget.color,
+            color: selected ? primaryColor : widget.color,
           ),
           child: Center(
             child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 Align(
                   alignment: Alignment.topCenter,
-                  child: Text(prepareString(widget.preference.name.toString()), style: TextStyle(fontSize: 10),),
+                  child: Text(prepareString(widget.preference.name.toString()), style: TextStyle(fontSize: 10, color: selected ? Colors.white : Colors.black),),
                 ),
-                Image.asset(widget.imagePath, fit: BoxFit.contain, width: 45, height: 45),
+                Image.asset('assets/preferences/${widget.preference.name!.toLowerCase()}.png', fit: BoxFit.contain, height: 35),
               ],
             ),
           )

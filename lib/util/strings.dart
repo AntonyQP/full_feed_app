@@ -17,3 +17,5 @@ const String bodyScalePath = 'assets/body_scale.png';
 const String innerCircle = 'assets/inner_circle.svg';
 
 const String externalCircle = 'assets/external_circle.svg';
+
+const List<String> mealImages = [breakfastImg, breakImg, lunchImg, breakImg, dinnerImg];

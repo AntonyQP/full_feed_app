@@ -70,7 +70,7 @@ class _UserAllergiesScreenState extends State<UserAllergiesScreen> with
                         FoodItem(
                           type: widget.type,
                           preference: _meats[index],
-                          imagePath: 'assets/1.png',
+
                           color: meatItemColor,
                         ),),
                   ),
@@ -94,8 +94,8 @@ class _UserAllergiesScreenState extends State<UserAllergiesScreen> with
                         FoodItem(
                           type: widget.type,
                           preference: _seaFood[index],
-                          imagePath: 'assets/1.png',
-                          color: seaFoodItemColor,
+
+                          color: chatCardPrimaryColor,
                         ),),
                   ),
                 ),
@@ -118,7 +118,7 @@ class _UserAllergiesScreenState extends State<UserAllergiesScreen> with
                         FoodItem(
                           type: widget.type,
                           preference: _vegetables[index],
-                          imagePath: 'assets/1.png',
+
                           color: vegetableItemColor,
                         ),),
                   ),
@@ -142,7 +142,7 @@ class _UserAllergiesScreenState extends State<UserAllergiesScreen> with
                         FoodItem(
                           type: widget.type,
                           preference: _tubers[index],
-                          imagePath: 'assets/1.png',
+
                           color: proteinItemColor,
                         ),
                     ),
@@ -167,7 +167,7 @@ class _UserAllergiesScreenState extends State<UserAllergiesScreen> with
                         FoodItem(
                           type: widget.type,
                           preference: _fruits[index],
-                          imagePath: 'assets/1.png',
+
                           color: fruitItemColor,
                         ),),
                   ),

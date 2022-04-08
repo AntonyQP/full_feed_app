@@ -1,8 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:full_feed_app/providers/user_provider.dart';
 import 'package:full_feed_app/view_model/chat_view_model.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
+
+import '../../../util/colors.dart';
 
 
 class ChatListCard extends StatefulWidget {
@@ -29,25 +33,40 @@ class _ChatListCardState extends State<ChatListCard> {
     return Container(
       width: size.width,
       height: size.height / 3,
+      padding: EdgeInsets.all(10),
       decoration: BoxDecoration(
           borderRadius: const BorderRadius.all(Radius.circular(20.0)),
-          color: const Color(0xFFDFE7FC),
-          boxShadow: [
-            BoxShadow(
-              color: Colors.grey.withOpacity(0.2),
-              spreadRadius: 2,
-              blurRadius: 4,
-              offset: const Offset(0, 2),
-            )
-          ]
+        gradient: const LinearGradient(
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+          colors: [
+            chatCardPrimaryColor,
+            chatCardSecondaryColor,
+          ],
+          stops: [0.6, 1.0],
+        ),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.15),
+            spreadRadius: 1,
+            blurRadius: 15,
+            offset: const Offset(5, 5),
+          ),
+          BoxShadow(
+            color: Colors.white.withOpacity(0.005),
+            spreadRadius: 1,
+            blurRadius: 12,
+            offset: const Offset(-5, -5),
+          )
+        ],
       ),
       child: Padding(
-        padding: EdgeInsets.symmetric(horizontal: size.width/20, vertical: size.height/80),
+        padding: EdgeInsets.symmetric(horizontal: size.width/30, vertical: size.height/80),
         child: Column(
           children: [
             Row(
               children: const [
-                Icon(CupertinoIcons.chat_bubble_2_fill, color: Colors.black, size: 18,),
+                FaIcon(FontAwesomeIcons.facebookMessenger, size: 15,),
                 Padding(
                   padding: EdgeInsets.only(left: 5),
                   child: Text("Conversaciones", style: TextStyle(fontWeight: FontWeight.bold),),
@@ -56,7 +75,13 @@ class _ChatListCardState extends State<ChatListCard> {
             ),
             Padding(
               padding: EdgeInsets.only(top: size.height/80),
-              child: widget.chatViewModel.getMessagesReady() && widget.chatViewModel.getLastMessages().isNotEmpty ?
+              child: Provider.of<UserProvider>(context).messagesReady == false ?
+              const Center(
+                child: SizedBox(
+                    width: 10,
+                    height: 10,
+                    child: CircularProgressIndicator(color: Colors.white, strokeWidth: 3,)),
+              ) : widget.chatViewModel.getLastMessages().isNotEmpty ?
               Column(
                 children: List.generate(widget.chatViewModel.getLastMessages().length, (index) {
                   return Padding(
@@ -65,10 +90,18 @@ class _ChatListCardState extends State<ChatListCard> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Row(
+                          crossAxisAlignment: CrossAxisAlignment.center,
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Text(widget.chatViewModel.getLastMessages()[index].user!.name,),
-                            Text(format.format(widget.chatViewModel.getLastMessages()[index].createdAt), style: const TextStyle(fontSize: 10),),
+                            Row(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                Text(widget.chatViewModel.getLastMessages()[index].user!.name, style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),),
+                                const SizedBox(width: 10),
+                                CircleAvatar(backgroundColor: Colors.black, radius: 5,)
+                              ],
+                            ),
+                            Text(format.format(widget.chatViewModel.getLastMessages()[index].createdAt), style: const TextStyle(fontSize: 10, color: Colors.white),),
                           ],
                         ),
                         Padding(
@@ -78,10 +111,10 @@ class _ChatListCardState extends State<ChatListCard> {
                             width: size.width,
                             height: 30,
                             decoration: const BoxDecoration(
-                                color: Color(0xFFE8EEFF),
+                                color: Colors.transparent,
                                 borderRadius: BorderRadius.all(Radius.circular(15.0))
                             ),
-                            child: Text(widget.chatViewModel.getLastMessages()[index].text!),
+                            child: Text(widget.chatViewModel.getLastMessages()[index].text!, style: TextStyle(color: Colors.white),),
                           ),
                         )
                       ],
@@ -90,8 +123,7 @@ class _ChatListCardState extends State<ChatListCard> {
                 }),
               ) :
               const Center(
-                child: Text("No tiene mensajes pendientes", style: TextStyle(color: Colors.grey),),
-              ),
+                  child: Text("No tiene mensajes pendientes", style: TextStyle(color: Colors.white),))
             )
           ],
         ),

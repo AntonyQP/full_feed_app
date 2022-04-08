@@ -19,6 +19,9 @@ class UpdatePatientDialog extends StatefulWidget {
 class UpdatePatientDialogState extends State<UpdatePatientDialog> {
   double _height = 0.0;
   double _weight = 0.0;
+  double _abdominal = 0.0;
+  double _tmb = 0.0;
+  double _arm = 0.0;
   late GlobalKey<FormState> formKey;
 
   @override
@@ -32,8 +35,7 @@ class UpdatePatientDialogState extends State<UpdatePatientDialog> {
     var size = MediaQuery.of(context).size;
     return Material(
       color: const Color.fromRGBO(255, 255, 255, 0.8),
-      child: Padding(padding: EdgeInsets.symmetric(
-          vertical: size.height/4, horizontal: size.width/20),
+      child: Padding(padding: EdgeInsets.symmetric(horizontal: size.width/20),
         child: Container(
           width: size.width/1.5,
           decoration: const BoxDecoration(
@@ -45,6 +47,7 @@ class UpdatePatientDialogState extends State<UpdatePatientDialog> {
             child: Form(
               key: formKey,
               child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   SizedBox(
@@ -55,7 +58,7 @@ class UpdatePatientDialogState extends State<UpdatePatientDialog> {
                     height: size.height/30,
                   ),
                   Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       const Text('Altura', style: TextStyle(fontSize: 14),),
                       Container(
@@ -83,7 +86,7 @@ class UpdatePatientDialogState extends State<UpdatePatientDialog> {
                             },
                             decoration: const InputDecoration(
                                 hintStyle: TextStyle(color: Colors.grey),
-                                hintText: 'm',
+                                hintText: 'cm',
                                 border: OutlineInputBorder(
                                     borderSide: BorderSide(
                                       width: 0,
@@ -100,10 +103,10 @@ class UpdatePatientDialogState extends State<UpdatePatientDialog> {
                     ],
                   ),
                   SizedBox(
-                    height: size.height/70,
+                    height: size.height * 0.02,
                   ),
                   Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       const Text('Peso', style: TextStyle(fontSize: 14),),
                       Container(
@@ -149,6 +152,150 @@ class UpdatePatientDialogState extends State<UpdatePatientDialog> {
                     ],
                   ),
                   SizedBox(
+                    height: size.height * 0.02,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      const Text('Brazo', style: TextStyle(fontSize: 14),),
+                      Container(
+                        width: size.width/2,
+                        decoration: BoxDecoration(
+                            color: Color(0XFFFAFAFA),
+                            borderRadius: const BorderRadius.all(Radius.circular(30.0)),
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.grey.withOpacity(0.2),
+                                spreadRadius: 2,
+                                blurRadius: 3,
+                                offset: const Offset(0, 2),
+                              )
+                            ]
+                        ),
+                        child: TextFormField(
+                            style: const TextStyle(fontSize: 14),
+                            textAlign: TextAlign.end,
+                            keyboardType: TextInputType.number,
+                            onSaved: (value){
+                              setState(() {
+                                _arm = double.parse(value!);
+                              });
+                            },
+                            decoration: const InputDecoration(
+                                hintStyle: TextStyle(color: Colors.grey),
+                                hintText: 'cm',
+                                border: OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                    width: 0,
+                                    style: BorderStyle.none,
+                                  ),)),
+                            textInputAction: TextInputAction.next,
+                            validator: (value) {
+                              if (value!.isEmpty) {
+                                return "Ingrese medida de brazo del paciente ";
+                              }
+                            }
+                        ),
+                      )
+                    ],
+                  ),
+                  SizedBox(
+                    height: size.height * 0.02,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      const Text('Abdominal', style: TextStyle(fontSize: 14),),
+                      Container(
+                        width: size.width/2,
+                        decoration: BoxDecoration(
+                            color: Color(0XFFFAFAFA),
+                            borderRadius: const BorderRadius.all(Radius.circular(30.0)),
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.grey.withOpacity(0.2),
+                                spreadRadius: 2,
+                                blurRadius: 3,
+                                offset: const Offset(0, 2),
+                              )
+                            ]
+                        ),
+                        child: TextFormField(
+                            style: const TextStyle(fontSize: 14),
+                            textAlign: TextAlign.end,
+                            keyboardType: TextInputType.number,
+                            onSaved: (value){
+                              setState(() {
+                                _abdominal = double.parse(value!);
+                              });
+                            },
+                            decoration: const InputDecoration(
+                                hintStyle: TextStyle(color: Colors.grey),
+                                hintText: 'cm',
+                                border: OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                    width: 0,
+                                    style: BorderStyle.none,
+                                  ),)),
+                            textInputAction: TextInputAction.next,
+                            validator: (value) {
+                              if (value!.isEmpty) {
+                                return "Ingrese medida abdminal del paciente ";
+                              }
+                            }
+                        ),
+                      )
+                    ],
+                  ),
+                  SizedBox(
+                    height: size.height * 0.02,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      const Text('Cadera', style: TextStyle(fontSize: 14),),
+                      Container(
+                        width: size.width/2,
+                        decoration: BoxDecoration(
+                            color: Color(0XFFFAFAFA),
+                            borderRadius: const BorderRadius.all(Radius.circular(30.0)),
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.grey.withOpacity(0.2),
+                                spreadRadius: 2,
+                                blurRadius: 3,
+                                offset: const Offset(0, 2),
+                              )
+                            ]
+                        ),
+                        child: TextFormField(
+                            style: const TextStyle(fontSize: 14),
+                            textAlign: TextAlign.end,
+                            keyboardType: TextInputType.number,
+                            onSaved: (value){
+                              setState(() {
+                                _tmb = double.parse(value!);
+                              });
+                            },
+                            decoration: const InputDecoration(
+                                hintStyle: TextStyle(color: Colors.grey),
+                                hintText: 'cm',
+                                border: OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                    width: 0,
+                                    style: BorderStyle.none,
+                                  ),)),
+                            textInputAction: TextInputAction.next,
+                            validator: (value) {
+                              if (value!.isEmpty) {
+                                return "Ingrese medida de cadera del paciente ";
+                              }
+                            }
+                        ),
+                      )
+                    ],
+                  ),
+                  SizedBox(
                     height: size.height/20,
                   ),
                   Row(
@@ -175,7 +322,7 @@ class UpdatePatientDialogState extends State<UpdatePatientDialog> {
                             if(isValid){
                               formKey.currentState!.save();
                               Provider.of<PatientProvider>(context, listen: false).setPatientUpdating(true);
-                              Provider.of<PatientViewModel>(context, listen: false).updatePatient(_height, _weight, context).whenComplete((){
+                              Provider.of<PatientViewModel>(context, listen: false).updatePatient(_height, _weight, _arm, _abdominal, _tmb,  context).whenComplete((){
                                 Navigator.pop(context);
                                 Provider.of<PatientProvider>(context, listen: false).setPatientUpdating(false);
                               });
@@ -195,7 +342,7 @@ class UpdatePatientDialogState extends State<UpdatePatientDialog> {
                     ],
                   ),
                   SizedBox(
-                    height: size.height/10,
+                    height: size.height/20,
                   ),
                   Visibility(
                       visible: Provider.of<PatientProvider>(context).getIsPatientUpdating(),

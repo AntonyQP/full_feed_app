@@ -47,7 +47,7 @@ class _HomeDietCardState extends State<HomeDietCard> {
           ),
           boxShadow: [
             BoxShadow(
-              color: Colors.black.withOpacity(0.1),
+              color: Colors.black.withOpacity(0.2),
               spreadRadius: 1,
               blurRadius: 15,
               offset: const Offset(5, 5),

@@ -38,14 +38,18 @@ class _HomeScreenState extends State<HomeScreen> {
     if (isPatient()) {
       _future = Provider.of<LoggedInViewModel>(context, listen: false).setDoctorByPatient().whenComplete(() {
         Provider.of<ProfileViewModel>(context, listen: false).initPatientData().whenComplete(() {
-          _chatViewModel.initUser(Provider.of<LoggedInViewModel>(context, listen: false).getDoctorByPatient().user!.dni, []);
+          _chatViewModel.initUser(Provider.of<LoggedInViewModel>(context, listen: false).getDoctorByPatient().user!.dni, []).whenComplete((){
+            _chatViewModel.setLastMessages(context);
+          });
         });
       });
     }
     else{
       _future = Provider.of<LoggedInViewModel>(context, listen: false).setPatientsByDoctor().whenComplete((){
         _chatViewModel.initUser(null,
-            Provider.of<LoggedInViewModel>(context, listen: false).getPatientsByDoctor());
+            Provider.of<LoggedInViewModel>(context, listen: false).getPatientsByDoctor()).whenComplete((){
+              _chatViewModel.setLastMessages(context);
+        });
       });
     }
     super.initState();
@@ -126,7 +130,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           padding: EdgeInsets.symmetric(horizontal: isPatient() ? 20.0 : 5.0),
                           child: isPatient() ? const DietCalendarPage() : const DoctorPatientsList(),),
                         Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 25.0, vertical: 30.0),
+                          padding: const EdgeInsets.symmetric(vertical: 30.0),
                           child: ChatScreen(chatViewModel: _chatViewModel,),),
                         UserProfileScreen( logOut: () { logOut(); } )
                       ],

@@ -58,15 +58,27 @@ class _AuthenticationScreenState extends State<AuthenticationScreen> {
                 width: size.width,
                 decoration: BoxDecoration(
                     borderRadius: const BorderRadius.all(Radius.circular(25.0)),
-                    color: Colors.white,
                     boxShadow: [
                       BoxShadow(
                         color: Colors.black.withOpacity(0.2),
-                        spreadRadius: 2,
-                        blurRadius: 4,
-                        offset: const Offset(0, 3),
+                        spreadRadius: 1,
+                        blurRadius: 15,
+                        offset: const Offset(5, 5),
+                      ),
+                      BoxShadow(
+                        color: primaryColor.withOpacity(0.5),
+                        spreadRadius: 1,
+                        blurRadius: 12,
+                        offset: const Offset(-5, -5),
                       )
-                    ]
+                    ],
+                    gradient: RadialGradient(
+                      colors: [
+                        cardColor,
+                        Colors.white.withOpacity(0.8),
+                      ],
+                      stops: [0.50, 1.0],
+                    ),
                 ),
                 child: Column(
                   children: [
@@ -77,69 +89,66 @@ class _AuthenticationScreenState extends State<AuthenticationScreen> {
                           children: [
                             Padding(
                                 padding: EdgeInsets.only(left: size.width/30, bottom: size.height/80),
-                            child: const Text('Correo', style: TextStyle(color: Color(0XFF7B7B7B)),),),
+                            child: const Text('Correo', style: TextStyle(color: Color(0XFF7B7B7B), fontSize: 12),),),
                             Container(
-                              height: size.height/20,
                               decoration: BoxDecoration(
-                                  color: Color(0XFFFAFAFA),
+                                  color: Colors.white.withOpacity(0.5),
                                   borderRadius: const BorderRadius.all(Radius.circular(30.0)),
                                 boxShadow: [
                                   BoxShadow(
-                                    color: Colors.grey.withOpacity(0.2),
+                                    color: Colors.black.withOpacity(0.05),
                                     spreadRadius: 2,
                                     blurRadius: 3,
-                                    offset: const Offset(0, 2),
-                                  )
+                                    offset: const Offset(1, 4),
+                                  ),
+
                                 ]
                               ),
-                              child: Padding(
-                                padding: EdgeInsets.only(top: size.height/80),
-                                child: TextFormField(
-                                  //initialValue: Provider.of<UserProvider>(context, listen: false).email,
-                                  textAlignVertical: TextAlignVertical.center,
-                                  keyboardType: TextInputType.emailAddress,
-                                  decoration: const InputDecoration(
-                                    hintStyle: TextStyle(color: Colors.grey),
-                                    hintText: 'example@example.com',
-                                    border: OutlineInputBorder(
-                                      borderSide: BorderSide(
-                                        width: 0,
-                                        style: BorderStyle.none,
-                                      ),
-                                      borderRadius: BorderRadius.all(Radius.circular(30.0)),
+                              child: TextFormField(
+                                //initialValue: Provider.of<UserProvider>(context, listen: false).email,
+                                keyboardType: TextInputType.emailAddress,
+                                style: TextStyle(fontSize: 12),
+                                decoration: const InputDecoration(
+                                  hintStyle: TextStyle(color: Colors.grey),
+                                  hintText: 'example@example.com',
+                                  border: OutlineInputBorder(
+                                    borderSide: BorderSide(
+                                      width: 0,
+                                      style: BorderStyle.none,
                                     ),
+                                    borderRadius: BorderRadius.all(Radius.circular(30.0)),
                                   ),
-                                  textInputAction: TextInputAction.next,
-                                  onSaved: (value){
-                                    Provider.of<LoginViewModel>(context, listen: false).setUserLoginDto('email', value!);
-                                  },
-                                  validator: (value) {
-                                    if (value!.isEmpty) {
-                                      return "Ingrese un correo";
-                                    }
-                                  },
                                 ),
+                                textInputAction: TextInputAction.next,
+                                onSaved: (value){
+                                  Provider.of<LoginViewModel>(context, listen: false).setUserLoginDto('email', value!);
+                                },
+                                validator: (value) {
+                                  if (value!.isEmpty) {
+                                    return "Ingrese un correo";
+                                  }
+                                },
                               ),
                             ),
                             const SizedBox(height: 20.0),
                             Padding(
                               padding: EdgeInsets.only(left: size.width/30, bottom: size.height/80),
-                              child: Text('Contraseña', style: TextStyle(color: Color(0XFF7B7B7B)),),),
+                              child: Text('Contraseña', style: TextStyle(color: Color(0XFF7B7B7B), fontSize: 12),),),
                             Container(
-                              height: size.height/20,
                               decoration: BoxDecoration(
-                                  color: Color(0XFFFAFAFA),
+                                  color: Colors.white.withOpacity(0.5),
                                   borderRadius: const BorderRadius.all(Radius.circular(30.0)),
                                   boxShadow: [
                                     BoxShadow(
-                                      color: Colors.grey.withOpacity(0.2),
+                                      color: Colors.black.withOpacity(0.05),
                                       spreadRadius: 2,
                                       blurRadius: 3,
-                                      offset: const Offset(0, 2),
+                                      offset: const Offset(1, 4),
                                     )
                                   ]
                               ),
                               child: TextFormField(
+                                style: TextStyle(fontSize: 12),
                                 //initialValue:  Provider.of<UserProvider>(context, listen: false).password,
                                 onSaved: (value){
                                   Provider.of<LoginViewModel>(context, listen: false).setUserLoginDto('password', value!);
