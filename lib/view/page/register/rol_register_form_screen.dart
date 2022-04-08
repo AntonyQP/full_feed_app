@@ -59,7 +59,7 @@ class RolRegisterFormScreenState extends State<RolRegisterFormScreen> with
         lastDate: DateTime(2025));
     if (picked != null && picked != _startDate) {
       setState(() {
-        Provider.of<RegisterViewModel>(context, listen: false).setUserRegisterDto('birthDate', DateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(picked));
+        Provider.of<RegisterViewModel>(context, listen: false).setUserRegisterDto('birthDate', DateFormat("yyyy-MM-dd").format(picked));
         _birthDayController.text = DateFormat('dd/MM/yyyy').format(picked);
       });
     }

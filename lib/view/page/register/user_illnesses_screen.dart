@@ -76,11 +76,12 @@ class _UserIllnessesScreenState extends State<UserIllnessesScreen> {
                       }
                     }
                   }
-                  await Provider.of<IllnessListViewModel>(context, listen: false).setPatientIllnesses(registerIllnesses);
-                  await Provider.of<IllnessListViewModel>(context, listen: false).registerPatientIllnesses().then((value){
-                    if(value){
-                      widget.goToNextPage();
-                    }
+                  await Provider.of<IllnessListViewModel>(context, listen: false).setPatientIllnesses(registerIllnesses).whenComplete(() {
+                    Provider.of<IllnessListViewModel>(context, listen: false).registerPatientIllnesses().then((value){
+                      if(value){
+                        widget.goToNextPage();
+                      }
+                    });
                   });
                 },
                 elevation: 1,

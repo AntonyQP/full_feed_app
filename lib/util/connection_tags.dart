@@ -1,6 +1,7 @@
 
 
-const String baseUrl = "https://fullfeed-aq.herokuapp.com/";
+//const String baseUrl = "https://fullfeed-aq.herokuapp.com/";
+const String baseUrl = "https://fullfeed-backend.azurewebsites.net/";
 
 //Endpoints
 

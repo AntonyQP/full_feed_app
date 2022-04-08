@@ -250,23 +250,23 @@ class RegisterViewModel extends ChangeNotifier{
 
   categorizeLists(List<Preference> preferenceList){
     for(int i = 0; i < preferenceList.length; i++){
-      if(preferenceList[i].category!.categoryId == 4){
+      if(preferenceList[i].category!.categoryId == 1){
         _meats.add(preferenceList[i]);
         continue;
       }
-      if(preferenceList[i].category!.categoryId == 14){
+      if(preferenceList[i].category!.categoryId == 2){
         _vegetables.add(preferenceList[i]);
         continue;
       }
-      if(preferenceList[i].category!.categoryId == 24){
+      if(preferenceList[i].category!.categoryId == 3){
         _seafood.add(preferenceList[i]);
         continue;
       }
-      if(preferenceList[i].category!.categoryId == 34){
+      if(preferenceList[i].category!.categoryId == 4){
         _tubers.add(preferenceList[i]);
         continue;
       }
-      if(preferenceList[i].category!.categoryId == 44){
+      if(preferenceList[i].category!.categoryId == 5){
         _fruits.add(preferenceList[i]);
         continue;
       }

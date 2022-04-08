@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:dio/dio.dart';
 import 'package:full_feed_app/model/entities/patient.dart';
+import 'package:full_feed_app/util/MultipartRequestEx.dart';
 import 'package:intl/intl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -192,18 +193,39 @@ class UserService{
 
   Future<bool> registerPatient(Map<dynamic, dynamic> newPatient) async{
 
-    var api = baseUrl + userEndpoint + patientRegister;
+    // var api = baseUrl + userEndpoint + patientRegister;
+    //
+    // final dio = Dio();
+    // Response response;
+    // response = await dio.post(api, data: newPatient);
+    // if(response.statusCode == 201){
+    //   return true;
+    // }
+    // return false;
 
-    final dio = Dio();
-    Response response;
-    response = await dio.post(api, data: newPatient);
+    String newPatientJson = json.encode(newPatient);
+
+    MultipartField request = MultipartField(newPatientJson,headers: {
+      Headers.contentTypeHeader : Headers.jsonContentType
+    });
+
+    var uri = Uri.parse(baseUrl + userEndpoint + patientRegister);
+    var req = MultipartRequestEx('POST', uri)
+      ..fields["request"] = request;
+
+    print(newPatient.toString());
+
+
+    final response = await req.send();
+    final respStr = await response.stream.bytesToString();
+    print(respStr);
+
     if(response.statusCode == 201){
-      // email = newPatient.email;
-      // password = newPatient.password;
       return true;
     }
     return false;
   }
+
 
   Future<bool> registerDoctor(Map<dynamic, dynamic> newDoctor) async{
 

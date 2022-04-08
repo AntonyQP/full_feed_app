@@ -13,7 +13,7 @@ class IllnessListViewModel extends ChangeNotifier {
 
   late List<IllnessViewModel> _registerPatientIllnesses;
 
-  setPatientIllnesses(List<IllnessViewModel> illnesses) {
+  Future<void> setPatientIllnesses(List<IllnessViewModel> illnesses)  async {
     _registerPatientIllnesses = illnesses;
   }
 
