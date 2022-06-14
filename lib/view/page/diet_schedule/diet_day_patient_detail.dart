@@ -11,6 +11,8 @@ import 'package:provider/provider.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
 
+import '../../../domain/service/user_service.dart';
+import '../../../model/entities/illness.dart';
 import '../../../view_model/profile_view_model.dart';
 import '../../widget/diet_schedule/patient_detail_card.dart';
 import 'diet_calendar_page.dart';
@@ -95,18 +97,6 @@ class DietDayPatientDetailState extends State<DietDayPatientDetail> {
               return Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Padding(
-                    padding: const EdgeInsets.only(left: 25.0),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        Image.asset(logoImagePath, width: 40,
-                            height: 40, fit: BoxFit.contain),
-                        Image.asset(logoTextPath, width: 70,
-                            height: 70, fit: BoxFit.contain)
-                      ],
-                    ),
-                  ),
                   SizedBox(
                     height: size.height*1.5,
                     child: PageView(
@@ -142,34 +132,40 @@ class DietDayPatientDetailState extends State<DietDayPatientDetail> {
                               ],
                             ),
                             Container(
+                              margin: EdgeInsets.all(5),
                               padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
                               decoration: BoxDecoration(
-                                  borderRadius: const BorderRadius.all(Radius.circular(20)),
-                                  boxShadow: [
-                                    BoxShadow(
-                                      color: Colors.grey.withOpacity(0.1),
-                                      spreadRadius: 1,
-                                      blurRadius: 2,
-                                      offset: const Offset(0, 5), // changes position of shadow
-                                    ),
+                                  borderRadius: const BorderRadius.all(Radius.circular(30)),
+                                gradient: RadialGradient(
+                                  colors: [
+                                    cardColor,
+                                    Colors.white.withOpacity(0.9),
                                   ],
-                                  color: Colors.white
+                                  stops: [0.5, 1.0],
+                                ),
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: Colors.black.withOpacity(0.15),
+                                    spreadRadius: 1,
+                                    blurRadius: 15,
+                                    offset: const Offset(5, 5),
+                                  ),
+                                  BoxShadow(
+                                    color: Colors.white.withOpacity(0.005),
+                                    spreadRadius: 1,
+                                    blurRadius: 12,
+                                    offset: const Offset(-5, -5),
+                                  )
+                                ],
                               ),
                               width: size.width,
                               child: Column(
                                 children: [
                                   Row(
                                     children: [
-                                      Container(
-                                        width: 80,
-                                        height: 80,
-                                        decoration: const BoxDecoration(
-                                          borderRadius: BorderRadius.all(Radius.circular(100.0)),
-                                          color: Color(0xFFFFBAB9),
-                                        ),
-                                        child: const Center(
-                                          child: FaIcon(FontAwesomeIcons.user, color: Colors.white, size: 40,) ,
-                                        ),
+                                      CircleAvatar(
+                                        backgroundImage: _patientSelected.user!.sex == 'h' ? AssetImage('assets/male_patient.jpg') : AssetImage('assets/female_patient.jpg'),
+                                        radius: size.width * 0.09,
                                       ),
                                       const SizedBox(width: 20.0),
                                       Column(
@@ -188,16 +184,70 @@ class DietDayPatientDetailState extends State<DietDayPatientDetail> {
                                                     Text(_patientSelected.user!.firstName.toString(), style: const TextStyle(fontWeight: FontWeight.w300)),
                                                   ],
                                                 ),
+                                                FutureBuilder(
+                                                    future: UserService().getPatientIllnessesByDoctor(_patientSelected.patientId!),
+                                                    builder: (context, snapshot) {
+                                                      return Container(
+                                                        width: size.width * 0.1,
+                                                        decoration: const BoxDecoration(
+                                                            color: primaryColor,
+                                                            shape: BoxShape.circle
+                                                        ),
+                                                        child: IconButton(
+                                                          icon: const FaIcon(FontAwesomeIcons.headSideMask),
+                                                          iconSize: size.width * 0.05,
+                                                          padding: EdgeInsets.all(size.width * 0.005),
+                                                          color: Colors.white,
+                                                          onPressed: (){showDialog(
+                                                              context: context,
+                                                              builder: (context){
+                                                                final _selectedPatientIllnessesList = snapshot.data as List<Illness>;
+                                                                return AlertDialog(
+                                                                  title: const Text('Enfermedades'),
+                                                                  content: SizedBox(
+                                                                    height: 100,
+                                                                    child: SingleChildScrollView(
+                                                                      child: Column(
+                                                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                                                        children: _selectedPatientIllnessesList.map((e) => Text('- ${e.name!}',
+                                                                          style: const TextStyle(color: Colors.black),
+                                                                        )).toList(),
+                                                                      ),
+                                                                    ),
+                                                                  ),
+                                                                  shape: RoundedRectangleBorder(
+                                                                      borderRadius: BorderRadius.circular(25.0)
+                                                                  ),
+                                                                  actions: [
+                                                                    ElevatedButton(
+                                                                      onPressed: (){ Navigator.pop(context); },
+                                                                      child: const Text('Volver', style: TextStyle(color: Colors.white),),
+                                                                      style: ElevatedButton.styleFrom(
+                                                                        primary: primaryColor,
+                                                                        shape: RoundedRectangleBorder(
+                                                                            borderRadius: BorderRadius.circular(25.0)
+                                                                        ),
+                                                                      ),
+                                                                    )
+                                                                  ],
+                                                                );
+                                                              }
+                                                          );},
+                                                        ),
+                                                      );
+                                                    }
+                                                ),
                                                 Container(
+                                                width: size.width * 0.1,
                                                   decoration: const BoxDecoration(
-                                                      color: Color(0xFF20D0CE),
+                                                      color: chatCardPrimaryColor,
                                                       shape: BoxShape.circle
                                                   ),
                                                   child: IconButton(
                                                     onPressed: () { _showDialog(); },
                                                     icon: Icon(Icons.edit),
                                                     color: Colors.white,
-                                                    iconSize: 30,
+                                                    iconSize: size.width * 0.05,
                                                   ),
                                                 )
                                               ],
@@ -219,41 +269,35 @@ class DietDayPatientDetailState extends State<DietDayPatientDetail> {
                                     ],
                                   ),
                                   SizedBox(
-                                    height: size.height/50,
+                                    height: size.height * 0.05,
                                   ),
                                   Wrap(
                                     spacing: 10,
                                     runSpacing: 10,
                                     children: [
                                       PatientDetailCard(asset: "assets/height.svg", text: (_patientSelected.height! / 100).toStringAsFixed(2) + " m", title: "Altura"),
-                                      PatientDetailCard(asset: "assets/weight.svg", text: _patientSelected.weight!.toStringAsFixed(2) + " kg", title: "Peso"),
-                                      PatientDetailCard(asset: "assets/bmi.svg", text: _patientSelected.imc!.toStringAsFixed(2), title: "Imc"),
-                                      PatientDetailCard(asset: "assets/age.svg", text: _patientSelected.age.toString(), title: "Edad")
+                                      PatientDetailCard(asset: "assets/weight.svg", text: _patientSelected.weight!.toStringAsFixed(1) + " kg", title: "Peso"),
+                                      PatientDetailCard(asset: "assets/bmi_icon.svg", text: _patientSelected.imc!.toStringAsFixed(2), title: "Imc"),
+                                      PatientDetailCard(asset: "assets/arm_icon.svg", text: _patientSelected.arm!.toStringAsFixed(2), title: "Brazo"),
+                                      PatientDetailCard(asset: "assets/abdominal_icon.svg", text: _patientSelected.abdominal!.toStringAsFixed(2), title: "Abdominal"),
+                                      PatientDetailCard(asset: "assets/hip_icon.svg", text: _patientSelected.tmb!.toStringAsFixed(2), title: "Cadera")
                                     ],
                                   ),
-                                ],
-                              ),
-                            ),
-                            SizedBox(
-                              height: size.height/50,
-                            ),
-                            Container(
-                              padding: EdgeInsets.symmetric(horizontal: 20, vertical: 20),
-                              decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.all(Radius.circular(20)),
-                                  boxShadow: [
-                                    BoxShadow(
-                                      color: Colors.grey.withOpacity(0.1),
-                                      spreadRadius: 1,
-                                      blurRadius: 2,
-                                      offset: Offset(0, 5), // changes position of shadow
-                                    ),
-                                  ],
-                                  color: Colors.white
-                              ),
-                              width: size.width,
-                              child: Column(
-                                children: [
+                                  SizedBox(
+                                    height: size.height * 0.05,
+                                  ),
+                                  Row(
+                                    children: const [
+                                      FaIcon(FontAwesomeIcons.balanceScale, color: darkColor, size: 12,),
+                                      Padding(
+                                        padding: EdgeInsets.only(left: 10),
+                                        child: Text('Balance consumido', style: TextStyle(color: darkColor, fontWeight: FontWeight.bold),),
+                                      )
+                                    ],
+                                  ),
+                                  SizedBox(
+                                    height: size.height * 0.02,
+                                  ),
                                   Align(
                                     alignment: Alignment.center,
                                     child: isPressed == false ?
@@ -265,7 +309,7 @@ class DietDayPatientDetailState extends State<DietDayPatientDetail> {
                                       },
                                       style: ElevatedButton.styleFrom(
                                         elevation: 0,
-                                        primary: const Color(0xFF20D0CE),
+                                        primary: primaryColor,
                                         fixedSize: const Size(350.0, 15.0),
                                         shape: RoundedRectangleBorder(
                                             borderRadius: BorderRadius.circular(50)),),
@@ -273,7 +317,7 @@ class DietDayPatientDetailState extends State<DietDayPatientDetail> {
                                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                         children: const [
                                           Icon(Icons.arrow_back_ios_rounded),
-                                          Text('Carbohidratos', style: TextStyle(fontSize: 12),),
+                                          Text('Carbohidratos (kcal)', style: TextStyle(fontSize: 12),),
                                           Icon(Icons.arrow_forward_ios_rounded),
                                         ],
                                       ),
@@ -285,7 +329,7 @@ class DietDayPatientDetailState extends State<DietDayPatientDetail> {
                                       },
                                       style: ElevatedButton.styleFrom(
                                         elevation: 0,
-                                        primary: chartTitleCardColor,
+                                        primary: chatCardPrimaryColor,
                                         fixedSize: const Size(350.0, 15.0),
                                         shape: RoundedRectangleBorder(
                                             borderRadius: BorderRadius.circular(50)),
@@ -294,14 +338,14 @@ class DietDayPatientDetailState extends State<DietDayPatientDetail> {
                                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                         children: const [
                                           Icon(Icons.arrow_back_ios_rounded),
-                                          Text('Proteínas', style: TextStyle(fontSize: 12)),
+                                          Text('Proteínas (kcal)', style: TextStyle(fontSize: 12)),
                                           Icon(Icons.arrow_forward_ios_rounded),
                                         ],
                                       ),
                                     ),
                                   ),
                                   SizedBox(
-                                    height: size.height/80,
+                                    height: size.height * 0.02,
                                   ),
                                   SizedBox(
                                       width: size.width,
@@ -330,7 +374,7 @@ class DietDayPatientDetailState extends State<DietDayPatientDetail> {
                                                       maximum: 250,
                                                       interval: 50,
                                                       decimalPlaces: 1,
-                                                      labelFormat: '{value} kcal',
+                                                      labelFormat: '{value}',
                                                       labelStyle: GoogleFonts.lato(),
                                                     ),
                                                     series: <CartesianSeries> [
@@ -361,7 +405,7 @@ class DietDayPatientDetailState extends State<DietDayPatientDetail> {
                                                       maximum: 250,
                                                       interval: 50,
                                                       decimalPlaces: 1,
-                                                      labelFormat: '{value} kcal',
+                                                      labelFormat: '{value}',
                                                       labelStyle: GoogleFonts.lato(),
                                                     ),
                                                     series: <CartesianSeries> [
@@ -389,38 +433,20 @@ class DietDayPatientDetailState extends State<DietDayPatientDetail> {
                                         },
                                       )
                                   ),
-                                ],
-                              ),
-                            ),
-                            SizedBox(
-                              height: size.height/50,
-                            ),
-                            Container(
-                              padding: EdgeInsets.symmetric(horizontal: 20, vertical: 20),
-                              decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.all(Radius.circular(20)),
-                                  boxShadow: [
-                                    BoxShadow(
-                                      color: Colors.grey.withOpacity(0.1),
-                                      spreadRadius: 1,
-                                      blurRadius: 2,
-                                      offset: Offset(0, 5), // changes position of shadow
-                                    ),
-                                  ],
-                                  color: Colors.white
-                              ),
-                              width: size.width,
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
+                                  SizedBox(
+                                    height: size.height * 0.05,
+                                  ),
                                   Row(
                                     children: const [
-                                      FaIcon(FontAwesomeIcons.weight, color: primaryColor, size: 12,),
+                                      FaIcon(FontAwesomeIcons.weight, color: darkColor, size: 12,),
                                       Padding(
                                         padding: EdgeInsets.only(left: 10),
-                                        child: Text('Evolución del Peso', style: TextStyle(color: primaryColor, fontWeight: FontWeight.bold),),
+                                        child: Text('Evolución del Peso', style: TextStyle(color: darkColor, fontWeight: FontWeight.bold),),
                                       )
                                     ],
+                                  ),
+                                  SizedBox(
+                                    height: size.height * 0.02,
                                   ),
                                   Container(
                                       padding: EdgeInsets.all(10),
@@ -437,7 +463,7 @@ class DietDayPatientDetailState extends State<DietDayPatientDetail> {
                                                 majorGridLines: const MajorGridLines(width: 0),
                                                 labelPlacement: LabelPlacement.betweenTicks,
                                                 interval: 1,
-                                                labelStyle: GoogleFonts.lato(),
+                                                labelStyle: TextStyle(fontSize: 8),
                                               ),
                                               primaryYAxis: NumericAxis(
                                                 majorGridLines: const MajorGridLines(width: 0),
@@ -445,7 +471,7 @@ class DietDayPatientDetailState extends State<DietDayPatientDetail> {
                                                 maximum: 100,
                                                 interval: 10,
                                                 decimalPlaces: 1,
-                                                labelFormat: '{value} Kg',
+                                                labelFormat: '{value}',
                                                 labelStyle: GoogleFonts.lato(),
                                               ),
                                               series: <ChartSeries> [
@@ -453,8 +479,8 @@ class DietDayPatientDetailState extends State<DietDayPatientDetail> {
                                                   dataSource: snapshot.data!,
                                                   yValueMapper: (WeightData weight, _) => weight.lostWeight,
                                                   xValueMapper: (WeightData weight, _) => weight.month.toString(),
-                                                  color: chartLineColor,
-                                                  width: 2,
+                                                  color: darkColor,
+                                                  width: 3,
                                                 ),
                                               ],
                                             );
@@ -473,7 +499,10 @@ class DietDayPatientDetailState extends State<DietDayPatientDetail> {
                                   ),
                                 ],
                               ),
-                            )
+                            ),
+                            SizedBox(
+                              height: size.height/50,
+                            ),
                           ],
                         ),
                         Column(
@@ -495,18 +524,31 @@ class DietDayPatientDetailState extends State<DietDayPatientDetail> {
                               ],
                             ),
                             Container(
+                              margin: EdgeInsets.all(5),
                               padding: EdgeInsets.symmetric(horizontal: 20, vertical: 20),
                               decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.all(Radius.circular(20)),
-                                  boxShadow: [
-                                    BoxShadow(
-                                      color: Colors.grey.withOpacity(0.1),
-                                      spreadRadius: 1,
-                                      blurRadius: 2,
-                                      offset: Offset(0, 5), // changes position of shadow
-                                    ),
+                                  borderRadius: BorderRadius.all(Radius.circular(30)),
+                                gradient: RadialGradient(
+                                  colors: [
+                                    cardColor,
+                                    Colors.white.withOpacity(0.9),
                                   ],
-                                  color: Colors.white
+                                  stops: [0.5, 1.0],
+                                ),
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: Colors.black.withOpacity(0.15),
+                                    spreadRadius: 1,
+                                    blurRadius: 15,
+                                    offset: const Offset(5, 5),
+                                  ),
+                                  BoxShadow(
+                                    color: Colors.white.withOpacity(0.005),
+                                    spreadRadius: 1,
+                                    blurRadius: 12,
+                                    offset: const Offset(-5, -5),
+                                  )
+                                ],
                               ),
                               height: size.height/1.5,
                               width: size.width,

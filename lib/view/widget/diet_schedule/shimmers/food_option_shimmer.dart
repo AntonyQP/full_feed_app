@@ -65,8 +65,8 @@ class FoodOptionShimmerState extends State<FoodOptionShimmer> {
                 ],
               )
           ),
-          baseColor: foodShimmerColor,
-          highlightColor: foodDetailHighLightColor
+          baseColor: primaryColor,
+          highlightColor: secondaryColor
       ),
     );
   }

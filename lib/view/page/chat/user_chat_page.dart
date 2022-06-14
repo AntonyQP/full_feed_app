@@ -48,34 +48,42 @@ class _UserChatPageState extends State<UserChatPage> with
         channel: channel,
         child: Container(
             margin: const EdgeInsets.fromLTRB(10.0, 50.0, 10.0, 20.0),
-            padding: EdgeInsets.only(bottom: size.height/80),
             height: size.height,
             width: size.width,
             decoration: BoxDecoration(
                 borderRadius: const BorderRadius.all(Radius.circular(30.0)),
-                color: Colors.white,
                 boxShadow: [
                   BoxShadow(
-                    color: Colors.grey.withOpacity(0.1),
-                    spreadRadius: 3,
-                    blurRadius: 2,
-                    offset: const Offset(0, 3),
+                    color: Colors.black.withOpacity(0.2),
+                    spreadRadius: 1,
+                    blurRadius: 15,
+                    offset: const Offset(5, 5),
+                  ),
+                  BoxShadow(
+                    color: Colors.white.withOpacity(0.5),
+                    spreadRadius: 1,
+                    blurRadius: 12,
+                    offset: const Offset(-5, -5),
                   )
-                ]
+                ],
+                gradient: RadialGradient(
+                  colors: [
+                    cardColor,
+                    Colors.white.withOpacity(0.35),
+                  ],
+                  stops: [0.50, 1.0],
+                ),
             ),
             child: ClipRRect(
               borderRadius: const BorderRadius.all(Radius.circular(30.0)),
               child: Stack(
                 children: [
                   Container(
+                    padding: EdgeInsets.symmetric(horizontal: size.width * 0.02, vertical: size.height * 0.02),
                     width: size.width,
-                    height: size.height/11,
                     decoration: const BoxDecoration(
                         color: primaryColor
                     ),
-                  ),
-                  Padding(
-                    padding: EdgeInsets.symmetric(horizontal: size.width/20, vertical: size.height/80),
                     child: Column(
                       children: [
                         Row(
@@ -89,7 +97,7 @@ class _UserChatPageState extends State<UserChatPage> with
                               splashColor: Colors.white,
                               child: Container(
                                 decoration: const BoxDecoration(
-                                  borderRadius: BorderRadius.all(Radius.circular(15.0))
+                                    borderRadius: BorderRadius.all(Radius.circular(15.0))
                                 ),
                                 child: Row(
                                   children: [
@@ -97,14 +105,10 @@ class _UserChatPageState extends State<UserChatPage> with
                                     SizedBox(
                                       width: size.width/50,
                                     ),
-                                    Container(
-                                      width: 60,
-                                      height: 60,
-                                      decoration: const BoxDecoration(
-                                          borderRadius: BorderRadius.all(Radius.circular(10.0)),
-                                          color: Colors.white
-                                      ),
-                                    ),
+                                    const CircleAvatar(
+                                      backgroundColor: Colors.white,
+                                      radius: 30,
+                                    )
                                   ],
                                 ),
                               ),
@@ -125,19 +129,18 @@ class _UserChatPageState extends State<UserChatPage> with
                       ],
                     ),
                   ),
-                  Align(
-                    alignment: Alignment.bottomCenter,
-                    child: Padding(
-                      padding: EdgeInsets.only(top: size.height/10),
-                      child: Column(
-                        children: [
-                          Expanded(
-                            child: MessageListView(),
+                  Padding(
+                    padding: EdgeInsets.only(top: size.height * 0.1),
+                    child: Column(
+                      children: [
+                        Expanded(
+                          child: MessageListView(
+                            messageHighlightColor: primaryColor,
                           ),
-                          MessageInput(
-                          )
-                        ],
-                      ),
+                        ),
+                        MessageInput(
+                        )
+                      ],
                     ),
                   )
                 ],

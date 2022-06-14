@@ -12,6 +12,7 @@ class DietProvider with ChangeNotifier {
 
   bool firstDayEntry = true;
   late DietDayDetailViewModel _dayDetailViewModel;
+  int optionSelected = -1;
 
   bool _isAlternativeMealSelected = false;
   int _foodSelectedIndex = 0;
@@ -59,12 +60,14 @@ class DietProvider with ChangeNotifier {
   }
 
   setAlternativeMeal(int index){
+    optionSelected = index;
     _dayDetailViewModel.setAlternativeMeal(index);
     _isAlternativeMealSelected = true;
     notifyListeners();
   }
 
   deselectAlternativeMeal(){
+    optionSelected = -1;
     _isAlternativeMealSelected = false;
     notifyListeners();
   }

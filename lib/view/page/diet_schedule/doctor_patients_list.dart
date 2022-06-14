@@ -42,12 +42,16 @@ class DoctorPatientsListState extends State<DoctorPatientsList> with
     return SizedBox(
         height: size.height,
         child: Padding(
-          padding: EdgeInsets.symmetric(horizontal: size.width/20, vertical: 15.0),
-          child: Provider.of<LoggedInViewModel>(context, listen: false).getPatientsByDoctor().isNotEmpty ?
+          padding: EdgeInsets.symmetric(vertical: 15.0),
+          child:
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text('Pacientes', style: TextStyle(fontSize: size.width/20, color: primaryColor, fontWeight: FontWeight.bold),),
+              Padding(
+                padding: const EdgeInsets.only(left: 20.0, top: 10),
+                child: Text('Pacientes', style: TextStyle(fontSize: size.width/20, color: primaryColor, fontWeight: FontWeight.bold),),
+              ),
+              Provider.of<LoggedInViewModel>(context, listen: false).getPatientsByDoctor().isNotEmpty ?
               Expanded(
                 child: Padding(
                   padding: EdgeInsets.only(top: size.height/70),
@@ -71,17 +75,20 @@ class DoctorPatientsListState extends State<DoctorPatientsList> with
                       );
                     },
                   ),
-                ),)
+                ),) : SizedBox(
+                height: size.height * 0.8,
+                child: Center(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      FaIcon(FontAwesomeIcons.exclamationCircle, color: Colors.black26, size: size.width/10,),
+                      const Text("Aun no tiene pacientes", style: TextStyle(color: Colors.black26),)
+                    ],
+                  ),
+                ),
+              ),
             ],
-          ) : Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                FaIcon(FontAwesomeIcons.exclamationCircle, color: Colors.black26, size: size.width/10,),
-                const Text("Aun no tiene pacientes", style: TextStyle(color: Colors.black26),)
-              ],
-            ),
-          ),
+          )
         )
     );
   }

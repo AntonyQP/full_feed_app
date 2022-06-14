@@ -124,29 +124,23 @@ class UserRegisterFormScreenState extends State<UserRegisterFormScreen> with
                       ]),
                 ),
                 Container(
-                  height: size.height/20,
-                  decoration: BoxDecoration(
-                      color: const Color(0XFFFAFAFA),
-                      borderRadius: const BorderRadius.all(Radius.circular(30.0)),
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.grey.withOpacity(0.2),
-                          spreadRadius: 2,
-                          blurRadius: 3,
-                          offset: const Offset(0, 2),
-                        )
-                      ]
-                  ),
-                  child: Padding(
-                    padding: EdgeInsets.only(top: size.height/80),
+                  padding: const EdgeInsets.symmetric(horizontal: 5),
+                  child: Material(
+                    color: Colors.transparent,
+                    elevation: 10.0,
+                    shadowColor: Colors.black.withOpacity(0.2),
+                    borderRadius: BorderRadius.all(Radius.circular(30)),
                     child: TextFormField(
+                      style: TextStyle(fontSize: 12),
                       onSaved: (value){
                         Provider.of<RegisterViewModel>(context, listen: false).setUserRegisterDto('firstName', value);
                       },
-                      decoration: const InputDecoration(
+                      decoration: InputDecoration(
+                        filled: true,
+                        fillColor: Colors.white.withOpacity(0.7),
                         hintStyle: TextStyle(color: Colors.grey),
                         hintText: 'Nombres',
-                        border: OutlineInputBorder(
+                        border: const OutlineInputBorder(
                           borderSide: BorderSide(
                             width: 0,
                             style: BorderStyle.none,
@@ -154,38 +148,36 @@ class UserRegisterFormScreenState extends State<UserRegisterFormScreen> with
                           borderRadius: BorderRadius.all(Radius.circular(30.0)),
                         ),),
                       textInputAction: TextInputAction.next,
+                      autovalidateMode: AutovalidateMode.onUserInteraction,
                       validator: (value) {
                         if (value!.isEmpty) {
                           return "Ingrese un nombre";
+                        }
+                        if(!RegExp(r"^[a-zA-ZÀ-ÿ ´]+$").hasMatch(value)){
+                          return "Ingrese un nombre válido";
                         }
                       },
                     ),
                   ),
                 ),
                 Container(
-                  height: size.height/20,
-                  decoration: BoxDecoration(
-                      color: Color(0XFFFAFAFA),
-                      borderRadius: const BorderRadius.all(Radius.circular(30.0)),
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.grey.withOpacity(0.2),
-                          spreadRadius: 2,
-                          blurRadius: 3,
-                          offset: const Offset(0, 2),
-                        )
-                      ]
-                  ),
-                  child: Padding(
-                    padding: EdgeInsets.only(top: size.height/80),
+                  padding: const EdgeInsets.symmetric(horizontal: 5),
+                  child: Material(
+                    color: Colors.transparent,
+                    elevation: 10.0,
+                    shadowColor: Colors.black.withOpacity(0.2),
+                    borderRadius: BorderRadius.all(Radius.circular(30)),
                     child: TextFormField(
+                        style: TextStyle(fontSize: 12),
                         onSaved: (value){
                           Provider.of<RegisterViewModel>(context, listen: false).setUserRegisterDto('lastName', value);
                         },
-                        decoration: const InputDecoration(
+                        decoration: InputDecoration(
+                            filled: true,
+                            fillColor: Colors.white.withOpacity(0.7),
                             hintStyle: TextStyle(color: Colors.grey),
                             hintText: 'Apellidos',
-                            border: OutlineInputBorder(
+                            border: const OutlineInputBorder(
                               borderSide: BorderSide(
                                 width: 0,
                                 style: BorderStyle.none,
@@ -193,39 +185,37 @@ class UserRegisterFormScreenState extends State<UserRegisterFormScreen> with
                               borderRadius: BorderRadius.all(Radius.circular(30.0)),
                             )),
                         textInputAction: TextInputAction.next,
+                        autovalidateMode: AutovalidateMode.onUserInteraction,
                         validator: (value) {
                           if (value!.isEmpty) {
                             return "Ingrese un apellido";
+                          }
+                          if(!RegExp(r"^[a-zA-ZÀ-ÿ ´]+$").hasMatch(value)){
+                            return "Ingrese un apellido válido";
                           }
                         }
                     ),
                   ),
                 ),
                 Container(
-                  height: size.height/20,
-                  decoration: BoxDecoration(
-                      color: Color(0XFFFAFAFA),
-                      borderRadius: const BorderRadius.all(Radius.circular(30.0)),
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.grey.withOpacity(0.2),
-                          spreadRadius: 2,
-                          blurRadius: 3,
-                          offset: const Offset(0, 2),
-                        )
-                      ]
-                  ),
-                  child: Padding(
-                    padding: EdgeInsets.only(top: size.height/80),
+                  padding: const EdgeInsets.symmetric(horizontal: 5),
+                  child: Material(
+                    color: Colors.transparent,
+                    elevation: 10.0,
+                    shadowColor: Colors.black.withOpacity(0.2),
+                    borderRadius: BorderRadius.all(Radius.circular(30)),
                     child: TextFormField(
+                        style: TextStyle(fontSize: 12),
                         keyboardType: TextInputType.number,
                         onSaved: (value){
                           Provider.of<RegisterViewModel>(context, listen: false).setUserRegisterDto('dni', value);
                         },
-                        decoration: const InputDecoration(
+                        decoration: InputDecoration(
+                            filled: true,
+                            fillColor: Colors.white.withOpacity(0.7),
                             hintStyle: TextStyle(color: Colors.grey),
                             hintText: 'DNI',
-                            border: OutlineInputBorder(
+                            border: const OutlineInputBorder(
                               borderSide: BorderSide(
                                 width: 0,
                                 style: BorderStyle.none,
@@ -233,6 +223,7 @@ class UserRegisterFormScreenState extends State<UserRegisterFormScreen> with
                               borderRadius: BorderRadius.all(Radius.circular(30.0)),
                             )),
                         textInputAction: TextInputAction.next,
+                        autovalidateMode: AutovalidateMode.onUserInteraction,
                         validator: (value) {
                           if (value!.isEmpty) {
                             return "Ingrese su dni";
@@ -245,30 +236,24 @@ class UserRegisterFormScreenState extends State<UserRegisterFormScreen> with
                   ),
                 ),
                 Container(
-                  height: size.height/20,
-                  decoration: BoxDecoration(
-                      color: Color(0XFFFAFAFA),
-                      borderRadius: const BorderRadius.all(Radius.circular(30.0)),
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.grey.withOpacity(0.2),
-                          spreadRadius: 2,
-                          blurRadius: 3,
-                          offset: const Offset(0, 2),
-                        )
-                      ]
-                  ),
-                  child: Padding(
-                    padding: EdgeInsets.only(top: size.height/80),
+                  padding: const EdgeInsets.symmetric(horizontal: 5),
+                  child: Material(
+                    color: Colors.transparent,
+                    elevation: 10.0,
+                    shadowColor: Colors.black.withOpacity(0.2),
+                    borderRadius: BorderRadius.all(Radius.circular(30)),
                     child: TextFormField(
+                        style: TextStyle(fontSize: 12),
                         keyboardType: TextInputType.number,
                         onSaved: (value){
                           Provider.of<RegisterViewModel>(context, listen: false).setUserRegisterDto('phone', value);
                         },
-                        decoration: const InputDecoration(
+                        decoration: InputDecoration(
+                            filled: true,
+                            fillColor: Colors.white.withOpacity(0.7),
                             hintStyle: TextStyle(color: Colors.grey),
                             hintText: 'Teléfono',
-                            border: OutlineInputBorder(
+                            border: const OutlineInputBorder(
                               borderSide: BorderSide(
                                 width: 0,
                                 style: BorderStyle.none,
@@ -276,6 +261,7 @@ class UserRegisterFormScreenState extends State<UserRegisterFormScreen> with
                               borderRadius: BorderRadius.all(Radius.circular(30.0)),
                             )),
                         textInputAction: TextInputAction.next,
+                        autovalidateMode: AutovalidateMode.onUserInteraction,
                         validator: (value) {
                           if (value!.isEmpty) {
                             return "Ingrese su telefono";
@@ -285,64 +271,57 @@ class UserRegisterFormScreenState extends State<UserRegisterFormScreen> with
                   ),
                 ),
                 Container(
-                  height: size.height/20,
-                  decoration: BoxDecoration(
-                      color: Color(0XFFFAFAFA),
-                      borderRadius: const BorderRadius.all(Radius.circular(30.0)),
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.grey.withOpacity(0.2),
-                          spreadRadius: 2,
-                          blurRadius: 3,
-                          offset: const Offset(0, 2),
-                        )
-                      ]
-                  ),
-                  child: Padding(
-                    padding: EdgeInsets.only(top: size.height/80),
+                  padding: const EdgeInsets.symmetric(horizontal: 5),
+                  child: Material(
+                    color: Colors.transparent,
+                    elevation: 10.0,
+                    shadowColor: Colors.black.withOpacity(0.2),
+                    borderRadius: BorderRadius.all(Radius.circular(30)),
                     child: TextFormField(
+                        style: TextStyle(fontSize: 12),
                         onSaved: (value){
                           Provider.of<RegisterViewModel>(context, listen: false).setUserRegisterDto('email', value);
                         },
-                        decoration: const InputDecoration(
+                        decoration: InputDecoration(
+                          filled: true,
+                          fillColor: Colors.white.withOpacity(0.7),
                           hintStyle: TextStyle(color: Colors.grey),
                           hintText: 'Correo',
-                          border: OutlineInputBorder(
+                          border: const OutlineInputBorder(
                               borderSide: BorderSide(
                                 width: 0,
                                 style: BorderStyle.none,
                               ),
                               borderRadius: BorderRadius.all(Radius.circular(30.0))),),
                         textInputAction: TextInputAction.next,
+                        autovalidateMode: AutovalidateMode.onUserInteraction,
+                        keyboardType: TextInputType.emailAddress,
                         validator: (value) {
                           if (value!.isEmpty) {
                             return "Ingrese su correo";
+                          }
+                          if (!value.contains("@") || !value.contains(".com")) {
+                            return "Ingrese un correo valido";
                           }
                         }
                     ),
                   ),
                 ),
                 Container(
-                  height: size.height/20,
-                  decoration: BoxDecoration(
-                      color: Color(0XFFFAFAFA),
-                      borderRadius: const BorderRadius.all(Radius.circular(30.0)),
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.grey.withOpacity(0.2),
-                          spreadRadius: 2,
-                          blurRadius: 3,
-                          offset: const Offset(0, 2),
-                        )
-                      ]
-                  ),
-                  child: Padding(
-                    padding: EdgeInsets.only(top: size.height/80),
+                  padding: const EdgeInsets.symmetric(horizontal: 5),
+                  child: Material(
+                    color: Colors.transparent,
+                    elevation: 10.0,
+                    shadowColor: Colors.black.withOpacity(0.2),
+                    borderRadius: BorderRadius.all(Radius.circular(30)),
                     child: TextFormField(
+                        style: TextStyle(fontSize: 12),
                         onSaved: (value){
                           Provider.of<RegisterViewModel>(context, listen: false).setUserRegisterDto('password', value);
                         },
                         decoration: InputDecoration(
+                            filled: true,
+                            fillColor: Colors.white.withOpacity(0.7),
                             hintStyle: const TextStyle(color: Colors.grey),
                             hintText: 'Contraseña',
                             border: const OutlineInputBorder(
@@ -351,14 +330,11 @@ class UserRegisterFormScreenState extends State<UserRegisterFormScreen> with
                                   style: BorderStyle.none,
                                 ),
                                 borderRadius: BorderRadius.all(Radius.circular(30.0))),
-                            suffixIcon: Padding(
-                              padding: EdgeInsets.only(bottom: size.height/80),
-                              child: InkWell(
-                                child: isHiddenPassword == true
-                                    ? const Icon(Icons.visibility, size: 20, color: primaryColor,)
-                                    : const Icon(Icons.visibility_off, size: 20, color: primaryColor,),
-                                onTap: _togglePassword,
-                              ),
+                            suffixIcon: InkWell(
+                              child: isHiddenPassword == true
+                                  ? const Icon(Icons.visibility, size: 20, color: primaryColor,)
+                                  : const Icon(Icons.visibility_off, size: 20, color: primaryColor,),
+                              onTap: _togglePassword,
                             )),
                         obscureText: isHiddenPassword,
                         textInputAction: TextInputAction.done,
@@ -371,7 +347,7 @@ class UserRegisterFormScreenState extends State<UserRegisterFormScreen> with
                   ),
                 ),
               ].map((children) =>
-                  Padding(padding: const EdgeInsets.fromLTRB(25, 15, 25, 15),
+                  Padding(padding: const EdgeInsets.fromLTRB(25, 5, 25, 15),
                       child: children)).toList(),
             ),
           ),

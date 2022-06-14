@@ -53,16 +53,20 @@ class _ChatScreenState extends State<ChatScreen> with
 
     return SizedBox(
       height: size.height,
-      child: Provider.of<LoggedInViewModel>(context).getPatientsByDoctor().isNotEmpty || isPatient() ?
+      child:
       ListView(
         padding: EdgeInsets.zero,
         //crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text('Chats', style: TextStyle(fontSize: 20, color: primaryColor, fontWeight: FontWeight.bold),),
-          !isPatient() ?
+          const Padding(
+            padding: EdgeInsets.only(left: 20),
+            child: Text('Chats', style: TextStyle(fontSize: 20, color: primaryColor, fontWeight: FontWeight.bold),)),
+          Provider.of<LoggedInViewModel>(context).getPatientsByDoctor().isNotEmpty || isPatient() ?
           SizedBox(
             height: size.height,
-            child: ListView(
+            child:
+            !isPatient() ?
+            ListView(
               physics: const BouncingScrollPhysics(),
               padding: const EdgeInsets.only(bottom: 200),
               children: List.generate(Provider.of<LoggedInViewModel>(context, listen: false).getPatientsByDoctor().length, (index) =>
@@ -74,14 +78,12 @@ class _ChatScreenState extends State<ChatScreen> with
                     },
                     child: Padding(
                         padding: EdgeInsets.symmetric(vertical: size.height/80),
-                        child: ChatListItem(title: "Paciente", name: Provider.of<LoggedInViewModel>(context, listen: false).getPatientsByDoctor()[index].user!.firstName.toString(),)
+                        child: ChatListItem(index: index, title: "Paciente", name: Provider.of<LoggedInViewModel>(context, listen: false).getPatientsByDoctor()[index].user!.firstName.toString(),
+                            sex: Provider.of<LoggedInViewModel>(context, listen: false).getPatientsByDoctor()[index].user!.sex.toString())
                     ),
                   )
               ),
-            ),
-          ) : SizedBox(
-            height: size.height,
-            child: ListView(
+            ) : ListView(
               padding: EdgeInsets.zero,
               children: [
                 InkWell(
@@ -92,24 +94,26 @@ class _ChatScreenState extends State<ChatScreen> with
                   },
                   child: Padding(
                       padding: EdgeInsets.symmetric(vertical: size.height/80),
-                      child: ChatListItem(title: "Doctor", name: Provider.of<LoggedInViewModel>(context, listen: false).getDoctorByPatient().user!.firstName.toString(),)
+                      child: ChatListItem(index: 0, title: "Doctor", name: Provider.of<LoggedInViewModel>(context, listen: false).getDoctorByPatient().user!.firstName.toString(),
+                      sex: Provider.of<LoggedInViewModel>(context, listen: false).getDoctorByPatient().user!.sex.toString(),)
                   ),
                 ),
               ],
             ),
+          ) : SizedBox(
+            height: size.height * 0.8,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                FaIcon(FontAwesomeIcons.exclamationCircle, color: Colors.black26, size: size.width/10,),
+                SizedBox(
+                  width: size.width/2,
+                  child: const Text("Aun no tiene mensajes de sus pacientes", style: TextStyle(color: Colors.black26), textAlign: TextAlign.center,),
+                )
+              ],
+            ),
           )
         ],
-      ) : Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            FaIcon(FontAwesomeIcons.exclamationCircle, color: Colors.black26, size: size.width/10,),
-            SizedBox(
-              width: size.width/2,
-              child: const Text("Aun no tiene mensajes de sus pacientes", style: TextStyle(color: Colors.black26), textAlign: TextAlign.center,),
-            )
-          ],
-        ),
       )
     );
   }

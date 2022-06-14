@@ -13,6 +13,7 @@ import '../../../view/page/register/user_role_screen.dart';
 import '../../../view/widget/authentication/register_steps_body.dart';
 import '../../../view_model/register_view_model.dart';
 import '../register/bmi_screen.dart';
+import '../register/user_illnesses_screen.dart';
 
 class GoToPage {
   static const int role = 0;
@@ -22,7 +23,8 @@ class GoToPage {
   static const int selectDoctor = 4;
   static const int userLikes = 5;
   static const int userFoodAllergies = 6;
-  static const int waitForDiet = 7;
+  static const int userIllnesses = 7;
+  static const int waitForDiet = 8;
 }
 
 
@@ -164,7 +166,7 @@ class _RegisterUserFormState extends State<RegisterUserForm> {
           ),
           RegisterStepBody(
               title: 'Alergias',
-              child: UserAllergiesScreen(type: "ALLERGY", goToNextPage: () { switchPage(GoToPage.waitForDiet); },),
+              child: UserAllergiesScreen(type: "ALLERGY", goToNextPage: () { switchPage(GoToPage.userIllnesses); },),
               fabOnPressed: () {
                 // if(Provider.of<UserProvider>(context, listen: false).registerPresenter.preferencesAllergy.isNotEmpty){
                 //   Provider.of<UserProvider>(context, listen: false).registerPreferences(Provider.of<UserProvider>(context, listen: false).registerPresenter.preferencesAllergy).whenComplete((){
@@ -176,6 +178,12 @@ class _RegisterUserFormState extends State<RegisterUserForm> {
                 // }
               },
               arrowBackOnPressed: (){Navigator.of(context, rootNavigator: true).pop();}
+          ),
+          RegisterStepBody(
+              title: 'Enfermedades',
+              child: UserIllnessesScreen(goToNextPage: () { switchPage(GoToPage.waitForDiet); },),
+              fabOnPressed: (){},
+              arrowBackOnPressed: () { Navigator.of(context, rootNavigator: true).pop(); }
           ),
           RegisterStepBody(
               title: '',

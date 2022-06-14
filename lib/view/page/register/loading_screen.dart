@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:full_feed_app/providers/diet_provider.dart';
+import 'package:full_feed_app/util/colors.dart';
 import 'package:full_feed_app/view_model/diet_view_model.dart';
 import 'package:full_feed_app/view_model/register_view_model.dart';
 import 'package:page_transition/page_transition.dart';
@@ -84,13 +85,13 @@ class LoadingScreenState extends State<LoadingScreen> with TickerProviderStateMi
               padding: EdgeInsets.only(top: size.height/4),
               child: RotationTransition(
                 turns: innerAnimation,
-                child: SvgPicture.asset(innerCircle, width: size.width/4.5,),
+                child: SvgPicture.asset(innerCircle, width: size.width/4.5, color: primaryColor,),
               ),),
             Padding(
                padding: EdgeInsets.only(top: size.height/4),
                child: RotationTransition(
                  turns: externalAnimation,
-                 child: SvgPicture.asset(externalCircle, width: size.width/3),
+                 child: SvgPicture.asset(externalCircle, width: size.width/3, color: primaryColor,),
                ))
           ],
         ),

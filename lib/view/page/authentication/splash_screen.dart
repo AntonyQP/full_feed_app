@@ -1,9 +1,11 @@
 
 import 'package:animated_splash_screen/animated_splash_screen.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:full_feed_app/providers/doctor_provider.dart';
 import 'package:full_feed_app/view/page/authentication/authentication_screen.dart';
 import 'package:full_feed_app/util/colors.dart';
 import 'package:page_transition/page_transition.dart';
+import 'package:provider/provider.dart';
 
 import 'authentication_screen.dart';
 
@@ -19,6 +21,9 @@ class SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     //Provider.of<UserProvider>(context, listen: false).getCredentials();
+    Provider.of<DoctorProvider>(context, listen: false).validateActualDate().whenComplete((){
+      Provider.of<DoctorProvider>(context, listen: false).getAlertCheckedFromSharedPreferences();
+    });
     super.initState();
   }
 

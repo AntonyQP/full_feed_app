@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:full_feed_app/util/colors.dart';
 import 'package:full_feed_app/view_model/register_view_model.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:provider/provider.dart';
@@ -57,7 +58,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                   decoration: const BoxDecoration(
                       shape: BoxShape.circle,
                       gradient: LinearGradient(
-                          colors: [Color(0xFFFF295D), Color(0xFFFE7EB4)],
+                          colors: [primaryColor, secondaryColor],
                           stops: [0.05, 1]
                       )
                   ),

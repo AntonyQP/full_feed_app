@@ -34,6 +34,7 @@ class _HomeDietCardState extends State<HomeDietCard> {
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
     return Container(
+      margin: EdgeInsets.symmetric(horizontal: 25),
       padding: const EdgeInsets.only(bottom: 20),
       width: size.width,
       decoration: BoxDecoration(
@@ -47,7 +48,7 @@ class _HomeDietCardState extends State<HomeDietCard> {
           ),
           boxShadow: [
             BoxShadow(
-              color: Colors.black.withOpacity(0.1),
+              color: Colors.black.withOpacity(0.2),
               spreadRadius: 1,
               blurRadius: 15,
               offset: const Offset(5, 5),

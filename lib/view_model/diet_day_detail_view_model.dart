@@ -21,6 +21,7 @@ class DietDayDetailViewModel{
   late MealReplaceDto _mealToReplace;
   late Meal _alternativeMeal;
   late List<String> _ingredients;
+  List<String> _portion = [];
   late List<Meal> _alternativeMealList = [];
   bool _thereAreDiet = true;
 
@@ -28,6 +29,10 @@ class DietDayDetailViewModel{
 
   List<String> getIngredients(){
     return _ingredients;
+  }
+
+  List<String> getPortions(){
+    return _portion;
   }
 
   Future<void> completeMeal(int mealId) async {
@@ -130,10 +135,17 @@ class DietDayDetailViewModel{
   }
 
   List<String> splitIngredients(Meal meal){
+
+    List<String> aux = [];
+    List<String> portionAux = [];
     _ingredients = meal.ingredients!.split('-');
     for(int i =0; i< _ingredients.length; i ++){
-      _ingredients[i] = _ingredients[i].substring(0, 1) + _ingredients[i].substring(1).toLowerCase();
+       aux = _ingredients[i].split(':');
+      _ingredients[i] = aux[0].substring(0, 1) + aux[0].substring(1).toLowerCase();
+       portionAux.add(aux[1]);
     }
+
+    _portion = portionAux;
 
     return _ingredients;
   }
@@ -144,7 +156,7 @@ class DietDayDetailViewModel{
       chartData.clear();
     }
     chartData = [
-      ProteinDetail('Peso', double.parse(meal.gramsPortion.toString())),
+      //ProteinDetail('Peso', double.parse(meal.gramsPortion.toString())),
       ProteinDetail('Grasas', double.parse(meal.fat.toString())),
       ProteinDetail('Proteinas', double.parse(meal.protein.toString())),
       ProteinDetail('Carbohidratos', double.parse(meal.carbohydrates.toString())),

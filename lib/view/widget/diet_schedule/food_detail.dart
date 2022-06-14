@@ -57,17 +57,17 @@ class FoodDetailState extends State<FoodDetail> {
     return Stack(
       children: [
         Container(
-
-          padding: EdgeInsets.symmetric(horizontal: size.width/20, vertical: size.height/90),
+          margin: EdgeInsets.only(bottom: 10),
+          padding: EdgeInsets.symmetric(horizontal: size.width * 0.03, vertical: size.height * 0.02),
           decoration: const BoxDecoration(
             borderRadius: BorderRadius.only(
-              topLeft: Radius.circular(70.0),
+              topRight: Radius.circular(70.0),
               bottomLeft: Radius.circular(25.0),
               bottomRight: Radius.circular(25.0),
             ),
             color: primaryColor,
           ),
-          width: size.width,
+          width: size.width * 0.93,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -77,12 +77,6 @@ class FoodDetailState extends State<FoodDetail> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
-                    const CircleAvatar(
-                      backgroundImage: NetworkImage(
-                        "https://blogladiadoresfit.com/wp-content/uploads/2021/02/avena-fitness.jpg"
-                      ),
-                      radius: 50,
-                    ),
                     Padding(
                       padding: EdgeInsets.only(left: size.width/40),
                       child: Column(
@@ -90,15 +84,15 @@ class FoodDetailState extends State<FoodDetail> {
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
                           SizedBox(
-                            width: size.width/2,
+                            width: size.width * 0.45,
                             child: Text(widget.meal.name.toString(), style: const TextStyle(color: Color(0xFF2D2D2D), fontSize: 15, fontWeight: FontWeight.bold),),
                           ),
-                          SizedBox(height: size.height/80,),
+                          SizedBox(height: size.height * 0.03,),
                           Container(
                             padding: const EdgeInsets.all(15),
                             //width: size.width/2.05,
                             decoration: const BoxDecoration(
-                              color: Color(0xFFFFD698),
+                              color: darkColor,
                               borderRadius: BorderRadius.all(Radius.circular(15.0))
                             ),
                             constraints: BoxConstraints(
@@ -110,16 +104,28 @@ class FoodDetailState extends State<FoodDetail> {
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   crossAxisAlignment: CrossAxisAlignment.center,
                                   children: const [
-                                    Icon(Icons.emoji_food_beverage_rounded, color: Colors.black, size: 10,),
-                                    Text('     Ingredientes', style: TextStyle(color: Color(0xFF2D2D2D), fontSize: 10, fontWeight: FontWeight.bold),)
+                                    Icon(Icons.emoji_food_beverage_rounded, color: Colors.white, size: 10,),
+                                    Text('     Ingredientes', style: TextStyle(color: Colors.white, fontSize: 10, fontWeight: FontWeight.bold),)
                                   ],
                                 ),
                                 SizedBox(height: size.height/80,),
                                 Wrap(
-                                  spacing: 2.0,
+                                  spacing: 5.0,
                                   direction: Axis.vertical,
                                   children: List.generate(Provider.of<DietProvider>(context).getDietDayDetailViewModel().splitIngredients(widget.meal).length, (index){
-                                    return Text(Provider.of<DietProvider>(context).getDietDayDetailViewModel().getIngredients()[index], style: const TextStyle(color: Color(0xFF2D2D2D), fontSize: 10),);
+                                    return SizedBox(
+                                      width: size.width * 0.55,
+                                      child: Row(
+                                        crossAxisAlignment: CrossAxisAlignment.center,
+                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          SizedBox(
+                                              width: size.width * 0.4,
+                                              child: Text(Provider.of<DietProvider>(context).getDietDayDetailViewModel().getIngredients()[index], style: const TextStyle(color: Colors.white, fontSize: 10),)),
+                                          Text(Provider.of<DietProvider>(context).getDietDayDetailViewModel().getPortions()[index] + ' gr', style: const TextStyle(color: Colors.white, fontSize: 10),),
+                                        ],
+                                      ),
+                                    );
                                   }),
                                 ),
                               ],
@@ -138,7 +144,7 @@ class FoodDetailState extends State<FoodDetail> {
                 child: SfCartesianChart(
                   plotAreaBorderWidth: 0,
                   palette: const [
-                    Color(0XFF02D871),
+                    Colors.white,
                     Color(0XFFFFEA29),
                     Color(0XFFFF003E)
                   ],
@@ -148,8 +154,11 @@ class FoodDetailState extends State<FoodDetail> {
                         xValueMapper: (ProteinDetail pd, _) => pd.protein,
                         yValueMapper: (ProteinDetail pd, _) => pd.q,
                         dataLabelSettings: const DataLabelSettings(
+                            alignment: ChartAlignment.near,
+                            labelAlignment: ChartDataLabelAlignment.outer,
                             isVisible: true,
-                            textStyle: TextStyle(color: Color(0xFF2D2D2D))
+                            color: darkColor,
+                            textStyle: TextStyle(color: Colors.white, fontSize: 10)
                         ))
                   ],
                   primaryXAxis: CategoryAxis(
@@ -159,88 +168,112 @@ class FoodDetailState extends State<FoodDetail> {
                     majorGridLines: MajorGridLines(width: 0),
                   ),
                   primaryYAxis: NumericAxis(
+                      labelFormat: '{value} kcal',
+                      labelStyle: const TextStyle(color: Colors.black),
                       isVisible: false
                   ),),
               ),
-              Row(
-                  children: [
-                    const Text("Opciones", style: TextStyle(color: Color(0xFF2D2D2D), fontWeight: FontWeight.bold),),
-                    SizedBox(
-                      width: size.width/15,
-                      child: IconButton(
-                          onPressed: () {
-                            setState(() {
+              SizedBox(
+                height: size.height/80,
+              ),
+              Center(child: Text('Carbohidratos, Proteinas, Grasas medidos en kcal', style: TextStyle(color: Colors.white, fontSize: 8),)),
+              Padding(
+                padding: const EdgeInsets.only(left: 15.0, top: 8.0, bottom: 8.0),
+                child: Row(
+                    children: [
+                      const Text("Opciones", style: TextStyle(color: Color(0xFF2D2D2D), fontWeight: FontWeight.bold),),
+                      SizedBox(
+                        width: size.width/15,
+                        child: IconButton(
+                            onPressed: () {
+                              setState(() {
 
-                            });
-                            //Provider.of<DietProvider>(context, listen: false).getDietDayDetailViewModel().setAlternativeMealList(Provider.of<DietProvider>(context, listen: false).getAlternativeMealSelected(), widget.meal);
-                          },
-                          icon: Icon(CupertinoIcons.refresh_thin, color: const Color(0xFF2D2D2D), size: size.width/25,)
-                      ),
-                    )
-                  ],
+                              });
+                              //Provider.of<DietProvider>(context, listen: false).getDietDayDetailViewModel().setAlternativeMealList(Provider.of<DietProvider>(context, listen: false).getAlternativeMealSelected(), widget.meal);
+                            },
+                            icon: Icon(CupertinoIcons.refresh_thin, color: const Color(0xFF2D2D2D), size: size.width/25,)
+                        ),
+                      )
+                    ],
+                ),
               ),
               FutureBuilder(
                 future: Provider.of<DietProvider>(context, listen: false).getDietDayDetailViewModel().setAlternativeMealList(Provider.of<DietProvider>(context, listen: false).getAlternativeMealSelected(), widget.meal),
                 builder: (context, snapshot) {
-                  return Wrap(
-                    direction: Axis.horizontal,
-                    children: List.generate(3, (index) {
-                      if(Provider.of<DietProvider>(context,listen: false).getDietDayDetailViewModel().getAlternativeMealList().isNotEmpty){
-                        return InkWell(
-                          onTap: () {
-                            Provider.of<DietProvider>(context, listen: false).setAlternativeMeal(index);
-                          },
-                          child: FoodOption(meal: Provider.of<DietProvider>(context).getDietDayDetailViewModel().getAlternativeMealList()[index]),
-                        );
-                      }
-                      else{
-                        return const FoodOptionShimmer();
-                      }
-                    }),);
+                  return Center(
+                    child: Wrap(
+                      alignment: WrapAlignment.center,
+                      runAlignment: WrapAlignment.center,
+                      direction: Axis.horizontal,
+                      children: List.generate(3, (index) {
+                        if(Provider.of<DietProvider>(context,listen: false).getDietDayDetailViewModel().getAlternativeMealList().isNotEmpty){
+                          return InkWell(
+                            onTap: () {
+                              Provider.of<DietProvider>(context, listen: false).setAlternativeMeal(index);
+                            },
+                            child: FoodOption(index: index, meal: Provider.of<DietProvider>(context).getDietDayDetailViewModel().getAlternativeMealList()[index]),
+                          );
+                        }
+                        else{
+                          return const FoodOptionShimmer();
+                        }
+                      }),),
+                  );
                 }
               ),
             ],
           ),
         ),
         AnimatedPositioned(
-            top: 150,
-            left: Provider.of<DietProvider>(context).getIsAlternativeMealSelected() ? size.width/35 : -150.0,
+            top: 80,
+            right: Provider.of<DietProvider>(context).getIsAlternativeMealSelected() ? size.width * 0.05 : -150.0,
             curve: Curves.fastOutSlowIn,
-            child: Row(
+            child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                ElevatedButton(
-                  onPressed: () async {
-                    _showDialog();
-                  },
-                  child: Icon(CupertinoIcons.arrow_2_circlepath, color: Colors.white, size: size.height/50,),
-                  style: ElevatedButton.styleFrom(
-                    maximumSize: Size(size.height/10, size.height/10),
-                    elevation: 0,
-                    shape: const CircleBorder(),
-                    padding: EdgeInsets.all(size.height/90),
-                    primary: primaryColor, // <-- Button color
-                    onPrimary: Colors.white, // <-- Splash color
-                  ),
+                Column(
+                  children: [
+                    ElevatedButton(
+                      onPressed: () async {
+                        _showDialog();
+                      },
+                      child: Icon(CupertinoIcons.arrow_2_circlepath, color: darkColor, size: size.height/50,),
+                      style: ElevatedButton.styleFrom(
+                        maximumSize: Size(size.height/10, size.height/10),
+                        elevation: 0,
+                        shape: const CircleBorder(),
+                        padding: EdgeInsets.all(size.height/90),
+                        primary: Colors.white, // <-- Button color
+                        onPrimary: darkColor, // <-- Splash color
+                      ),
+                    ),
+                    Text('Cambiar', style: TextStyle(color: Colors.white, fontSize: 12))
+                  ],
                 ),
-                ElevatedButton(
-                  onPressed: () async {
-                    Provider.of<DietProvider>(context, listen: false).deselectAlternativeMeal();
-                  },
-                  child: Icon(CupertinoIcons.xmark, color: Colors.white, size: size.height/50,),
-                  style: ElevatedButton.styleFrom(
-                    maximumSize: Size(size.height/10, size.height/10),
-                    elevation: 0,
-                    shape: const CircleBorder(),
-                    padding: EdgeInsets.all(size.height/90),
-                    primary: Colors.red, // <-- Button color
-                    onPrimary: Colors.white, // <-- Splash color
-                  ),
+                Column(
+                  children: [
+                    ElevatedButton(
+                      onPressed: () async {
+                        Provider.of<DietProvider>(context, listen: false).deselectAlternativeMeal();
+                      },
+                      child: Icon(CupertinoIcons.xmark, color: Colors.white, size: size.height/50,),
+                      style: ElevatedButton.styleFrom(
+                        maximumSize: Size(size.height/10, size.height/10),
+                        elevation: 0,
+                        shape: const CircleBorder(),
+                        padding: EdgeInsets.all(size.height/90),
+                        primary: Colors.red, // <-- Button color
+                        onPrimary: Colors.white, // <-- Splash color
+                      ),
+                    ),
+                    Text('Cancelar', style: TextStyle(color: Colors.white, fontSize: 12),)
+                  ],
                 ),
               ],
             ),
-            duration: const Duration(seconds: 2))
+            duration: const Duration(seconds: 2)),
+
       ],
     );
   }

@@ -31,12 +31,6 @@ class LoginValidateState extends State<LoginValidate> {
     super.initState();
     Provider.of<LoginViewModel>(context, listen: false).doLogin().then((response){
       if(response){
-        if(isPatient()){
-
-        }
-        else{
-          Provider.of<LoggedInViewModel>(context, listen: false).setDoctorByPatient();
-        }
         Navigator.pushReplacement(context,
             PageTransition(
                 duration: const Duration(milliseconds: 200),

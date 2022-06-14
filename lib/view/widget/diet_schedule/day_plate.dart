@@ -80,7 +80,7 @@ class DayPlateState extends State<DayPlate> {
                           Text(setFoodDayName(widget.meal.schedule.toString()),
                             style: TextStyle(fontSize: size/40, fontWeight: FontWeight.bold,
                                 color: widget.selected ? Colors.white : Colors.black),),
-                          Image.asset(foodIcon(widget.meal.schedule.toString()), width: 30,
+                          Image.asset(foodIcon(widget.meal.schedule.toString()), width: 20,
                               height: 20, fit: BoxFit.contain),
                         ],
                       ),

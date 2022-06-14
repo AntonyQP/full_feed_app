@@ -46,10 +46,16 @@ class _UserRoleScreenState extends State<UserRoleScreen> with
                   decoration: BoxDecoration(
                     boxShadow: [
                       BoxShadow(
-                        color: Colors.black.withOpacity(0.08),
-                        offset: const Offset(2, 3),
-                        blurRadius: 1,
-                        spreadRadius: 2
+                        color: Colors.black.withOpacity(0.2),
+                        spreadRadius: 1,
+                        blurRadius: 15,
+                        offset: const Offset(5, 5),
+                      ),
+                      BoxShadow(
+                        color: Colors.white.withOpacity(0.5),
+                        spreadRadius: 1,
+                        blurRadius: 12,
+                        offset: const Offset(-5, -5),
                       )
                     ],
                       gradient: Provider.of<RegisterViewModel>(context).getDesireRol() == "p" ?
@@ -59,11 +65,12 @@ class _UserRoleScreenState extends State<UserRoleScreen> with
                           colors: [primaryColor, secondaryColor],
                           stops: [0.3, 1]
                       ) :
-                      const LinearGradient(
-                          begin: Alignment.bottomLeft,
-                          end: Alignment.topRight,
-                          colors: [Color(0xFFF6F6F6), Colors.white],
-                          stops: [0.3, 1]
+                      RadialGradient(
+                        colors: [
+                          cardColor,
+                          Colors.white.withOpacity(0.35),
+                        ],
+                        stops: [0.50, 1.0],
                       ),
                       borderRadius: BorderRadius.circular(30.0),
                   ),
@@ -88,10 +95,16 @@ class _UserRoleScreenState extends State<UserRoleScreen> with
                   decoration: BoxDecoration(
                     boxShadow: [
                       BoxShadow(
-                          color: Colors.black.withOpacity(0.08),
-                          offset: const Offset(2, 3),
-                          blurRadius: 1,
-                          spreadRadius: 2
+                        color: Colors.black.withOpacity(0.2),
+                        spreadRadius: 1,
+                        blurRadius: 15,
+                        offset: const Offset(5, 5),
+                      ),
+                      BoxShadow(
+                        color: Colors.white.withOpacity(0.5),
+                        spreadRadius: 1,
+                        blurRadius: 12,
+                        offset: const Offset(-5, -5),
                       )
                     ],
                     gradient: Provider.of<RegisterViewModel>(context).getDesireRol() == "d" ?
@@ -101,11 +114,12 @@ class _UserRoleScreenState extends State<UserRoleScreen> with
                         colors: [primaryColor, secondaryColor],
                         stops: [0.3, 1]
                     ) :
-                    const LinearGradient(
-                        begin: Alignment.bottomLeft,
-                        end: Alignment.topRight,
-                        colors: [Color(0xFFF6F6F6), Colors.white],
-                        stops: [0.3, 1]
+                    RadialGradient(
+                      colors: [
+                        cardColor,
+                        Colors.white.withOpacity(0.6),
+                      ],
+                      stops: [0.50, 1.0],
                     ),
                     borderRadius: BorderRadius.circular(30.0),
                   ),

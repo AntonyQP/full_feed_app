@@ -1,6 +1,8 @@
 
 
-const String baseUrl = "https://fullfeed-aq.herokuapp.com/";
+//const String baseUrl = "https://fullfeed-aq.herokuapp.com/";
+const String baseUrl = "https://fullfeed-backend.azurewebsites.net/";
+
 
 //Endpoints
 
@@ -9,6 +11,7 @@ const String userEndpoint = "user/";
 const String userLogin = "login";
 const String patientRegister = "patient";
 const String doctorRegister = "doctor";
+
 
 //Region
 const String regionEndpoint = "region/";
@@ -22,10 +25,15 @@ const String successfulDays = "successfulDays";
 const String newNutritionalPlan = "generateDiet";
 const String validateAccessCodeEndpoint = "validateAccessCode";
 
+//Illness
+const String illnessEndpoint = "illness";
+const String getAllIllnessesEndpoint = "/all";
+
 //Doctor
 const String doctorEndpoint = "doctor/";
 const String generateAccessCode = "generateAccessCode";
 const String getPatientsByDoctorEndpoint = "patients";
+const String getPatientThatNotCompleteDayDiet = "getPatientThatNotCompleteDayDiet";
 
 //Preferences
 const String preferencesEndpoint = "preferences";

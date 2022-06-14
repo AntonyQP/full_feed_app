@@ -27,12 +27,12 @@ class PatientViewModel with ChangeNotifier {
     return _patientSelected;
   }
 
-  Future<void> updatePatient(double height, double weight, BuildContext context) async {
-    double imc = weight/pow(height, 2);
-    height = height * 100;
-    await _userService.updatePatientInfo(PatientUpdateDto(_patientSelected.patientId!, height, imc, weight)).then((newPatient){
+  Future<void> updatePatient(double height, double weight, double arm, double abdominal, double tmb, BuildContext context) async {
+    double imc = weight/pow(height/100, 2);
+    await _userService.updatePatientInfo(PatientUpdateDto(_patientSelected.patientId!, height, imc, weight, arm, abdominal, tmb)).then((newPatient){
       if(newPatient.patientId == _patientSelected.patientId){
         newPatient.setFirstDayOfWeek(_patientSelected.firstDayOfWeek!);
+        newPatient.setState();
         _patientSelected = newPatient;
         Provider.of<LoggedInViewModel>(context, listen: false).setPatientAfterUpdate(newPatient);
         notifyListeners();

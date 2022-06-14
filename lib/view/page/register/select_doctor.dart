@@ -59,15 +59,15 @@ class SelectDoctorScreenState extends State<SelectDoctorScreen>{
                   Container(
                     height: size.height/20,
                     decoration: BoxDecoration(
-                        color: const Color(0XFFFAFAFA),
-                        borderRadius: const BorderRadius.all(Radius.circular(30.0)),
+                        color: Colors.white.withOpacity(0.7),
+                        borderRadius: const BorderRadius.all(Radius.circular(25.0)),
                         boxShadow: [
                           BoxShadow(
-                            color: Colors.grey.withOpacity(0.2),
+                            color: Colors.black.withOpacity(0.05),
                             spreadRadius: 2,
                             blurRadius: 3,
-                            offset: const Offset(0, 2),
-                          )
+                            offset: const Offset(1, 4),
+                          ),
                         ]
                     ),
                     child: Padding(
