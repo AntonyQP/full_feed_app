@@ -118,19 +118,18 @@ class SelectDoctorScreenState extends State<SelectDoctorScreen>{
                       animationDuration: const Duration(milliseconds: 300),
                       controller: pinController,
                       onCompleted: (v) {
-                        // Provider.of<RegisterViewModel>(context, listen: false).validateAccessCode().then((value){
-                        //   if(value){
-                        //     widget.goToUserLikes();
-                        //   }
-                        //   else{
-                        //     setState(() {
-                        //       error = true;
-                        //       _cantError--;
-                        //     });
-                        //     pinController.clear();
-                        //   }
-                        // });
-                        widget.goToUserLikes();
+                        Provider.of<RegisterViewModel>(context, listen: false).validateAccessCode().then((value){
+                          if(value){
+                            widget.goToUserLikes();
+                          }
+                          else{
+                            setState(() {
+                              error = true;
+                              _cantError--;
+                            });
+                            pinController.clear();
+                          }
+                        });
                       },
                       onChanged: (value) {
                         Provider.of<RegisterViewModel>(context, listen: false).setAccessCode(value);

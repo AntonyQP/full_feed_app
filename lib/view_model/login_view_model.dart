@@ -1,14 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:full_feed_app/domain/service/user_service.dart';
-import 'package:full_feed_app/view_model/logged_in_view_model.dart';
-import 'package:page_transition/page_transition.dart';
-import 'package:provider/provider.dart';
 
 import '../model/dtos/user_login_dto.dart';
-import '../model/entities/user_session.dart';
-import '../providers/diet_provider.dart';
-import '../providers/user_provider.dart';
-import '../util/util.dart';
+
 
 class LoginViewModel extends ChangeNotifier{
 

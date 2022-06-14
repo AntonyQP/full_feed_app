@@ -35,18 +35,21 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
-    return SizedBox(
+    return Container(
       height: size.height,
       child: ListView(
         children: [
-          Align(
-            alignment: Alignment.topLeft,
-            child: Text.rich(TextSpan(
-                children: [
-                  const TextSpan(text: 'Bienvenido de nuevo, ', style: TextStyle(fontSize: 16)),
-                  TextSpan(text: UserSession().userFirstName.contains(" ")? UserSession().userFirstName.substring(0, UserSession().userFirstName.lastIndexOf(" ")) : UserSession().userFirstName
-                  , style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 20)),
-                ])
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 25),
+            child: Align(
+              alignment: Alignment.topLeft,
+              child: Text.rich(TextSpan(
+                  children: [
+                    const TextSpan(text: 'Bienvenido de nuevo, ', style: TextStyle(fontSize: 16)),
+                    TextSpan(text: UserSession().userFirstName.contains(" ")? UserSession().userFirstName.substring(0, UserSession().userFirstName.lastIndexOf(" ")) : UserSession().userFirstName
+                    , style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 20)),
+                  ])
+              ),
             ),
           ),
           const SizedBox(height: 25.0),
@@ -96,14 +99,18 @@ class _HomePageState extends State<HomePage> {
                 }),
           ),
           const SizedBox(height: 25.0),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              HomeNutritionistCard(chatViewModel: widget.chatViewModel),
-              const HomeAchievementsCard()
-            ],
-          )
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 25),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                HomeNutritionistCard(chatViewModel: widget.chatViewModel),
+                const HomeAchievementsCard()
+              ],
+            ),
+          ),
+          SizedBox(height: size.height * 0.15),
         ],
       ),
     );

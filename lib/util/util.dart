@@ -1,6 +1,10 @@
 
 
 
+import 'dart:ui';
+
+import 'package:full_feed_app/util/colors.dart';
+
 import '../model/entities/user_session.dart';
 
 bool isPatient(){
@@ -130,6 +134,24 @@ String setFoodDayName(String originalName){
   }
 }
 
+String setScheduleName(String originalName){
+  switch(originalName){
+    case "DESAYUNO":
+      return "desayuno";
+    case "ALMUERZO":
+      return "almuerzo";
+    case "CENA":
+      return "cena";
+    case "MERIENDA_DIA":
+      return "merienda de dia";
+    case "MERIENDA_TARDE":
+      return "merienda de tarde";
+    default:
+      return "";
+  }
+}
+
+
 int getCurrentWeek(){
   String date = DateTime.now().toString();
   String firstDay = date.substring(0, 8) + '01' + date.substring(10);
@@ -162,4 +184,52 @@ String getCurrentDay(String time) {
   else if (time == 'Sunday')
     return 'Domingo';
   else return ' ';
+}
+
+String setPatientStateName(double imc){
+  if (imc >= 40.0) {
+    return "OBESIDAD III";
+  }
+  if (imc < 39.9 && imc >= 35.0) {
+    return "OBESIDAD II";
+  }
+  if (imc < 34.9 && imc >= 30.0) {
+    return "OBESIDAD I";
+  }
+  if (imc < 30.0 && imc >= 25.0) {
+    return "SOBREPESO";
+  }
+  if (imc < 24.9 && imc >= 18.5) {
+    return "NORMAL";
+  }
+  if (imc < 18.5) {
+    return "BAJO PESO";
+  }
+  return "NORMAL";
+}
+
+Color setPatientStateColor(double imc){
+  if (imc >= 40.0) {
+    return fatIIIWeightColor;
+  }
+  if (imc < 39.9 && imc >= 35.0) {
+    return fatIIWeightColor;
+  }
+  if (imc < 34.9 && imc >= 30.0) {
+    return fatIWeightColor;
+  }
+  if (imc < 30.0 && imc >= 25.0) {
+    return Color(0XFFFF295D);
+  }
+  if (imc < 30.0 && imc >= 25.0) {
+    return Color(0XFFFF295D);
+  }
+  if (imc < 24.9 && imc >= 18.5) {
+    return Color(0XFF02D871);
+  }
+  if (imc < 18.5) {
+    return Color(0XFFFFEA29);
+  }
+
+  return Color(0XFFFFEA29);
 }

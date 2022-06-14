@@ -87,6 +87,22 @@ class _AuthenticationScreenState extends State<AuthenticationScreen> {
                       child: Expanded(
                         child: ListView(
                           children: [
+                            Visibility(
+                              visible: Provider.of<LoginViewModel>(context).getErrorMessage() != "",
+                              child: Column(
+                                children: [
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Text(Provider.of<LoginViewModel>(context).getErrorMessage(), style: TextStyle(color: Colors.red, fontSize: 12),),
+                                    ],
+                                  ),
+                                  SizedBox(
+                                    height: 5,
+                                  )
+                                ],
+                              ),
+                            ),
                             Padding(
                                 padding: EdgeInsets.only(left: size.width/30, bottom: size.height/80),
                             child: const Text('Correo', style: TextStyle(color: Color(0XFF7B7B7B), fontSize: 12),),),

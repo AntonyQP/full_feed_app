@@ -56,18 +56,23 @@ class ChatViewModel{
   }
 
   Future<void> setLastMessages(BuildContext context) async{
-    for(int i = 0; i < _userChannels.length; i++){
-      await _userChannels[i].watch().then((value){
-        if(value.messages.isNotEmpty){
-          if(value.messages.last.user!.name != UserSession().userFirstName){
-            _lastMessages.add(value.messages.last);
+    if(_userChannels.isNotEmpty){
+      for(int i = 0; i < _userChannels.length; i++){
+        await _userChannels[i].watch().then((value){
+          if(value.messages.isNotEmpty){
+            if(value.messages.last.user!.name != UserSession().userFirstName){
+              _lastMessages.add(value.messages.last);
+            }
           }
+        });
+        await _userChannels[i].stopWatching();
+        if(i == _userChannels.length -1 ){
+          Provider.of<UserProvider>(context, listen: false).setMessagesReady(true);
         }
-      });
-      await _userChannels[i].stopWatching();
-      if(i == _userChannels.length -1 ){
-        Provider.of<UserProvider>(context, listen: false).setMessagesReady(true);
       }
+    }
+    else{
+      Provider.of<UserProvider>(context, listen: false).setMessagesReady(true);
     }
   }
 

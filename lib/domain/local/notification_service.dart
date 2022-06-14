@@ -48,17 +48,94 @@ class NotificationService{
     );
   }
 
-  static void showScheduledNotification({
+  static void showBreakfastScheduledNotification({
     int id =0,
     String? title,
     String? body,
     String? payload,
+    required Time time
   }) async =>
       _notifications.zonedSchedule(
           id,
           title,
           body,
-          _scheduleDaily(Time(18, 30)),
+          _scheduleDaily(time),
+          await _notificationDetails(),
+          payload: payload,
+          matchDateTimeComponents: DateTimeComponents.time,
+          uiLocalNotificationDateInterpretation: UILocalNotificationDateInterpretation.absoluteTime,
+          androidAllowWhileIdle: true
+      );
+
+  static void showMidDayScheduledNotification({
+    int id =1,
+    String? title,
+    String? body,
+    String? payload,
+    required Time time
+  }) async =>
+      _notifications.zonedSchedule(
+          id,
+          title,
+          body,
+          _scheduleDaily(time),
+          await _notificationDetails(),
+          payload: payload,
+          matchDateTimeComponents: DateTimeComponents.time,
+          uiLocalNotificationDateInterpretation: UILocalNotificationDateInterpretation.absoluteTime,
+          androidAllowWhileIdle: true
+      );
+
+  static void showLunchScheduledNotification({
+    int id =2,
+    String? title,
+    String? body,
+    String? payload,
+    required Time time
+  }) async =>
+      _notifications.zonedSchedule(
+          id,
+          title,
+          body,
+          _scheduleDaily(time),
+          await _notificationDetails(),
+          payload: payload,
+          matchDateTimeComponents: DateTimeComponents.time,
+          uiLocalNotificationDateInterpretation: UILocalNotificationDateInterpretation.absoluteTime,
+          androidAllowWhileIdle: true
+      );
+
+  static void showMidEveningScheduledNotification({
+    int id =3,
+    String? title,
+    String? body,
+    String? payload,
+    required Time time
+  }) async =>
+      _notifications.zonedSchedule(
+          id,
+          title,
+          body,
+          _scheduleDaily(time),
+          await _notificationDetails(),
+          payload: payload,
+          matchDateTimeComponents: DateTimeComponents.time,
+          uiLocalNotificationDateInterpretation: UILocalNotificationDateInterpretation.absoluteTime,
+          androidAllowWhileIdle: true
+      );
+
+  static void showDinnerScheduledNotification({
+    int id = 4,
+    String? title,
+    String? body,
+    String? payload,
+    required Time time
+  }) async =>
+      _notifications.zonedSchedule(
+          id,
+          title,
+          body,
+          _scheduleDaily(time),
           await _notificationDetails(),
           payload: payload,
           matchDateTimeComponents: DateTimeComponents.time,

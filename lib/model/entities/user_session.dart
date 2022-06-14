@@ -1,7 +1,7 @@
 class UserSession {
 
   int userId = 0, profileId = 0, firstDayOfWeek = 0, successfulDays = 0, lossWeight = 0, activePatients = 0;
-  String userName = "", userLastName = "", userFirstName = "", token = "", rol="", date = "", dni = "";
+  String userName = "", userLastName = "", userFirstName = "", token = "", rol="", date = "", dni = "", sex = "";
   double arm = 0.0, tmb = 0.0, abdominal = 0.0, weight = 0.0, height = 0.0, bmi = 0.0;
 
   static final UserSession _singleton = UserSession._internal();
@@ -12,7 +12,7 @@ class UserSession {
 
   UserSession._internal();
 
-  create(int _userId, String _userName, String _userFirstName, String _userLastName, String _token, String _rol, int _firsDayOfWeek, String _date, String _dni){
+  create(int _userId, String _userName, String _userFirstName, String _userLastName, String _token, String _rol, int _firsDayOfWeek, String _date, String _dni, String _sex){
     userId = _userId;
     userName = _userName;
     userFirstName = _userFirstName;
@@ -22,6 +22,7 @@ class UserSession {
     firstDayOfWeek = _firsDayOfWeek;
     date = _date;
     dni = _dni;
+    sex = _sex;
   }
 
   setProfileId(int _profileId){

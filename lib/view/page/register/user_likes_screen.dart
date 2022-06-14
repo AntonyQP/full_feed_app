@@ -20,10 +20,11 @@ class UserLikesScreen extends StatefulWidget {
 class _UserLikesScreenState extends State<UserLikesScreen> with
     AutomaticKeepAliveClientMixin{
 
+  late Future _future;
 
   @override
   void initState() {
-    // TODO: implement initState
+    _future = Provider.of<RegisterViewModel>(context, listen: false).registerAndLogin();
     super.initState();
   }
 
@@ -46,9 +47,11 @@ class _UserLikesScreenState extends State<UserLikesScreen> with
 
     var size = MediaQuery.of(context).size;
     return FutureBuilder(
-        future: Provider.of<RegisterViewModel>(context, listen: false).registerAndLogin(),
+        future: Future.wait([
+          _future
+        ]),
         builder: (context, snapshot){
-          if(( false /*snapshot.data == false || snapshot.data == null*/)){
+          if((snapshot.data == false || snapshot.data == null || snapshot.connectionState == ConnectionState.waiting)){
             return const LoadingScreen(text: "Estamos configurando tu cuenta...", generateDiet: false,);
           }
           else{

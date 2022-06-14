@@ -38,12 +38,15 @@ class HomePageDoctorState extends State<HomePageDoctor> {
       children: [
         Align(
           alignment: Alignment.topLeft,
-          child: Text.rich(TextSpan(
-              children: [
-                const TextSpan(text: 'Bienvenido de nuevo, ', style: TextStyle(fontSize: 16)),
-                TextSpan(text: UserSession().userFirstName.contains(" ")? UserSession().userFirstName.substring(0, UserSession().userFirstName.lastIndexOf(" ")) : UserSession().userFirstName,
-                    style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 20)),
-              ])
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 25.0),
+            child: Text.rich(TextSpan(
+                children: [
+                  const TextSpan(text: 'Bienvenido de nuevo, ', style: TextStyle(fontSize: 16)),
+                  TextSpan(text: UserSession().userFirstName.contains(" ")? UserSession().userFirstName.substring(0, UserSession().userFirstName.lastIndexOf(" ")) : UserSession().userFirstName,
+                      style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 20)),
+                ])
+            ),
           ),
         ),
         const SizedBox(height: 25.0),
@@ -108,7 +111,7 @@ class HomePageDoctorState extends State<HomePageDoctor> {
                               onChanged: null),
                               );
                             }),
-                          ) : Text('El paciente no tiene comidas hoy')
+                          ) : Text('El paciente no tiene comidas hoy', style: TextStyle(fontSize: 11, color: Colors.grey),)
                         ],
                       ),);
                       }),
@@ -148,7 +151,10 @@ class HomePageDoctorState extends State<HomePageDoctor> {
           )
         ),
         const SizedBox(height: 25.0),
-        ChatListCard(chatViewModel: widget.chatViewModel,)
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 25.0),
+          child: ChatListCard(chatViewModel: widget.chatViewModel,),
+        )
       ],
     );
   }

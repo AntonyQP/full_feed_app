@@ -14,6 +14,7 @@ import 'package:syncfusion_flutter_charts/charts.dart';
 import '../../../model/entities/user_session.dart';
 import '../../../view/widget/user/user_profile_weight.dart';
 import '../../../util/colors.dart';
+import '../../../view_model/illness_list_view_model.dart';
 import '../../../view_model/profile_view_model.dart';
 import '../../widget/diet_schedule/message.dart';
 import '../../widget/user/user_profile_completed_days.dart';
@@ -38,6 +39,9 @@ class _UserProfileScreenState extends State<UserProfileScreen> with
   bool isPressed = false;
   final PageController _pageController = PageController(initialPage: GoToPage.carbohydrates);
   final TextEditingController pinController = TextEditingController();
+
+  String _state = "";
+  Color _colorState = Colors.white;
 
   void _switchPage(int page) {
     _pageController.animateToPage(page,
@@ -80,6 +84,47 @@ class _UserProfileScreenState extends State<UserProfileScreen> with
   @override
   void initState() {
     super.initState();
+    setValue(UserSession().bmi);
+  }
+
+
+  setValue(double imc){
+    if (imc >= 40.0) {
+      setState(() {
+        _colorState = fatIIIWeightColor;
+        _state = "OBESIDAD III";
+      });
+    }
+    if (imc < 39.9 && imc >= 35.0) {
+      setState(() {
+        _colorState = fatIIWeightColor;
+        _state = "OBESIDAD II";
+      });
+    }
+    if (imc < 34.9 && imc >= 30.0) {
+      setState(() {
+        _colorState = fatIWeightColor;
+        _state = "OBESIDAD I";
+      });
+    }
+    if (imc < 30.0 && imc >= 25.0) {
+      setState(() {
+        _colorState = Color(0XFFFF295D);
+        _state = "SOBREPESO";
+      });
+    }
+    if (imc < 24.9 && imc >= 18.5) {
+      setState(() {
+        _colorState = Color(0XFF02D871);
+        _state = "NORMAL";
+      });
+    }
+    if (imc < 18.5) {
+      setState(() {
+        _colorState = Color(0XFFFFEA29);
+        _state = "BAJO PESO";
+      });
+    }
   }
 
   @override
@@ -92,13 +137,15 @@ class _UserProfileScreenState extends State<UserProfileScreen> with
   Widget build(BuildContext context) {
     super.build(context);
     var size = MediaQuery.of(context).size;
+
+    final patientIllnessesList = Provider.of<IllnessListViewModel>(context, listen: false).getPatientIllnesses();
+
     return SizedBox(
       height: size.height,
       child: ListView(
         children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.start,
+          Stack(
+            alignment: AlignmentDirectional.topCenter,
             children: [
               Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
@@ -106,21 +153,75 @@ class _UserProfileScreenState extends State<UserProfileScreen> with
                 children: [
                   CircleAvatar(
                     radius: 40,
-                    backgroundColor: darkColor,
+                    backgroundImage: UserSession().sex == 'h' ? AssetImage('assets/male_user.jpg') : AssetImage('assets/female_user.jpg'),
                   ),
                   const SizedBox(height: 10.0),
                   Text(UserSession().userLastName),
                   Text(UserSession().userFirstName, style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),),
                 ],
               ),
-              Ink(
-                  child: InkWell(
-                      onTap: (){
-                        _showDialog();
-                      },
-                      child: const Icon(Icons.settings, color: darkColor)
-                  )
-              ),
+              Positioned(
+                right: 20,
+                child: Row(
+                  children: [
+                    Visibility(
+                      visible: isPatient(),
+                      child: Ink(
+                          child: InkWell(
+                              onTap: (){
+                                showDialog(
+                                    context: context,
+                                    builder: (context){
+                                      return AlertDialog(
+                                        title: const Text('Enfermedades'),
+                                        content: SizedBox(
+                                          height: 100,
+                                          child: SingleChildScrollView(
+                                            child: Column(
+                                              crossAxisAlignment: CrossAxisAlignment.start,
+                                              children: patientIllnessesList.map((e) => Text('- ${e.name!}',
+                                                style: const TextStyle(color: Colors.black),
+                                              )).toList(),
+                                            ),
+                                          ),
+                                        ),
+                                        shape: RoundedRectangleBorder(
+                                            borderRadius: BorderRadius.circular(25.0)
+                                        ),
+                                        actions: [
+                                          ElevatedButton(
+                                            onPressed: (){ Navigator.pop(context); },
+                                            child: const Text('Volver', style: TextStyle(color: Colors.white),),
+                                            style: ElevatedButton.styleFrom(
+                                              primary: primaryColor,
+                                              shape: RoundedRectangleBorder(
+                                                  borderRadius: BorderRadius.circular(25.0)
+                                              ),
+                                            ),
+                                          )
+                                        ],
+                                      );
+                                    }
+                                );
+                              },
+                              child: const FaIcon(FontAwesomeIcons.archive, color: chatCardPrimaryColor)
+                          )
+                      ),
+                    ),
+                    SizedBox(
+                      width: 10,
+                    ),
+                    Ink(
+                        child: InkWell(
+                            onTap: (){
+                              _showDialog();
+                            },
+                            child: const Icon(Icons.settings, color: darkColor)
+                        )
+                    ),
+                  ],
+                ),
+              )
             ],
           ),
           SizedBox(
@@ -243,7 +344,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> with
                                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                                     children: [
                                       SvgPicture.asset('assets/bmi_icon.svg', height: 15, color: darkColor,),
-                                      Text(UserSession().bmi.toStringAsFixed(1))
+                                      Text(UserSession().bmi.toStringAsFixed(1),  style: TextStyle(fontSize: 12))
                                     ],
                                   )
                               ),
@@ -280,7 +381,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> with
                                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                                     children: [
                                       SvgPicture.asset('assets/hip_icon.svg', height: 15, color: darkColor,),
-                                      Text(UserSession().tmb.toStringAsFixed(1))
+                                      Text(UserSession().tmb.toStringAsFixed(1),  style: TextStyle(fontSize: 12))
                                     ],
                                   )
                               ),
@@ -321,7 +422,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> with
                                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                                   children: [
                                     SvgPicture.asset('assets/arm_icon.svg', height: 15, color: darkColor,),
-                                    Text(UserSession().arm.toStringAsFixed(1))
+                                    Text(UserSession().arm.toStringAsFixed(1),  style: TextStyle(fontSize: 12))
                                   ],
                                 )
                               ),
@@ -357,8 +458,8 @@ class _UserProfileScreenState extends State<UserProfileScreen> with
                                 child: Column(
                                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                                   children: [
-                                    SvgPicture.asset('abdominal_icon.svg', height: 15, color: darkColor,),
-                                    Text(UserSession().abdominal.toStringAsFixed(1))
+                                    SvgPicture.asset('assets/abdominal_icon.svg', height: 15, color: darkColor,),
+                                    Text(UserSession().abdominal.toStringAsFixed(1), style: TextStyle(fontSize: 12),)
                                   ],
                                 ),
                               ),
@@ -368,11 +469,21 @@ class _UserProfileScreenState extends State<UserProfileScreen> with
                           Column(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              Text('${UserSession().height.toStringAsFixed(1)} cm'),
+                              CircleAvatar(
+                                radius: size.height * 0.04,
+                                backgroundColor: _colorState,
+                                child: Center(
+                                  child: Text(_state, style: const TextStyle(fontSize: 10, color: Colors.white), textAlign: TextAlign.center,),
+                                ),
+                              ),
                               SizedBox(
                                 height: size.height * 0.01,
                               ),
-                              Text('${UserSession().weight.toStringAsFixed(1)} kg')
+                              Text('${UserSession().height.toStringAsFixed(1)} cm',  style: TextStyle(fontSize: 12)),
+                              SizedBox(
+                                height: size.height * 0.01,
+                              ),
+                              Text('${UserSession().weight.toStringAsFixed(1)} kg',  style: TextStyle(fontSize: 12))
                             ],
                           )
                         ],

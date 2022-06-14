@@ -124,229 +124,226 @@ class UserRegisterFormScreenState extends State<UserRegisterFormScreen> with
                       ]),
                 ),
                 Container(
-                  decoration: BoxDecoration(
-                      color: Colors.white.withOpacity(0.7),
-                      borderRadius: const BorderRadius.all(Radius.circular(25.0)),
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.black.withOpacity(0.05),
-                          spreadRadius: 2,
-                          blurRadius: 3,
-                          offset: const Offset(1, 4),
-                        ),
-                      ]
-                  ),
-                  child: TextFormField(
-                    style: TextStyle(fontSize: 12),
-                    onSaved: (value){
-                      Provider.of<RegisterViewModel>(context, listen: false).setUserRegisterDto('firstName', value);
-                    },
-                    decoration: const InputDecoration(
-                      hintStyle: TextStyle(color: Colors.grey),
-                      hintText: 'Nombres',
-                      border: OutlineInputBorder(
-                        borderSide: BorderSide(
-                          width: 0,
-                          style: BorderStyle.none,
-                        ),
-                        borderRadius: BorderRadius.all(Radius.circular(30.0)),
-                      ),),
-                    textInputAction: TextInputAction.next,
-                    validator: (value) {
-                      if (value!.isEmpty) {
-                        return "Ingrese un nombre";
-                      }
-                    },
-                  ),
-                ),
-                Container(
-                  decoration: BoxDecoration(
-                      color: Colors.white.withOpacity(0.7),
-                      borderRadius: const BorderRadius.all(Radius.circular(25.0)),
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.black.withOpacity(0.05),
-                          spreadRadius: 2,
-                          blurRadius: 3,
-                          offset: const Offset(1, 4),
-                        ),
-                      ]
-                  ),
-                  child: TextFormField(
+                  padding: const EdgeInsets.symmetric(horizontal: 5),
+                  child: Material(
+                    color: Colors.transparent,
+                    elevation: 10.0,
+                    shadowColor: Colors.black.withOpacity(0.2),
+                    borderRadius: BorderRadius.all(Radius.circular(30)),
+                    child: TextFormField(
                       style: TextStyle(fontSize: 12),
                       onSaved: (value){
-                        Provider.of<RegisterViewModel>(context, listen: false).setUserRegisterDto('lastName', value);
-                      },
-                      decoration: const InputDecoration(
-                          hintStyle: TextStyle(color: Colors.grey),
-                          hintText: 'Apellidos',
-                          border: OutlineInputBorder(
-                            borderSide: BorderSide(
-                              width: 0,
-                              style: BorderStyle.none,
-                            ),
-                            borderRadius: BorderRadius.all(Radius.circular(30.0)),
-                          )),
-                      textInputAction: TextInputAction.next,
-                      validator: (value) {
-                        if (value!.isEmpty) {
-                          return "Ingrese un apellido";
-                        }
-                      }
-                  ),
-                ),
-                Container(
-                  decoration: BoxDecoration(
-                      color: Colors.white.withOpacity(0.7),
-                      borderRadius: const BorderRadius.all(Radius.circular(25.0)),
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.black.withOpacity(0.05),
-                          spreadRadius: 2,
-                          blurRadius: 3,
-                          offset: const Offset(1, 4),
-                        ),
-                      ]
-                  ),
-                  child: TextFormField(
-                      style: TextStyle(fontSize: 12),
-                      keyboardType: TextInputType.number,
-                      onSaved: (value){
-                        Provider.of<RegisterViewModel>(context, listen: false).setUserRegisterDto('dni', value);
-                      },
-                      decoration: const InputDecoration(
-                          hintStyle: TextStyle(color: Colors.grey),
-                          hintText: 'DNI',
-                          border: OutlineInputBorder(
-                            borderSide: BorderSide(
-                              width: 0,
-                              style: BorderStyle.none,
-                            ),
-                            borderRadius: BorderRadius.all(Radius.circular(30.0)),
-                          )),
-                      textInputAction: TextInputAction.next,
-                      validator: (value) {
-                        if (value!.isEmpty) {
-                          return "Ingrese su dni";
-                        }
-                        if (value.length != 8) {
-                          return "Ingrese un dni válido";
-                        }
-                      }
-                  ),
-                ),
-                Container(
-                  decoration: BoxDecoration(
-                      color: Colors.white.withOpacity(0.7),
-                      borderRadius: const BorderRadius.all(Radius.circular(25.0)),
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.black.withOpacity(0.05),
-                          spreadRadius: 2,
-                          blurRadius: 3,
-                          offset: const Offset(1, 4),
-                        ),
-                      ]
-                  ),
-                  child: TextFormField(
-                      style: TextStyle(fontSize: 12),
-                      keyboardType: TextInputType.number,
-                      onSaved: (value){
-                        Provider.of<RegisterViewModel>(context, listen: false).setUserRegisterDto('phone', value);
-                      },
-                      decoration: const InputDecoration(
-                          hintStyle: TextStyle(color: Colors.grey),
-                          hintText: 'Teléfono',
-                          border: OutlineInputBorder(
-                            borderSide: BorderSide(
-                              width: 0,
-                              style: BorderStyle.none,
-                            ),
-                            borderRadius: BorderRadius.all(Radius.circular(30.0)),
-                          )),
-                      textInputAction: TextInputAction.next,
-                      validator: (value) {
-                        if (value!.isEmpty) {
-                          return "Ingrese su telefono";
-                        }
-                      }
-                  ),
-                ),
-                Container(
-                  decoration: BoxDecoration(
-                      color: Colors.white.withOpacity(0.7),
-                      borderRadius: const BorderRadius.all(Radius.circular(25.0)),
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.black.withOpacity(0.05),
-                          spreadRadius: 2,
-                          blurRadius: 3,
-                          offset: const Offset(1, 4),
-                        ),
-                      ]
-                  ),
-                  child: TextFormField(
-                      style: TextStyle(fontSize: 12),
-                      onSaved: (value){
-                        Provider.of<RegisterViewModel>(context, listen: false).setUserRegisterDto('email', value);
-                      },
-                      decoration: const InputDecoration(
-                        hintStyle: TextStyle(color: Colors.grey),
-                        hintText: 'Correo',
-                        border: OutlineInputBorder(
-                            borderSide: BorderSide(
-                              width: 0,
-                              style: BorderStyle.none,
-                            ),
-                            borderRadius: BorderRadius.all(Radius.circular(30.0))),),
-                      textInputAction: TextInputAction.next,
-                      validator: (value) {
-                        if (value!.isEmpty) {
-                          return "Ingrese su correo";
-                        }
-                      }
-                  ),
-                ),
-                Container(
-                  decoration: BoxDecoration(
-                      color: Colors.white.withOpacity(0.7),
-                      borderRadius: const BorderRadius.all(Radius.circular(25.0)),
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.black.withOpacity(0.05),
-                          spreadRadius: 2,
-                          blurRadius: 3,
-                          offset: const Offset(1, 4),
-                        ),
-                      ]
-                  ),
-                  child: TextFormField(
-                      style: TextStyle(fontSize: 12),
-                      onSaved: (value){
-                        Provider.of<RegisterViewModel>(context, listen: false).setUserRegisterDto('password', value);
+                        Provider.of<RegisterViewModel>(context, listen: false).setUserRegisterDto('firstName', value);
                       },
                       decoration: InputDecoration(
-                          hintStyle: const TextStyle(color: Colors.grey),
-                          hintText: 'Contraseña',
+                        filled: true,
+                        fillColor: Colors.white.withOpacity(0.7),
+                        hintStyle: TextStyle(color: Colors.grey),
+                        hintText: 'Nombres',
+                        border: const OutlineInputBorder(
+                          borderSide: BorderSide(
+                            width: 0,
+                            style: BorderStyle.none,
+                          ),
+                          borderRadius: BorderRadius.all(Radius.circular(30.0)),
+                        ),),
+                      textInputAction: TextInputAction.next,
+                      autovalidateMode: AutovalidateMode.onUserInteraction,
+                      validator: (value) {
+                        if (value!.isEmpty) {
+                          return "Ingrese un nombre";
+                        }
+                        if(!RegExp(r"^[a-zA-ZÀ-ÿ ´]+$").hasMatch(value)){
+                          return "Ingrese un nombre válido";
+                        }
+                      },
+                    ),
+                  ),
+                ),
+                Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 5),
+                  child: Material(
+                    color: Colors.transparent,
+                    elevation: 10.0,
+                    shadowColor: Colors.black.withOpacity(0.2),
+                    borderRadius: BorderRadius.all(Radius.circular(30)),
+                    child: TextFormField(
+                        style: TextStyle(fontSize: 12),
+                        onSaved: (value){
+                          Provider.of<RegisterViewModel>(context, listen: false).setUserRegisterDto('lastName', value);
+                        },
+                        decoration: InputDecoration(
+                            filled: true,
+                            fillColor: Colors.white.withOpacity(0.7),
+                            hintStyle: TextStyle(color: Colors.grey),
+                            hintText: 'Apellidos',
+                            border: const OutlineInputBorder(
+                              borderSide: BorderSide(
+                                width: 0,
+                                style: BorderStyle.none,
+                              ),
+                              borderRadius: BorderRadius.all(Radius.circular(30.0)),
+                            )),
+                        textInputAction: TextInputAction.next,
+                        autovalidateMode: AutovalidateMode.onUserInteraction,
+                        validator: (value) {
+                          if (value!.isEmpty) {
+                            return "Ingrese un apellido";
+                          }
+                          if(!RegExp(r"^[a-zA-ZÀ-ÿ ´]+$").hasMatch(value)){
+                            return "Ingrese un apellido válido";
+                          }
+                        }
+                    ),
+                  ),
+                ),
+                Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 5),
+                  child: Material(
+                    color: Colors.transparent,
+                    elevation: 10.0,
+                    shadowColor: Colors.black.withOpacity(0.2),
+                    borderRadius: BorderRadius.all(Radius.circular(30)),
+                    child: TextFormField(
+                        style: TextStyle(fontSize: 12),
+                        keyboardType: TextInputType.number,
+                        onSaved: (value){
+                          Provider.of<RegisterViewModel>(context, listen: false).setUserRegisterDto('dni', value);
+                        },
+                        decoration: InputDecoration(
+                            filled: true,
+                            fillColor: Colors.white.withOpacity(0.7),
+                            hintStyle: TextStyle(color: Colors.grey),
+                            hintText: 'DNI',
+                            border: const OutlineInputBorder(
+                              borderSide: BorderSide(
+                                width: 0,
+                                style: BorderStyle.none,
+                              ),
+                              borderRadius: BorderRadius.all(Radius.circular(30.0)),
+                            )),
+                        textInputAction: TextInputAction.next,
+                        autovalidateMode: AutovalidateMode.onUserInteraction,
+                        validator: (value) {
+                          if (value!.isEmpty) {
+                            return "Ingrese su dni";
+                          }
+                          if (value.length != 8) {
+                            return "Ingrese un dni válido";
+                          }
+                        }
+                    ),
+                  ),
+                ),
+                Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 5),
+                  child: Material(
+                    color: Colors.transparent,
+                    elevation: 10.0,
+                    shadowColor: Colors.black.withOpacity(0.2),
+                    borderRadius: BorderRadius.all(Radius.circular(30)),
+                    child: TextFormField(
+                        style: TextStyle(fontSize: 12),
+                        keyboardType: TextInputType.number,
+                        onSaved: (value){
+                          Provider.of<RegisterViewModel>(context, listen: false).setUserRegisterDto('phone', value);
+                        },
+                        decoration: InputDecoration(
+                            filled: true,
+                            fillColor: Colors.white.withOpacity(0.7),
+                            hintStyle: TextStyle(color: Colors.grey),
+                            hintText: 'Teléfono',
+                            border: const OutlineInputBorder(
+                              borderSide: BorderSide(
+                                width: 0,
+                                style: BorderStyle.none,
+                              ),
+                              borderRadius: BorderRadius.all(Radius.circular(30.0)),
+                            )),
+                        textInputAction: TextInputAction.next,
+                        autovalidateMode: AutovalidateMode.onUserInteraction,
+                        validator: (value) {
+                          if (value!.isEmpty) {
+                            return "Ingrese su telefono";
+                          }
+                        }
+                    ),
+                  ),
+                ),
+                Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 5),
+                  child: Material(
+                    color: Colors.transparent,
+                    elevation: 10.0,
+                    shadowColor: Colors.black.withOpacity(0.2),
+                    borderRadius: BorderRadius.all(Radius.circular(30)),
+                    child: TextFormField(
+                        style: TextStyle(fontSize: 12),
+                        onSaved: (value){
+                          Provider.of<RegisterViewModel>(context, listen: false).setUserRegisterDto('email', value);
+                        },
+                        decoration: InputDecoration(
+                          filled: true,
+                          fillColor: Colors.white.withOpacity(0.7),
+                          hintStyle: TextStyle(color: Colors.grey),
+                          hintText: 'Correo',
                           border: const OutlineInputBorder(
                               borderSide: BorderSide(
                                 width: 0,
                                 style: BorderStyle.none,
                               ),
-                              borderRadius: BorderRadius.all(Radius.circular(30.0))),
-                          suffixIcon: InkWell(
-                            child: isHiddenPassword == true
-                                ? const Icon(Icons.visibility, size: 20, color: primaryColor,)
-                                : const Icon(Icons.visibility_off, size: 20, color: primaryColor,),
-                            onTap: _togglePassword,
-                          )),
-                      obscureText: isHiddenPassword,
-                      textInputAction: TextInputAction.done,
-                      validator: (value) {
-                        if (value!.isEmpty) {
-                          return "Ingrese una contraseña";
+                              borderRadius: BorderRadius.all(Radius.circular(30.0))),),
+                        textInputAction: TextInputAction.next,
+                        autovalidateMode: AutovalidateMode.onUserInteraction,
+                        keyboardType: TextInputType.emailAddress,
+                        validator: (value) {
+                          if (value!.isEmpty) {
+                            return "Ingrese su correo";
+                          }
+                          if (!value.contains("@") || !value.contains(".com")) {
+                            return "Ingrese un correo valido";
+                          }
                         }
-                      }
+                    ),
+                  ),
+                ),
+                Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 5),
+                  child: Material(
+                    color: Colors.transparent,
+                    elevation: 10.0,
+                    shadowColor: Colors.black.withOpacity(0.2),
+                    borderRadius: BorderRadius.all(Radius.circular(30)),
+                    child: TextFormField(
+                        style: TextStyle(fontSize: 12),
+                        onSaved: (value){
+                          Provider.of<RegisterViewModel>(context, listen: false).setUserRegisterDto('password', value);
+                        },
+                        decoration: InputDecoration(
+                            filled: true,
+                            fillColor: Colors.white.withOpacity(0.7),
+                            hintStyle: const TextStyle(color: Colors.grey),
+                            hintText: 'Contraseña',
+                            border: const OutlineInputBorder(
+                                borderSide: BorderSide(
+                                  width: 0,
+                                  style: BorderStyle.none,
+                                ),
+                                borderRadius: BorderRadius.all(Radius.circular(30.0))),
+                            suffixIcon: InkWell(
+                              child: isHiddenPassword == true
+                                  ? const Icon(Icons.visibility, size: 20, color: primaryColor,)
+                                  : const Icon(Icons.visibility_off, size: 20, color: primaryColor,),
+                              onTap: _togglePassword,
+                            )),
+                        obscureText: isHiddenPassword,
+                        textInputAction: TextInputAction.done,
+                        validator: (value) {
+                          if (value!.isEmpty) {
+                            return "Ingrese una contraseña";
+                          }
+                        }
+                    ),
                   ),
                 ),
               ].map((children) =>

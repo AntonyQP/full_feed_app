@@ -1,7 +1,4 @@
 
-
-
-
 import 'package:flutter/cupertino.dart';
 import 'package:full_feed_app/view_model/chat_view_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';

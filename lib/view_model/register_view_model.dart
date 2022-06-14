@@ -194,7 +194,7 @@ class RegisterViewModel extends ChangeNotifier{
     LocationPermission permission;
     Position currentPosition;
 
-    _userService.getAllRegions().then((value){
+    await _userService.getAllRegions().then((value){
       regionList = value;
     });
 
@@ -250,23 +250,23 @@ class RegisterViewModel extends ChangeNotifier{
 
   categorizeLists(List<Preference> preferenceList){
     for(int i = 0; i < preferenceList.length; i++){
-      if(preferenceList[i].category!.categoryId == 4){
+      if(preferenceList[i].category!.categoryId == 1){
         _meats.add(preferenceList[i]);
         continue;
       }
-      if(preferenceList[i].category!.categoryId == 14){
+      if(preferenceList[i].category!.categoryId == 2){
         _vegetables.add(preferenceList[i]);
         continue;
       }
-      if(preferenceList[i].category!.categoryId == 24){
+      if(preferenceList[i].category!.categoryId == 3){
         _seafood.add(preferenceList[i]);
         continue;
       }
-      if(preferenceList[i].category!.categoryId == 34){
+      if(preferenceList[i].category!.categoryId == 4){
         _tubers.add(preferenceList[i]);
         continue;
       }
-      if(preferenceList[i].category!.categoryId == 44){
+      if(preferenceList[i].category!.categoryId == 5){
         _fruits.add(preferenceList[i]);
         continue;
       }
@@ -283,8 +283,8 @@ class RegisterViewModel extends ChangeNotifier{
     return await _userService.getDoctors();
   }
 
-  Future<bool> registerAndLogin() async{
-    return await _userService.registerAndLogin(_patientRegisterDto, _userLoginDto);
+  Future<void> registerAndLogin() async{
+    await _userService.registerAndLogin(_patientRegisterDto, _userLoginDto);
   }
 
   Future<bool> registerPreferences() async{

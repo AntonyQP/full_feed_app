@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:full_feed_app/domain/local/notification_service.dart';
 import 'package:full_feed_app/providers/diet_provider.dart';
+import 'package:full_feed_app/providers/doctor_provider.dart';
 import 'package:full_feed_app/providers/patient_provider.dart';
 import 'package:full_feed_app/providers/user_provider.dart';
 import 'package:full_feed_app/view/page/authentication/splash_screen.dart';
 import 'package:full_feed_app/view_model/diet_view_model.dart';
+import 'package:full_feed_app/view_model/illness_list_view_model.dart';
 import 'package:full_feed_app/view_model/logged_in_view_model.dart';
 import 'package:full_feed_app/view_model/login_view_model.dart';
 import 'package:full_feed_app/view_model/patient_view_model.dart';
@@ -33,19 +36,11 @@ class MyApp extends StatefulWidget {
 class MyAppState extends State<MyApp> {
   late StreamChatClient client;
 
-  listenNotifications() => NotificationService.onNotifications.stream.listen((event) { });
-
   @override
   void initState() {
-    NotificationService.init().whenComplete((){
-      listenNotifications();
-
-      NotificationService.showScheduledNotification(title: 'Hola', body: 'Soy pepino');
-    });
-
 
     client = StreamChatClient(
-      '4u4qb3jxyjpa',
+      'n9tvm6gfmjw3',
       logLevel: Level.WARNING,
     );
     super.initState();
@@ -61,13 +56,15 @@ class MyAppState extends State<MyApp> {
 
           ChangeNotifierProvider(create: (ctx) => UserProvider()),
           ChangeNotifierProvider(create: (ctx) => DietProvider()),
+          ChangeNotifierProvider(create: (ctx) => DoctorProvider()),
           ChangeNotifierProvider(create: (ctx) => PatientProvider()),
 
           ChangeNotifierProvider(create: (ctx) => LoginViewModel()),
           ChangeNotifierProvider(create: (ctx) => RegisterViewModel()),
           ChangeNotifierProvider(create: (ctx) => LoggedInViewModel()),
           ChangeNotifierProvider(create: (ctx) => DietViewModel()),
-          ChangeNotifierProvider(create: (ctx) => PatientViewModel())
+          ChangeNotifierProvider(create: (ctx) => PatientViewModel()),
+          ChangeNotifierProvider(create: (ctx) => IllnessListViewModel())
         ],
         child: MaterialApp(
             localizationsDelegates: const [

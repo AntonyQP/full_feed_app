@@ -7,7 +7,8 @@ class ChatListItem extends StatefulWidget {
   final int index;
   final String title;
   final String name;
-  const ChatListItem({Key? key, required this.index, required this.title, required this.name}) : super(key: key);
+  final String sex;
+  const ChatListItem({Key? key, required this.index, required this.title, required this.name, required this.sex}) : super(key: key);
 
   @override
   ChatListItemState createState() => ChatListItemState();
@@ -49,9 +50,9 @@ class ChatListItemState extends State<ChatListItem> with
             left: size.width * 0.1,
             child: Row(
               children: [
-                const CircleAvatar(
+                CircleAvatar(
                   radius: 30,
-                  backgroundImage: AssetImage('assets/breakfast_back.png'),
+                  backgroundImage: widget.sex == 'h' ? AssetImage('assets/male_user.jpg') : AssetImage('assets/female_user.jpg'),
                 ),
                 Padding(
                   padding: EdgeInsets.symmetric(horizontal: size.width/20, vertical: size.height/40),

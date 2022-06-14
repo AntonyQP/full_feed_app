@@ -19,7 +19,7 @@ class _HomeAchievementsCardState extends State<HomeAchievementsCard> {
     var size = MediaQuery.of(context).size;
     return Container(
       width: size.width * 0.4,
-      height: size.height * 0.35,
+      height: size.height * 0.4,
       decoration: const BoxDecoration(
         borderRadius: BorderRadius.only(topLeft: Radius.circular(15.0), topRight: Radius.circular(60.0),),
         gradient: LinearGradient(
@@ -50,9 +50,9 @@ class _HomeAchievementsCardState extends State<HomeAchievementsCard> {
                   children: [
                     Image.asset(trophyPath, width: 42, height: 42),
                     Positioned(
-                      top: 2,
+                      top: 3,
                       child: Text(UserSession().successfulDays.toString(),
-                          style: const TextStyle(fontSize: 15, fontWeight: FontWeight.w500,
+                          style: const TextStyle(fontSize: 12, fontWeight: FontWeight.w500,
                               color: trophyTextColor)
                       ),
                     )
@@ -62,7 +62,7 @@ class _HomeAchievementsCardState extends State<HomeAchievementsCard> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(UserSession().successfulDays.toString(),
-                        style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold)
+                        style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold)
                     ),
                     const Text('Días', style: TextStyle(fontSize: 10.5)),
                     const Text('cumplidos', style: TextStyle(fontSize: 10.5))
@@ -84,9 +84,9 @@ class _HomeAchievementsCardState extends State<HomeAchievementsCard> {
                   children: [
                     Image.asset(bodyScalePath, width: 55, height: 55),
                     Positioned(
-                      top: 20,
+                      top: 25,
                       child: Text(UserSession().lossWeight.toString(),
-                          style: const TextStyle(fontSize: 15, fontWeight: FontWeight.w500,
+                          style: const TextStyle(fontSize: 12, fontWeight: FontWeight.w500,
                               color: trophyTextColor)
                       ),
                     )
@@ -96,7 +96,7 @@ class _HomeAchievementsCardState extends State<HomeAchievementsCard> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(UserSession().lossWeight.toString(),
-                        style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold)
+                        style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold)
                     ),
                     const Flexible(child: Text('Kg perdidos', style: TextStyle(fontSize: 10.5)))
                   ],

@@ -62,7 +62,9 @@ class DietDayDetailState extends State<DietDayDetail> {
 
   @override
   void dispose() {
-    Provider.of<DietProvider>(context, listen: false).deselectAlternativeMeal();
+    if(Provider.of<DietProvider>(context, listen: false).getIsAlternativeMealSelected()){
+      Provider.of<DietProvider>(context, listen: false).deselectAlternativeMeal();
+    }
     super.dispose();
   }
 
@@ -101,10 +103,13 @@ class DietDayDetailState extends State<DietDayDetail> {
             children: List.generate( Provider.of<DietViewModel>(context, listen: false).getDaysForDetail().length, (index) {
               return InkWell(
                 onTap: () {
+                  if(Provider.of<DietProvider>(context, listen: false).getIsAlternativeMealSelected()){
+                    Provider.of<DietProvider>(context, listen: false).deselectAlternativeMeal();
+                  }
+                  Provider.of<DietProvider>(context, listen: false).setDayDetailPresenter(index, context);
+                  Provider.of<DietProvider>(context, listen: false).firstDayEntry = true;
                   setState(() {
                     selected = index;
-                    Provider.of<DietProvider>(context, listen: false).setDayDetailPresenter(index, context);
-                    Provider.of<DietProvider>(context, listen: false).firstDayEntry = true;
                   });
                 },
                 child: Container(
@@ -146,7 +151,7 @@ class DietDayDetailState extends State<DietDayDetail> {
                 ],
             ),
             width: size,
-            height: size2,
+            height: size2 * 1.1,
             child: Stack(
                 children: [
                   SelectDayPlate(dayMeals: Provider.of<DietProvider>(context).getDietDayDetailViewModel().getDayMeals(),),
@@ -161,11 +166,39 @@ class DietDayDetailState extends State<DietDayDetail> {
                   Positioned(
                     right: 15,
                     top: size2 * 0.2,
-                    child: const CircleAvatar(
-                      backgroundImage: NetworkImage(
+                    child: CircleAvatar(
+                      backgroundImage:
+                      Provider.of<DietProvider>(context).getIsAlternativeMealSelected() ?
+                      NetworkImage(
+                          Provider.of<DietProvider>(context).getDietDayDetailViewModel().getAlternativeMeal().imageUrl != null && Provider.of<DietProvider>(context).getDietDayDetailViewModel().getAlternativeMeal().imageUrl != "" ?
+                          Provider.of<DietProvider>(context).getDietDayDetailViewModel().getAlternativeMeal().imageUrl! :
+                          "https://blogladiadoresfit.com/wp-content/uploads/2021/02/avena-fitness.jpg"
+                      ) :
+                      NetworkImage(
+                          Provider.of<DietProvider>(context).getDietDayDetailViewModel().getMealSelected().imageUrl != null && Provider.of<DietProvider>(context).getDietDayDetailViewModel().getMealSelected().imageUrl != "" ?
+                          Provider.of<DietProvider>(context).getDietDayDetailViewModel().getMealSelected().imageUrl! :
                           "https://blogladiadoresfit.com/wp-content/uploads/2021/02/avena-fitness.jpg"
                       ),
                       radius: 80,
+                    ),
+                  ),
+                  Positioned(
+                    right: 15,
+                    top: size2 * 0.32,
+                    child: CircleAvatar(
+                      backgroundColor: chatCardPrimaryColor,
+                      radius: 28,
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text('Porción', textAlign: TextAlign.center, style: TextStyle(fontSize: 10, color: Colors.white),),
+                          Provider.of<DietProvider>(context).getIsAlternativeMealSelected() ?
+                          Text(Provider.of<DietProvider>(context).getDietDayDetailViewModel().getAlternativeMeal().gramsPortion.toString() + ' gr', textAlign: TextAlign.center, style: TextStyle(fontSize: 12, color: Colors.white, fontWeight: FontWeight.bold ),)
+                           :
+                          Text(Provider.of<DietProvider>(context).getDietDayDetailViewModel().getMealSelected().gramsPortion.toString() + ' gr', textAlign: TextAlign.center, style: TextStyle(fontSize: 12, color: Colors.white, fontWeight: FontWeight.bold),),
+
+                        ],
+                      ),
                     ),
                   ),
                 ],
@@ -183,7 +216,7 @@ class DietDayDetailState extends State<DietDayDetail> {
           Visibility(
             visible: widget.fromRegister,
             child: Padding(
-                padding: EdgeInsets.only(top: size2/20),
+                padding: EdgeInsets.only(top: size2/20, bottom: size2 * 0.02),
                 child: Container(
                   decoration: const BoxDecoration(
                       shape: BoxShape.circle,

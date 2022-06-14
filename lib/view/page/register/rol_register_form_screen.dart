@@ -62,6 +62,7 @@ class RolRegisterFormScreenState extends State<RolRegisterFormScreen> with
         Provider.of<RegisterViewModel>(context, listen: false).setUserRegisterDto('birthDate', DateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(picked));
         _birthDayController.text = DateFormat('dd/MM/yyyy').format(picked);
       });
+      _rolFormKey.currentState!.validate();
     }
   }
 
@@ -92,56 +93,56 @@ class RolRegisterFormScreenState extends State<RolRegisterFormScreen> with
             key: _rolFormKey,
             child: Column(
               children: [
-                Container(
-                  height: size.height *0.06,
-                  width: size.width * 0.9,
-                  decoration: BoxDecoration(
-                      color: Colors.white.withOpacity(0.7),
-                      borderRadius: const BorderRadius.all(Radius.circular(25.0)),
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.black.withOpacity(0.05),
-                          spreadRadius: 2,
-                          blurRadius: 3,
-                          offset: const Offset(1, 4),
-                        ),
-                      ]
+                Material(
+                  color: Colors.transparent,
+                  elevation: 10.0,
+                  shadowColor: Colors.black.withOpacity(0.2),
+                  borderRadius: BorderRadius.all(Radius.circular(30)),
+                  child: Container(
+                    height: size.height *0.06,
+                    width: size.width * 0.9,
+                    decoration: BoxDecoration(
+                        color: Colors.white.withOpacity(0.7),
+                        borderRadius: const BorderRadius.all(Radius.circular(25.0)),
+                    ),
+                    child: DropDown(hintText: "Sexo", datos: _sexList.map<DropdownMenuItem<Option>>((Option item){
+                      return DropdownMenuItem<Option>(
+                        child: Text(item.name),
+                        value: item,
+                      );
+                    }).toList(), initialValue: _sexList[0].id),
                   ),
-                  child: DropDown(hintText: "Sexo", datos: _sexList.map<DropdownMenuItem<Option>>((Option item){
-                    return DropdownMenuItem<Option>(
-                      child: Text(item.name),
-                      value: item,
-                    );
-                  }).toList(), initialValue: _sexList[0].id),
                 ),
                 Container(
-                  decoration: BoxDecoration(
-                      color: Colors.white.withOpacity(0.7),
-                      borderRadius: const BorderRadius.all(Radius.circular(25.0)),
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.black.withOpacity(0.05),
-                          spreadRadius: 2,
-                          blurRadius: 3,
-                          offset: const Offset(1, 4),
-                        ),
-                      ]
-                  ),
-                  child: TextField(
-                    style: TextStyle(fontSize: 12),
-                    controller: _birthDayController,
-                    readOnly: true,
-                    onTap: () => selectStartDate(context),
-                    decoration: const InputDecoration(
-                        hintStyle: TextStyle(color: Colors.grey),
-                        hintText: 'Fecha de nacimiento',
-                        border: OutlineInputBorder(
-                            borderSide: BorderSide(
-                              width: 0,
-                              style: BorderStyle.none,
-                            ),
-                            borderRadius: BorderRadius.all(Radius.circular(30.0)))),
-                    textInputAction: TextInputAction.next,
+                  padding: const EdgeInsets.symmetric(horizontal: 5),
+                  child: Material(
+                    color: Colors.transparent,
+                    elevation: 10.0,
+                    shadowColor: Colors.black.withOpacity(0.2),
+                    borderRadius: BorderRadius.all(Radius.circular(30)),
+                    child: TextFormField(
+                      style: TextStyle(fontSize: 12),
+                      controller: _birthDayController,
+                      readOnly: true,
+                      onTap: () => selectStartDate(context),
+                      decoration: InputDecoration(
+                          filled: true,
+                          fillColor: Colors.white.withOpacity(0.7),
+                          hintStyle: TextStyle(color: Colors.grey),
+                          hintText: 'Fecha de nacimiento',
+                          border: const OutlineInputBorder(
+                              borderSide: BorderSide(
+                                width: 0,
+                                style: BorderStyle.none,
+                              ),
+                              borderRadius: BorderRadius.all(Radius.circular(30.0)))),
+                      textInputAction: TextInputAction.next,
+                        validator: (value) {
+                          if (value!.isEmpty) {
+                            return "Ingrese su fecha de nacimiento ";
+                          }
+                        }
+                    ),
                   ),
                 ),
                 Provider.of<RegisterViewModel>(context, listen: false).getDesireRol() == "p" ?
@@ -151,78 +152,75 @@ class RolRegisterFormScreenState extends State<RolRegisterFormScreen> with
                     Text('Altura'),
                     Container(
                       width: size.width * 0.6,
-                      decoration: BoxDecoration(
-                          color: Colors.white.withOpacity(0.7),
-                          borderRadius: const BorderRadius.all(Radius.circular(25.0)),
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.black.withOpacity(0.05),
-                              spreadRadius: 2,
-                              blurRadius: 3,
-                              offset: const Offset(1, 4),
-                            ),
-                          ]
-                      ),
-                      child: TextFormField(
-                          style: TextStyle(fontSize: 12),
-                          onSaved: (value){
-                            Provider.of<RegisterViewModel>(context, listen: false).setHeight(double.parse(value!));
-                            Provider.of<RegisterViewModel>(context, listen: false).setUserRegisterDto('height', double.parse(value) * 100);
-                          },
-                          decoration: const InputDecoration(
-                            hintStyle: TextStyle(color: Colors.grey),
-                            hintText: 'cm',
-                            border: OutlineInputBorder(
-                                borderSide: BorderSide(
-                                  width: 0,
-                                  style: BorderStyle.none,
-                                ),
-                                borderRadius: BorderRadius.all(Radius.circular(30.0)))),
-                        textInputAction: TextInputAction.next,
-                          validator: (value) {
-                            if (value!.isEmpty) {
-                              return "Ingrese su altura ";
+                      padding: const EdgeInsets.symmetric(horizontal: 5),
+                      child: Material(
+                        color: Colors.transparent,
+                        elevation: 10.0,
+                        shadowColor: Colors.black.withOpacity(0.2),
+                        borderRadius: BorderRadius.all(Radius.circular(30)),
+                        child: TextFormField(
+                            style: TextStyle(fontSize: 12),
+                            onSaved: (value){
+                              Provider.of<RegisterViewModel>(context, listen: false).setHeight(double.parse(value!));
+                              Provider.of<RegisterViewModel>(context, listen: false).setUserRegisterDto('height', double.parse(value));
+                            },
+                            decoration: InputDecoration(
+                              filled: true,
+                              fillColor: Colors.white.withOpacity(0.7),
+                              hintStyle: TextStyle(color: Colors.grey),
+                              hintText: 'cm',
+                              border: const OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                    width: 0,
+                                    style: BorderStyle.none,
+                                  ),
+                                  borderRadius: BorderRadius.all(Radius.circular(30.0)))),
+                          textInputAction: TextInputAction.next,
+                            keyboardType: TextInputType.number,
+                            autovalidateMode: AutovalidateMode.onUserInteraction,
+                            validator: (value) {
+                              if (value!.isEmpty) {
+                                return "Ingrese su altura ";
+                              }
                             }
-                          }
+                        ),
                       ),
                     ),
                   ],
                 ) : Container(
-                  decoration: BoxDecoration(
-                      color: Colors.white.withOpacity(0.7),
-                      borderRadius: const BorderRadius.all(Radius.circular(25.0)),
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.black.withOpacity(0.05),
-                          spreadRadius: 2,
-                          blurRadius: 3,
-                          offset: const Offset(1, 4),
-                        ),
-                      ]
-                  ),
-                  child: TextFormField(
-                      style: TextStyle(fontSize: 12),
-                    keyboardType: TextInputType.number,
-                    onChanged: (value){
-                      setState(() {
-                        Provider.of<RegisterViewModel>(context, listen: false).setDoctorRegisterDto('licenseNumber', value);
-                      });
-                    },
-                    decoration: const InputDecoration(
-                        hintStyle: TextStyle(color: Colors.grey),
-                        hintText: 'Código de nutricionista',
-                        border: OutlineInputBorder(
-                            borderSide: BorderSide(
-                              width: 0,
-                              style: BorderStyle.none,
-                            ),
-                            borderRadius: BorderRadius.all(Radius.circular(30.0)))),
-                    textInputAction: TextInputAction.next,
-                      validator: (value) {
-                        if (value!.isEmpty) {
-                          return "Ingrese su codigo de nutricionista";
+                  padding: const EdgeInsets.symmetric(horizontal: 5),
+                  child: Material(
+                    color: Colors.transparent,
+                    elevation: 10.0,
+                    shadowColor: Colors.black.withOpacity(0.2),
+                    borderRadius: BorderRadius.all(Radius.circular(30)),
+                    child: TextFormField(
+                        style: TextStyle(fontSize: 12),
+                      keyboardType: TextInputType.number,
+                      onChanged: (value){
+                        setState(() {
+                          Provider.of<RegisterViewModel>(context, listen: false).setDoctorRegisterDto('licenseNumber', value);
+                        });
+                      },
+                      decoration: InputDecoration(
+                          filled: true,
+                          fillColor: Colors.white.withOpacity(0.7),
+                          hintStyle: TextStyle(color: Colors.grey),
+                          hintText: 'Código de nutricionista',
+                          border: const OutlineInputBorder(
+                              borderSide: BorderSide(
+                                width: 0,
+                                style: BorderStyle.none,
+                              ),
+                              borderRadius: BorderRadius.all(Radius.circular(30.0)))),
+                      textInputAction: TextInputAction.next,
+                        autovalidateMode: AutovalidateMode.onUserInteraction,
+                        validator: (value) {
+                          if (value!.isEmpty) {
+                            return "Ingrese su codigo de nutricionista";
+                          }
                         }
-                      }
+                    ),
                   ),
                 ),
                 Visibility(
@@ -233,40 +231,38 @@ class RolRegisterFormScreenState extends State<RolRegisterFormScreen> with
                       Text('Peso'),
                       Container(
                         width: size.width * 0.6,
-                        decoration: BoxDecoration(
-                            color: Colors.white.withOpacity(0.7),
-                            borderRadius: const BorderRadius.all(Radius.circular(25.0)),
-                            boxShadow: [
-                              BoxShadow(
-                                color: Colors.black.withOpacity(0.05),
-                                spreadRadius: 2,
-                                blurRadius: 3,
-                                offset: const Offset(1, 4),
-                              ),
-                            ]
-                        ),
-                        child: TextFormField(
-                          style: TextStyle(fontSize: 12),
-                          onSaved: (value){
-                            Provider.of<RegisterViewModel>(context, listen: false).setWeight(double.parse(value!));
-                            Provider.of<RegisterViewModel>(context, listen: false).setUserRegisterDto('weight', double.parse(value));
-                          },
-                            decoration: const InputDecoration(
-                                hintText: 'cm',
-                                hintStyle: TextStyle(color: Colors.grey),
-                                border: OutlineInputBorder(
-                                  borderSide: BorderSide(
-                                    width: 0,
-                                    style: BorderStyle.none,
-                                  ),
-                                    borderRadius: BorderRadius.all(Radius.circular(30.0)))),
-                            textInputAction: TextInputAction.next,
-                            autovalidateMode: AutovalidateMode.onUserInteraction,
-                            validator: (value) {
-                            if (value!.isEmpty) {
-                              return "Ingrese su peso ";
-                            }
-                          },
+                        padding: const EdgeInsets.symmetric(horizontal: 5),
+                        child: Material(
+                          color: Colors.transparent,
+                          elevation: 10.0,
+                          shadowColor: Colors.black.withOpacity(0.2),
+                          borderRadius: BorderRadius.all(Radius.circular(30)),
+                          child: TextFormField(
+                            style: TextStyle(fontSize: 12),
+                            onSaved: (value){
+                              Provider.of<RegisterViewModel>(context, listen: false).setWeight(double.parse(value!));
+                              Provider.of<RegisterViewModel>(context, listen: false).setUserRegisterDto('weight', double.parse(value));
+                            },
+                              decoration: InputDecoration(
+                                  filled: true,
+                                  fillColor: Colors.white.withOpacity(0.7),
+                                  hintText: 'kg',
+                                  hintStyle: TextStyle(color: Colors.grey),
+                                  border: const OutlineInputBorder(
+                                    borderSide: BorderSide(
+                                      width: 0,
+                                      style: BorderStyle.none,
+                                    ),
+                                      borderRadius: BorderRadius.all(Radius.circular(30.0)))),
+                              textInputAction: TextInputAction.next,
+                              autovalidateMode: AutovalidateMode.onUserInteraction,
+                            keyboardType: TextInputType.number,
+                              validator: (value) {
+                              if (value!.isEmpty) {
+                                return "Ingrese su peso ";
+                              }
+                            },
+                          ),
                         ),
                       ),
                     ],
@@ -280,39 +276,37 @@ class RolRegisterFormScreenState extends State<RolRegisterFormScreen> with
                       Text('Brazo'),
                       Container(
                         width: size.width * 0.6,
-                        decoration: BoxDecoration(
-                            color: Colors.white.withOpacity(0.7),
-                            borderRadius: const BorderRadius.all(Radius.circular(25.0)),
-                            boxShadow: [
-                              BoxShadow(
-                                color: Colors.black.withOpacity(0.05),
-                                spreadRadius: 2,
-                                blurRadius: 3,
-                                offset: const Offset(1, 4),
-                              ),
-                            ]
-                        ),
-                        child: TextFormField(
-                          style: TextStyle(fontSize: 12),
-                          onSaved: (value){
-                            Provider.of<RegisterViewModel>(context, listen: false).setUserRegisterDto('arm', double.parse(value!));
-                          },
-                          decoration: const InputDecoration(
-                              hintText: 'cm',
-                              hintStyle: TextStyle(color: Colors.grey),
-                              border: OutlineInputBorder(
-                                  borderSide: BorderSide(
-                                    width: 0,
-                                    style: BorderStyle.none,
-                                  ),
-                                  borderRadius: BorderRadius.all(Radius.circular(30.0)))),
-                          textInputAction: TextInputAction.next,
-                          autovalidateMode: AutovalidateMode.onUserInteraction,
-                          validator: (value) {
-                            if (value!.isEmpty) {
-                              return "Ingrese las medidas de su brazo";
-                            }
-                          },
+                        padding: const EdgeInsets.symmetric(horizontal: 5),
+                        child: Material(
+                          color: Colors.transparent,
+                          elevation: 10.0,
+                          shadowColor: Colors.black.withOpacity(0.2),
+                          borderRadius: BorderRadius.all(Radius.circular(30)),
+                          child: TextFormField(
+                            style: TextStyle(fontSize: 12),
+                            onSaved: (value){
+                              Provider.of<RegisterViewModel>(context, listen: false).setUserRegisterDto('arm', double.parse(value!));
+                            },
+                            decoration: InputDecoration(
+                                filled: true,
+                                fillColor: Colors.white.withOpacity(0.7),
+                                hintText: 'cm',
+                                hintStyle: TextStyle(color: Colors.grey),
+                                border: const OutlineInputBorder(
+                                    borderSide: BorderSide(
+                                      width: 0,
+                                      style: BorderStyle.none,
+                                    ),
+                                    borderRadius: BorderRadius.all(Radius.circular(30.0)))),
+                            textInputAction: TextInputAction.next,
+                            autovalidateMode: AutovalidateMode.onUserInteraction,
+                            keyboardType: TextInputType.number,
+                            validator: (value) {
+                              if (value!.isEmpty) {
+                                return "Ingrese las medidas de su brazo";
+                              }
+                            },
+                          ),
                         ),
                       ),
                     ],
@@ -326,39 +320,37 @@ class RolRegisterFormScreenState extends State<RolRegisterFormScreen> with
                       Text('Abdominal'),
                       Container(
                         width: size.width * 0.6,
-                        decoration: BoxDecoration(
-                            color: Colors.white.withOpacity(0.7),
-                            borderRadius: const BorderRadius.all(Radius.circular(25.0)),
-                            boxShadow: [
-                              BoxShadow(
-                                color: Colors.black.withOpacity(0.05),
-                                spreadRadius: 2,
-                                blurRadius: 3,
-                                offset: const Offset(1, 4),
-                              ),
-                            ]
-                        ),
-                        child: TextFormField(
-                          style: TextStyle(fontSize: 12),
-                          onSaved: (value){
-                            Provider.of<RegisterViewModel>(context, listen: false).setUserRegisterDto('abdominal', double.parse(value!));
-                          },
-                          decoration: const InputDecoration(
-                              hintText: 'cm',
-                              hintStyle: TextStyle(color: Colors.grey),
-                              border: OutlineInputBorder(
-                                  borderSide: BorderSide(
-                                    width: 0,
-                                    style: BorderStyle.none,
-                                  ),
-                                  borderRadius: BorderRadius.all(Radius.circular(30.0)))),
-                          textInputAction: TextInputAction.next,
-                          autovalidateMode: AutovalidateMode.onUserInteraction,
-                          validator: (value) {
-                            if (value!.isEmpty) {
-                              return "Ingrese las medidas de su cintura";
-                            }
-                          },
+                        padding: const EdgeInsets.symmetric(horizontal: 5),
+                        child: Material(
+                          color: Colors.transparent,
+                          elevation: 10.0,
+                          shadowColor: Colors.black.withOpacity(0.2),
+                          borderRadius: BorderRadius.all(Radius.circular(30)),
+                          child: TextFormField(
+                            style: TextStyle(fontSize: 12),
+                            onSaved: (value){
+                              Provider.of<RegisterViewModel>(context, listen: false).setUserRegisterDto('abdominal', double.parse(value!));
+                            },
+                            decoration: InputDecoration(
+                                filled: true,
+                                fillColor: Colors.white.withOpacity(0.7),
+                                hintText: 'cm',
+                                hintStyle: TextStyle(color: Colors.grey),
+                                border: const OutlineInputBorder(
+                                    borderSide: BorderSide(
+                                      width: 0,
+                                      style: BorderStyle.none,
+                                    ),
+                                    borderRadius: BorderRadius.all(Radius.circular(30.0)))),
+                            textInputAction: TextInputAction.next,
+                            autovalidateMode: AutovalidateMode.onUserInteraction,
+                            keyboardType: TextInputType.number,
+                            validator: (value) {
+                              if (value!.isEmpty) {
+                                return "Ingrese las medidas de su abdominal";
+                              }
+                            },
+                          ),
                         ),
                       ),
                     ],
@@ -372,39 +364,37 @@ class RolRegisterFormScreenState extends State<RolRegisterFormScreen> with
                       Text('Cadera'),
                       Container(
                         width: size.width * 0.6,
-                        decoration: BoxDecoration(
-                            color: Colors.white.withOpacity(0.7),
-                            borderRadius: const BorderRadius.all(Radius.circular(25.0)),
-                            boxShadow: [
-                              BoxShadow(
-                                color: Colors.black.withOpacity(0.05),
-                                spreadRadius: 2,
-                                blurRadius: 3,
-                                offset: const Offset(1, 4),
-                              ),
-                            ]
-                        ),
-                        child: TextFormField(
-                          style: TextStyle(fontSize: 12),
-                          onSaved: (value){
-                            Provider.of<RegisterViewModel>(context, listen: false).setUserRegisterDto('tmb', double.parse(value!));
-                          },
-                          decoration: const InputDecoration(
-                              hintText: 'cm',
-                              hintStyle: TextStyle(color: Colors.grey),
-                              border: OutlineInputBorder(
-                                  borderSide: BorderSide(
-                                    width: 0,
-                                    style: BorderStyle.none,
-                                  ),
-                                  borderRadius: BorderRadius.all(Radius.circular(30.0)))),
-                          textInputAction: TextInputAction.next,
-                          autovalidateMode: AutovalidateMode.onUserInteraction,
-                          validator: (value) {
-                            if (value!.isEmpty) {
-                              return "Ingrese las medidas de su cadera ";
-                            }
-                          },
+                        padding: const EdgeInsets.symmetric(horizontal: 5),
+                        child: Material(
+                          color: Colors.transparent,
+                          elevation: 10.0,
+                          shadowColor: Colors.black.withOpacity(0.2),
+                          borderRadius: BorderRadius.all(Radius.circular(30)),
+                          child: TextFormField(
+                            style: TextStyle(fontSize: 12),
+                            onSaved: (value){
+                              Provider.of<RegisterViewModel>(context, listen: false).setUserRegisterDto('tmb', double.parse(value!));
+                            },
+                            decoration: InputDecoration(
+                                filled: true,
+                                fillColor: Colors.white.withOpacity(0.7),
+                                hintText: 'cm',
+                                hintStyle: TextStyle(color: Colors.grey),
+                                border: const OutlineInputBorder(
+                                    borderSide: BorderSide(
+                                      width: 0,
+                                      style: BorderStyle.none,
+                                    ),
+                                    borderRadius: BorderRadius.all(Radius.circular(30.0)))),
+                            textInputAction: TextInputAction.next,
+                            autovalidateMode: AutovalidateMode.onUserInteraction,
+                            keyboardType: TextInputType.number,
+                            validator: (value) {
+                              if (value!.isEmpty) {
+                                return "Ingrese las medidas de su cadera ";
+                              }
+                            },
+                          ),
                         ),
                       ),
                     ],

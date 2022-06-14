@@ -32,6 +32,7 @@ class PatientViewModel with ChangeNotifier {
     await _userService.updatePatientInfo(PatientUpdateDto(_patientSelected.patientId!, height, imc, weight, arm, abdominal, tmb)).then((newPatient){
       if(newPatient.patientId == _patientSelected.patientId){
         newPatient.setFirstDayOfWeek(_patientSelected.firstDayOfWeek!);
+        newPatient.setState();
         _patientSelected = newPatient;
         Provider.of<LoggedInViewModel>(context, listen: false).setPatientAfterUpdate(newPatient);
         notifyListeners();

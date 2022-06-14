@@ -8,7 +8,7 @@ import '../../../model/entities/patient.dart';
 class DoctorPatient extends StatefulWidget {
   final String title;
   final Patient patient;
-  const DoctorPatient({Key? key, required this.title, required this.patient}) : super(key: key);
+  const   DoctorPatient({Key? key, required this.title, required this.patient}) : super(key: key);
 
   @override
   DoctorPatientState createState() => DoctorPatientState();
@@ -17,43 +17,12 @@ class DoctorPatient extends StatefulWidget {
 class DoctorPatientState extends State<DoctorPatient> with
     AutomaticKeepAliveClientMixin{
 
-  String _state = "";
-  Color _colorState = Colors.white;
-
   @override
   bool get wantKeepAlive => true;
 
-
-  setValue(double imc){
-    if (imc >= 30.0) {
-      setState(() {
-        _colorState = Color(0XFFFF003E);
-        _state = "OBESIDAD";
-      });
-    }
-    if (imc < 30.0 && imc >= 25.0) {
-      setState(() {
-        _colorState = Color(0XFFFF295D);
-        _state = "SOBREPESO";
-      });
-    }
-    if (imc < 24.9 && imc >= 18.5) {
-      setState(() {
-        _colorState = Color(0XFF02D871);
-        _state = "NORMAL";
-      });
-    }
-    if (imc < 18.5) {
-      setState(() {
-        _colorState = Color(0XFFFFEA29);
-        _state = "BAJO PESO";
-      });
-    }
-  }
   @override
   void initState() {
     super.initState();
-    setValue(widget.patient.imc!);
   }
 
   @override
@@ -101,9 +70,9 @@ class DoctorPatientState extends State<DoctorPatient> with
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              const CircleAvatar(
+              CircleAvatar(
                 radius: 30,
-                backgroundColor: darkColor,
+                backgroundImage: widget.patient.user!.sex! == 'h' ? AssetImage('assets/male_patient.jpg') : AssetImage('assets/female_patient.jpg'),
               ),
               Padding(
                 padding: EdgeInsets.symmetric(horizontal: size.width/30, vertical: size.height * 0.009),
@@ -119,15 +88,14 @@ class DoctorPatientState extends State<DoctorPatient> with
               ),
             ],
           ),
-          Container(
-            height: size.width/6,
-            width: size.width/6,
-            decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                color: _colorState
-            ),
-            child: Center(
-              child: Text(_state, style: const TextStyle(fontSize: 10, color: Colors.white),),
+          CircleAvatar(
+            radius: size.width * 0.09,
+            backgroundColor: widget.patient.stateColor,
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Center(
+                child: Text(widget.patient.stateName!, style: const TextStyle(fontSize: 10, color: Colors.white), textAlign: TextAlign.center,),
+              ),
             ),
           )
         ],

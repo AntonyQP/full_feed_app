@@ -9,21 +9,41 @@ import '../../model/dtos/doctor_register_dto.dart';
 import '../../model/dtos/patient_update_dto.dart';
 import '../../model/dtos/preference_register_dto.dart';
 import '../../model/entities/doctor.dart';
+import '../../model/entities/illness.dart';
 import '../../model/entities/nutrition_stat.dart';
 import '../../model/entities/region.dart';
 import '../../model/entities/user_session.dart';
 import '../../model/entities/weight_history.dart';
+import '../../util/MultipartRequestEx.dart';
 import '../../util/connection_tags.dart';
 import '../../util/util.dart';
 import '../../view_model/profile_view_model.dart';
 
 class UserService{
 
-  Future<bool> registerAndLogin(Map<dynamic, dynamic> patientRegisterDto, Map<dynamic, dynamic> userLoginDto) async{
+  Future<void> registerAndLogin(Map<dynamic, dynamic> patientRegisterDto, Map<dynamic, dynamic> userLoginDto) async{
     await registerPatient(patientRegisterDto).whenComplete(() {
       loginUser(userLoginDto);
     });
-    return true;
+  }
+
+  Future<List<Illness>> getPatientIllnessesByDoctor(int patientId) async {
+    var uri = baseUrl + illnessEndpoint;
+
+    final dio = Dio();
+
+    dio.options.headers["authorization"] = "Bearer ${UserSession().token}";
+
+    Response response = await dio.get(uri, queryParameters: {
+      'patientId': patientId
+    });
+
+    if(response.statusCode == 200) {
+      List aux = response.data["data"].map((e) => Illness.fromJson(e)).toList();
+      return aux.cast<Illness>();
+    }
+
+    return [];
   }
 
   Future<int> loginUser(Map<dynamic, dynamic> userLoginDto) async{
@@ -41,7 +61,7 @@ class UserService{
       UserSession().create(response.data["data"]["profile"]["user"]["userId"], response.data["data"]["profile"]["user"]["username"],
           response.data["data"]["profile"]["user"]["firstName"], response.data["data"]["profile"]["user"]["lastName"],
           response.headers.value("Token")!, response.data["data"]["profile"]["user"]["rol"], int.parse(response.headers.value("Firstdayofweek")!),
-          response.headers.value("Date")!, response.data["data"]["profile"]["user"]["dni"]);
+          response.headers.value("Date")!, response.data["data"]["profile"]["user"]["dni"], response.data["data"]["profile"]["user"]["sex"]);
       if(UserSession().rol == "p"){
         UserSession().setProfileId(response.data["data"]["profile"]["patientId"]);
         UserSession().setSize(response.data["data"]["profile"]["arm"], response.data["data"]["profile"]["tmb"], response.data["data"]["profile"]["abdominal"],
@@ -196,11 +216,28 @@ class UserService{
 
   Future<bool> registerPatient(Map<dynamic, dynamic> newPatient) async{
 
-    var api = baseUrl + userEndpoint + patientRegister;
+    // var api = baseUrl + userEndpoint + patientRegister;
+    //
+    // final dio = Dio();
+    // Response response;
+    // response = await dio.post(api, data: newPatient);
+    //
+    // String newPatientJson = json.encode(newPatient);
 
-    final dio = Dio();
-    Response response;
-    response = await dio.post(api, data: newPatient);
+    String newPatientJson = json.encode(newPatient);
+
+    MultipartField request = MultipartField(newPatientJson,headers: {
+      Headers.contentTypeHeader : Headers.jsonContentType
+    });
+
+    var uri = Uri.parse(baseUrl + userEndpoint + patientRegister);
+    var req = MultipartRequestEx('POST', uri)
+      ..fields["request"] = request;
+
+    final response = await req.send();
+    //final respStr = await response.stream.bytesToString();
+    //print(respStr);
+
     if(response.statusCode == 201){
       // email = newPatient.email;
       // password = newPatient.password;

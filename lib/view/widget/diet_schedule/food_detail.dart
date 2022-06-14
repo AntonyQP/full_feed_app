@@ -57,6 +57,7 @@ class FoodDetailState extends State<FoodDetail> {
     return Stack(
       children: [
         Container(
+          margin: EdgeInsets.only(bottom: 10),
           padding: EdgeInsets.symmetric(horizontal: size.width * 0.03, vertical: size.height * 0.02),
           decoration: const BoxDecoration(
             borderRadius: BorderRadius.only(
@@ -83,10 +84,10 @@ class FoodDetailState extends State<FoodDetail> {
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
                           SizedBox(
-                            width: size.width/2,
+                            width: size.width * 0.45,
                             child: Text(widget.meal.name.toString(), style: const TextStyle(color: Color(0xFF2D2D2D), fontSize: 15, fontWeight: FontWeight.bold),),
                           ),
-                          SizedBox(height: size.height/80,),
+                          SizedBox(height: size.height * 0.03,),
                           Container(
                             padding: const EdgeInsets.all(15),
                             //width: size.width/2.05,
@@ -109,10 +110,22 @@ class FoodDetailState extends State<FoodDetail> {
                                 ),
                                 SizedBox(height: size.height/80,),
                                 Wrap(
-                                  spacing: 2.0,
+                                  spacing: 5.0,
                                   direction: Axis.vertical,
                                   children: List.generate(Provider.of<DietProvider>(context).getDietDayDetailViewModel().splitIngredients(widget.meal).length, (index){
-                                    return Text(Provider.of<DietProvider>(context).getDietDayDetailViewModel().getIngredients()[index], style: const TextStyle(color: Colors.white, fontSize: 10),);
+                                    return SizedBox(
+                                      width: size.width * 0.55,
+                                      child: Row(
+                                        crossAxisAlignment: CrossAxisAlignment.center,
+                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          SizedBox(
+                                              width: size.width * 0.4,
+                                              child: Text(Provider.of<DietProvider>(context).getDietDayDetailViewModel().getIngredients()[index], style: const TextStyle(color: Colors.white, fontSize: 10),)),
+                                          Text(Provider.of<DietProvider>(context).getDietDayDetailViewModel().getPortions()[index] + ' gr', style: const TextStyle(color: Colors.white, fontSize: 10),),
+                                        ],
+                                      ),
+                                    );
                                   }),
                                 ),
                               ],
@@ -141,10 +154,11 @@ class FoodDetailState extends State<FoodDetail> {
                         xValueMapper: (ProteinDetail pd, _) => pd.protein,
                         yValueMapper: (ProteinDetail pd, _) => pd.q,
                         dataLabelSettings: const DataLabelSettings(
-                            alignment: ChartAlignment.far,
+                            alignment: ChartAlignment.near,
                             labelAlignment: ChartDataLabelAlignment.outer,
                             isVisible: true,
-                            textStyle: TextStyle(color: Colors.white)
+                            color: darkColor,
+                            textStyle: TextStyle(color: Colors.white, fontSize: 10)
                         ))
                   ],
                   primaryXAxis: CategoryAxis(
@@ -154,13 +168,15 @@ class FoodDetailState extends State<FoodDetail> {
                     majorGridLines: MajorGridLines(width: 0),
                   ),
                   primaryYAxis: NumericAxis(
+                      labelFormat: '{value} kcal',
+                      labelStyle: const TextStyle(color: Colors.black),
                       isVisible: false
                   ),),
               ),
               SizedBox(
                 height: size.height/80,
               ),
-              Center(child: Text('Carbohidratos, Proteinas, Grasas: kcal  -  Peso: gr', style: TextStyle(color: Colors.white, fontSize: 8),)),
+              Center(child: Text('Carbohidratos, Proteinas, Grasas medidos en kcal', style: TextStyle(color: Colors.white, fontSize: 8),)),
               Padding(
                 padding: const EdgeInsets.only(left: 15.0, top: 8.0, bottom: 8.0),
                 child: Row(
@@ -210,7 +226,7 @@ class FoodDetailState extends State<FoodDetail> {
         ),
         AnimatedPositioned(
             top: 80,
-            right: Provider.of<DietProvider>(context).getIsAlternativeMealSelected() ? size.width * 0.1 : -150.0,
+            right: Provider.of<DietProvider>(context).getIsAlternativeMealSelected() ? size.width * 0.05 : -150.0,
             curve: Curves.fastOutSlowIn,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,

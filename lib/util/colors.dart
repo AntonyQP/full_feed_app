@@ -24,7 +24,11 @@ const Color normalWeightColor = Color(0xFF02D871);
 
 const Color overWeightColor = Color(0xFFFF295D);
 
-const Color fatWeightColor = Color(0xFFFF003E);
+const Color fatIIIWeightColor = Color(0xFFFF003E);
+
+const Color fatIIWeightColor = Color(0xFFD90639);
+
+const Color fatIWeightColor = Color(0xFFE0214F);
 
 const Color fooSelectedColor = Color.fromRGBO(255, 89, 86, 0.8);
 

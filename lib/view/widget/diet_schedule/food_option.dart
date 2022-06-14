@@ -65,7 +65,10 @@ class FoodOptionState extends State<FoodOption> {
           ),
           CircleAvatar(
             radius: widget.index == selected ? size.height * 0.05 : size.height * 0.04,
-            backgroundImage: NetworkImage("https://blogladiadoresfit.com/wp-content/uploads/2021/02/avena-fitness.jpg"),
+            backgroundImage: NetworkImage(
+                widget.meal.imageUrl != null && widget.meal.imageUrl != "" ?
+                widget.meal.imageUrl! :
+                "https://blogladiadoresfit.com/wp-content/uploads/2021/02/avena-fitness.jpg"),
           ),
         ],
       ),

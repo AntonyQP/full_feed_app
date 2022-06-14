@@ -22,7 +22,8 @@ class _HomeNutritionistCardState extends State<HomeNutritionistCard> {
     var size = MediaQuery.of(context).size;
     return Container(
       width: size.width * 0.4,
-      height: size.height * 0.35,
+      height: size.height * 0.4,
+      padding: EdgeInsets.only(bottom: 10),
       decoration: const BoxDecoration(
         borderRadius: BorderRadius.only(topLeft: Radius.circular(60.0), topRight: Radius.circular(15.0),),
         gradient: LinearGradient(
@@ -43,8 +44,8 @@ class _HomeNutritionistCardState extends State<HomeNutritionistCard> {
           ),
           const SizedBox(height: 10.0),
           CircleAvatar(
-            radius: size.width * 0.1,
-            backgroundImage: AssetImage('assets/breakfast_back.png')
+            radius: size.width * 0.09,
+            backgroundImage: AssetImage('assets/male_user.jpg')
             ),
           const SizedBox(height: 10.0),
           Text(Provider.of<LoggedInViewModel>(context, listen: false).getDoctorByPatient().user!.firstName.toString(),
@@ -78,13 +79,10 @@ class _HomeNutritionistCardState extends State<HomeNutritionistCard> {
               Container(
                 width: size.width,
                 margin: const EdgeInsets.symmetric(horizontal: 15.0),
-                decoration: const BoxDecoration(
-                    borderRadius: BorderRadius.all(Radius.circular(25.5)),
-                    color: Color(0xFFE8EEFF),
-                ),
+                color: Colors.white.withOpacity(0.2),
                 child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 2.0),
-                  child: Text(widget.chatViewModel.getLastMessages()[0].text!, style: const TextStyle(fontWeight: FontWeight.w200)),
+                  padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 10.0),
+                  child: Text(widget.chatViewModel.getLastMessages()[0].text!, maxLines: 3, style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 12, color: Colors.white, overflow: TextOverflow.ellipsis)),
                 ),
               ),
               const SizedBox(height: 5.0),
@@ -92,7 +90,7 @@ class _HomeNutritionistCardState extends State<HomeNutritionistCard> {
                 padding: const EdgeInsets.only(right: 13.0),
                 child: Align(
                     alignment: Alignment.centerRight,
-                    child: Text(DateFormat('EEEE HH:mm').format(Provider.of<ChatViewModel>(context, listen: false).getLastMessages()[0].createdAt), style: const TextStyle(color: chatMessageTime, fontSize: 10))),
+                    child: Text(DateFormat('EEEE HH:mm').format(widget.chatViewModel.getLastMessages()[0].createdAt), style: const TextStyle(color: Colors.white, fontSize: 10, overflow: TextOverflow.ellipsis))),
               )
             ],
           ) : Align(

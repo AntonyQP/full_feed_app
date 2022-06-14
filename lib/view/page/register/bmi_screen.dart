@@ -43,9 +43,17 @@ class _BMIScreenState extends State<BMIScreen> with AutomaticKeepAliveClientMixi
       if(_valueSlider < Provider.of<RegisterViewModel>(context, listen: false).getImc()){
         setState(() {
           _valueSlider += 0.1;
-          if (_valueSlider >= 30.0) {
-            _colorEgg = fatWeightColor;
-            _labelEgg = "OBESIDAD";
+          if (_valueSlider >= 40.0) {
+            _colorEgg = fatIIIWeightColor;
+            _labelEgg = "OBESIDAD III";
+          }
+          if (_valueSlider < 39.9 && _valueSlider >= 35.0) {
+            _colorEgg = fatIIWeightColor;
+            _labelEgg = "OBESIDAD II";
+          }
+          if (_valueSlider < 34.9 && _valueSlider >= 30.0) {
+            _colorEgg = fatIWeightColor;
+            _labelEgg = "OBESIDAD I";
           }
           if (_valueSlider < 30.0 && _valueSlider >= 25.0) {
             _colorEgg = overWeightColor;
@@ -107,7 +115,7 @@ class _BMIScreenState extends State<BMIScreen> with AutomaticKeepAliveClientMixi
               child: SfSlider(
                 thumbShape: const SfThumbShape(),
                 min: 5.0,
-                max: 45.0,
+                max: 50.0,
                 value: _valueSlider,
                 interval: 2,
                 showTicks: true,

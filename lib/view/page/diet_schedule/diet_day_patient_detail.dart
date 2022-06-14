@@ -11,6 +11,8 @@ import 'package:provider/provider.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
 
+import '../../../domain/service/user_service.dart';
+import '../../../model/entities/illness.dart';
 import '../../../view_model/profile_view_model.dart';
 import '../../widget/diet_schedule/patient_detail_card.dart';
 import 'diet_calendar_page.dart';
@@ -162,11 +164,8 @@ class DietDayPatientDetailState extends State<DietDayPatientDetail> {
                                   Row(
                                     children: [
                                       CircleAvatar(
-                                        child: const Center(
-                                          child: FaIcon(FontAwesomeIcons.user, color: Colors.white, size: 40,) ,
-                                        ),
-                                        backgroundColor: darkColor,
-                                        radius: 40,
+                                        backgroundImage: _patientSelected.user!.sex == 'h' ? AssetImage('assets/male_patient.jpg') : AssetImage('assets/female_patient.jpg'),
+                                        radius: size.width * 0.09,
                                       ),
                                       const SizedBox(width: 20.0),
                                       Column(
@@ -185,7 +184,61 @@ class DietDayPatientDetailState extends State<DietDayPatientDetail> {
                                                     Text(_patientSelected.user!.firstName.toString(), style: const TextStyle(fontWeight: FontWeight.w300)),
                                                   ],
                                                 ),
+                                                FutureBuilder(
+                                                    future: UserService().getPatientIllnessesByDoctor(_patientSelected.patientId!),
+                                                    builder: (context, snapshot) {
+                                                      return Container(
+                                                        width: size.width * 0.1,
+                                                        decoration: const BoxDecoration(
+                                                            color: primaryColor,
+                                                            shape: BoxShape.circle
+                                                        ),
+                                                        child: IconButton(
+                                                          icon: const FaIcon(FontAwesomeIcons.headSideMask),
+                                                          iconSize: size.width * 0.05,
+                                                          padding: EdgeInsets.all(size.width * 0.005),
+                                                          color: Colors.white,
+                                                          onPressed: (){showDialog(
+                                                              context: context,
+                                                              builder: (context){
+                                                                final _selectedPatientIllnessesList = snapshot.data as List<Illness>;
+                                                                return AlertDialog(
+                                                                  title: const Text('Enfermedades'),
+                                                                  content: SizedBox(
+                                                                    height: 100,
+                                                                    child: SingleChildScrollView(
+                                                                      child: Column(
+                                                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                                                        children: _selectedPatientIllnessesList.map((e) => Text('- ${e.name!}',
+                                                                          style: const TextStyle(color: Colors.black),
+                                                                        )).toList(),
+                                                                      ),
+                                                                    ),
+                                                                  ),
+                                                                  shape: RoundedRectangleBorder(
+                                                                      borderRadius: BorderRadius.circular(25.0)
+                                                                  ),
+                                                                  actions: [
+                                                                    ElevatedButton(
+                                                                      onPressed: (){ Navigator.pop(context); },
+                                                                      child: const Text('Volver', style: TextStyle(color: Colors.white),),
+                                                                      style: ElevatedButton.styleFrom(
+                                                                        primary: primaryColor,
+                                                                        shape: RoundedRectangleBorder(
+                                                                            borderRadius: BorderRadius.circular(25.0)
+                                                                        ),
+                                                                      ),
+                                                                    )
+                                                                  ],
+                                                                );
+                                                              }
+                                                          );},
+                                                        ),
+                                                      );
+                                                    }
+                                                ),
                                                 Container(
+                                                width: size.width * 0.1,
                                                   decoration: const BoxDecoration(
                                                       color: chatCardPrimaryColor,
                                                       shape: BoxShape.circle
@@ -194,7 +247,7 @@ class DietDayPatientDetailState extends State<DietDayPatientDetail> {
                                                     onPressed: () { _showDialog(); },
                                                     icon: Icon(Icons.edit),
                                                     color: Colors.white,
-                                                    iconSize: 30,
+                                                    iconSize: size.width * 0.05,
                                                   ),
                                                 )
                                               ],
